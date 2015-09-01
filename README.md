@@ -9,4 +9,5 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v0.2.0 New d() dump utility and audio player.
 * v0.1.0 keyHandler directive
