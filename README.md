@@ -1,6 +1,12 @@
 # Wigy's Chronicles of Angular
+
 Wigy's collection of useful utilities for AngularJS.
 
 ## License
+
 Copyright (c) 2015 Tommi Ronkainen  
 Licensed under the GPL-2.0 license.
+
+## Release History
+
+* v0.1.0 keyHandler directive
