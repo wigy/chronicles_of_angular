@@ -1,5 +1,5 @@
-# chronicles_of_angular
-Wigy's collection of useful utilities for AngularJS
+# Wigy's Chronicles of Angular
+Wigy's collection of useful utilities for AngularJS.
 
 ## License
 Copyright (c) 2015 Tommi Ronkainen  
