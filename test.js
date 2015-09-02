@@ -12,9 +12,7 @@ TestApp.controller('TestAppController', ['$scope', 'coaPlayer',
         $scope.coaPlayer = coaPlayer;
 
         $scope.storeKey = function(name) {
-            $scope.$apply(function() {
-                $scope.keyPressed = name;
-            });
+            $scope.keyPressed = name;
         };
     }
 ]);
