@@ -12,9 +12,9 @@ TestApp.controller('TestAppController', ['$scope', 'coaPlayer',
         $scope.coaPlayer = coaPlayer;
 
         $scope.storeKey = function(name) {
-            d('Key pressed:', name)
-            // TODO: Hmm, does not display anything?
-            $scope.keyPressed = name;
+            $scope.$apply(function() {
+                $scope.keyPressed = name;
+            });
         };
     }
 ]);
