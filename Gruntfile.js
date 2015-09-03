@@ -15,20 +15,14 @@ module.exports = function(grunt) {
         src: ['test/**/*.js']
       },
     },
-    watch: {
-      test: {
-        files: '<%= jshint.test.src %>',
-        tasks: ['jshint:test', 'nodeunit']
-      },
-    },
   });
 
   // These plugins provide necessary tasks.
   grunt.loadNpmTasks('grunt-contrib-nodeunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-watch');
+
+  grunt.loadTasks('node_modules/chronicles_of_grunt/tasks/');
 
   // Default task.
-  grunt.registerTask('default', ['jshint', 'nodeunit']);
-
+  grunt.registerTask('default', ['usage']);
 };
