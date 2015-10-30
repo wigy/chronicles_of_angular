@@ -2,6 +2,7 @@
 
 module.exports = function(grunt) {
 
+  // TODO: Define project using CoG.
   // Project configuration.
   grunt.initConfig({
     nodeunit: {
