@@ -8,14 +8,12 @@ module.exports = function(grunt) {
               name: "coa",
               external: {
                   lib: ['angular'],
-                  css: ['bootstrap'],
-                  fonts: ['bootstrap'],
               },
               src: {
                   config: [],
                   models: [],
                   data: [],
-                  code: ['src/**/index.js', 'src/**/*.js'],
+                  code: ['src/util.js', 'src/**/index.js', 'src/**/*.js', 'test.js'],
               },
               index: {
                   app: 'index.html',
@@ -24,12 +22,7 @@ module.exports = function(grunt) {
       },
   });
 
-  // These plugins provide necessary tasks.
-  grunt.loadNpmTasks('grunt-contrib-nodeunit');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
-
   grunt.loadTasks('node_modules/chronicles_of_grunt/tasks/');
-
-  // Default task.
   grunt.registerTask('default', ['usage']);
+
 };
