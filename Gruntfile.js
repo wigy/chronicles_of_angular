@@ -2,20 +2,26 @@
 
 module.exports = function(grunt) {
 
-  // TODO: Define project using CoG.
-  // Project configuration.
   grunt.initConfig({
-    nodeunit: {
-      files: ['test/**/*_test.js'],
-    },
-    jshint: {
-      src: {
-        src: ['src/**/*.js']
+      build: {
+          options: {
+              name: "coa",
+              external: {
+                  lib: ['angular'],
+                  css: ['bootstrap'],
+                  fonts: ['bootstrap'],
+              },
+              src: {
+                  config: [],
+                  models: [],
+                  data: [],
+                  code: ['lib/**/*.js'],
+              },
+              index: {
+                  app: 'test.html',
+              },
+          }
       },
-      test: {
-        src: ['test/**/*.js']
-      },
-    },
   });
 
   // These plugins provide necessary tasks.
