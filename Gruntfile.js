@@ -15,10 +15,10 @@ module.exports = function(grunt) {
                   config: [],
                   models: [],
                   data: [],
-                  code: ['lib/**/*.js'],
+                  code: ['src/**/index.js', 'src/**/*.js'],
               },
               index: {
-                  app: 'test.html',
+                  app: 'index.html',
               },
           }
       },
