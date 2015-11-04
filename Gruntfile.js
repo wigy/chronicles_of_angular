@@ -8,6 +8,8 @@ module.exports = function(grunt) {
               name: "coa",
               external: {
                   lib: ['angular'],
+                  unittestlib: ['jasmine'],
+                  unittestcss: ['jasmine'],
               },
               src: {
                   config: [],
@@ -15,8 +17,12 @@ module.exports = function(grunt) {
                   data: [],
                   code: ['src/util.js', 'src/**/index.js', 'src/**/*.js', 'test.js'],
               },
+              test: {
+                  unit: 'test/*_spec.js'
+              },
               index: {
                   app: 'index.html',
+                  test: 'test.html'
               },
           }
       },
