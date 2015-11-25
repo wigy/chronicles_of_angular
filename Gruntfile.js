@@ -15,7 +15,7 @@ module.exports = function(grunt) {
                   config: [],
                   models: [],
                   data: [],
-                  code: ['src/util.js', 'src/**/index.js', 'src/**/*.js', 'test.js'],
+                  code: ['src/utils.js', 'src/**/index.js', 'src/**/*.js', 'test.js'],
               },
               test: {
                   unit: 'test/*_spec.js'

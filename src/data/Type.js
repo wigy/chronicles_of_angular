@@ -5,12 +5,12 @@
     // TODO: Document code conventions (Uppercase models, module directories).
     // TODO: Model template generator for Grunt.
 
-    module.factory('Type', [function() {
+    module.factory('Type', ['Class', function(Class) {
 
         function Type(data) {
         }
 
-        Type.prototype = {}; // TODO: Perhaps this could be some common like 'Class' class.
+        Type.prototype = new Class();
 
         Type.prototype.init = function(data) {
             // TODO: Implement.

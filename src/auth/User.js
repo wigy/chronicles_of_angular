@@ -1,19 +1,19 @@
 (function() {
 
-	var module = angular.module('coa.auth');
+    var module = angular.module('coa.auth');
 
-	module.factory('User', ['Type', function(Type) {
+    module.factory('User', ['Type', function(Type) {
 
-		function User(data) {
-			// Name of the user.
-			this.name = null;
+        function User(data) {
+            // Name of the user.
+            this.name = null;
 
-			this.init(data);
-		}
+            this.init(data);
+        }
 
-		User.prototype = new Type({'name' : {}});
+        User.prototype = new Type({'name' : {}});
 
-		return User;
-	}]);
+        return User;
+    }]);
 
 })();
