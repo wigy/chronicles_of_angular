@@ -1,7 +1,7 @@
 {
   "name": "chronicles_of_angular",
   "description": "Wigy's collection of useful utilities for AngularJS.",
-  "version": "0.2.0",
+  "version": "0.3.0-beta",
   "homepage": "https://github.com/wigy/chronicles_of_angular",
   "author": {
     "name": "Tommi Ronkainen",
@@ -30,7 +30,7 @@
     "angular": "^1.4.5",
     "chronicles_of_grunt": "git+ssh://git@github.com:wigy/chronicles_of_grunt",
     "grunt": "~0.4.5",
-    "grunt-cli": "^0.1.13",
+    "grunt-cli": "^0.1.13"
   },
   "keywords": []
 }
