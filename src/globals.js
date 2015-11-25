@@ -1,5 +1,4 @@
 // TODO: Proper documentation.
-// TODO: Rename as globals.js.
 
 /**
  * Dump all arguments.
