@@ -1,7 +1,7 @@
 (function() {
 
 
-	// TODO: Make index.js for this.
+    // TODO: Make index.js for this.
     var module = angular.module('coa.audio.player', []);
 
 
@@ -15,7 +15,7 @@
      */
     function load(mapping) {
         angular.forEach(mapping, function(v, k) {audio[k] = new Audio(v);});
-    };
+    }
 
     function play(name, timestamp) {
         if (name === 'list') {
@@ -26,12 +26,12 @@
             return;
         }
 
-        if (typeof(DEBUG) != "undefined" && DEBUG) {
+        if (typeof(DEBUG) !== "undefined" && DEBUG) {
             d((timestamp ? timestamp : '') + "   >>> " + name + " <<<");
         } else {
             audio[name].play();
         }
-    };
+    }
 
     /**
      * Service to play sounds.

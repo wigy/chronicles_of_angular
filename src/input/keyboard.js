@@ -54,8 +54,9 @@
                             handler(key);
                         });
                     }
-                    else
+                    else {
                         d("Cannot find key-press handler", $attrs.coaKeyHandler);
+                    }
                 });
             }
         };
