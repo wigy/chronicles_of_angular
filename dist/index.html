@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CoA Test Page</title>
     <script src="coa.min.js"></script>
-    <link rel="stylesheet" href="coa.min.css">
   </head>
 
   <body ng-controller="TestAppController" coa-key-handler="storeKey">
@@ -17,4 +16,27 @@
             Key pressed: {{keyPressed}}
   </body>
 
+  <script>
+      var TestApp = angular.module('TestApp', ['coa.input.keyboard',
+                                              'coa.audio.player',
+                                              'coa.auth'
+                                              ]);
+
+      TestApp.controller('TestAppController', ['$scope', 'coaPlayer', 'User',
+
+          function($scope, coaPlayer, User) {
+
+              d(new User({name: "wigy"}));
+
+              coaPlayer.load({'test' : 'sounds/test.mp3'});
+
+              $scope.keyPressed = '-';
+              $scope.coaPlayer = coaPlayer;
+
+              $scope.storeKey = function(name) {
+                  $scope.keyPressed = name;
+              };
+          }
+      ]);
+  </script>
 </html>

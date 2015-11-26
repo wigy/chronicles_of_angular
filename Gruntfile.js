@@ -16,6 +16,7 @@ module.exports = function(grunt) {
                   models: [],
                   data: [],
                   code: ['src/globals.js', 'src/**/index.js', 'src/**/*.js'],
+                  sounds: ['sounds/*.mp3'],
               },
               test: {
                   unit: 'test/*_spec.js'

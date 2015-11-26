@@ -294,16 +294,28 @@ SHORTMONTH:"Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" "),WEEKENDR
 negSuf:"",posPre:"\u00a4",posSuf:""}]},id:"en-us",pluralCat:function(a,c){var e=a|0,f=c;u===f&&(f=Math.min(b(a),3));Math.pow(10,f);return 1==e&&0==f?"one":"other"}})}]),B(X).ready(function(){Zd(X,yc)}))})(window,document);!window.angular.$$csp().noInlineStyle&&window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 //# sourceMappingURL=angular.min.js.map
 
+// TODO: Proper documentation.
+
+/**
+ * Dump all arguments.
+ */
+function d(arg) {
+    console.log.apply(console, arguments);
+}
+
 // TODO: Module docs.
 angular.module('coa.auth', ['coa.data']);
 
 // TODO: Module docs.
-angular.module('coa.data', []);
+angular.module('coa.core', []);
+
+// TODO: Module docs.
+angular.module('coa.data', ['coa.core']);
 
 (function() {
 
 
-	// TODO: Make index.js for this.
+    // TODO: Make index.js for this.
     var module = angular.module('coa.audio.player', []);
 
 
@@ -317,7 +329,7 @@ angular.module('coa.data', []);
      */
     function load(mapping) {
         angular.forEach(mapping, function(v, k) {audio[k] = new Audio(v);});
-    };
+    }
 
     function play(name, timestamp) {
         if (name === 'list') {
@@ -328,12 +340,12 @@ angular.module('coa.data', []);
             return;
         }
 
-        if (typeof(DEBUG) != "undefined" && DEBUG) {
+        if (typeof(DEBUG) !== "undefined" && DEBUG) {
             d((timestamp ? timestamp : '') + "   >>> " + name + " <<<");
         } else {
             audio[name].play();
         }
-    };
+    }
 
     /**
      * Service to play sounds.
@@ -350,45 +362,62 @@ angular.module('coa.data', []);
 
 (function() {
 
-	var module = angular.module('coa.auth');
+    var module = angular.module('coa.auth');
 
-	module.factory('User', ['Type', function(Type) {
+    module.factory('User', ['Type', function(Type) {
 
-		function User(data) {
-			// Name of the user.
-			this.name = null;
+        function User(data) {
+            // Name of the user.
+            this.name = null;
 
-			this.init(data);
-		}
+            this.init(data);
+        }
 
-		User.prototype = new Type({'name' : {}});
+        User.prototype = new Type({'name' : {}});
 
-		return User;
-	}]);
+        return User;
+    }]);
 
 })();
 
 (function() {
 
-	var module = angular.module('coa.data');
+    var module = angular.module('coa.core');
 
-	// TODO: Document code conventions (Uppercase models, module directories).
-	// TODO: Model template generator for Grunt.
+    module.factory('Class', [function() {
 
-	module.factory('Type', [function() {
+        // TODO: Docs
+        function Class(data) {
+        }
 
-		function Type(data) {
-		};
+        Class.prototype = {};
 
-		Type.prototype = new Object();
+        return Class;
+    }]);
 
-		Type.prototype.init = function(data) {
-			// TODO: Implement.
-			d(data);
-		};
+})();
 
-		return Type;
-	}]);
+(function() {
+
+    var module = angular.module('coa.data');
+
+    // TODO: Document code conventions (Uppercase models, module directories).
+    // TODO: Model template generator for Grunt.
+
+    module.factory('Type', ['Class', function(Class) {
+
+        function Type(data) {
+        }
+
+        Type.prototype = new Class();
+
+        Type.prototype.init = function(data) {
+            // TODO: Implement.
+            d(data);
+        };
+
+        return Type;
+    }]);
 
 })();
 
@@ -448,45 +477,12 @@ angular.module('coa.data', []);
                             handler(key);
                         });
                     }
-                    else
+                    else {
                         d("Cannot find key-press handler", $attrs.coaKeyHandler);
+                    }
                 });
             }
         };
     }]);
 
 })();
-
-// TODO: Proper documentation.
-// TODO: Rename as globals.js.
-
-/**
- * Dump all arguments.
- */
-function d(arg) {
-    console.log.apply(console, arguments);
-}
-
-
-var TestApp = angular.module('TestApp', ['coa.input.keyboard',
-                                         'coa.audio.player',
-                                         'coa.auth'
-                                         ]);
-
-TestApp.controller('TestAppController', ['$scope', 'coaPlayer', 'User',
-
-    function($scope, coaPlayer, User) {
-
-        // TODO: Just testing.
-        d(new User({name: "wigy"}));
-
-        coaPlayer.load({'test' : 'sounds/test.mp3'});
-
-        $scope.keyPressed = '-';
-        $scope.coaPlayer = coaPlayer;
-
-        $scope.storeKey = function(name) {
-            $scope.keyPressed = name;
-        };
-    }
-]);
