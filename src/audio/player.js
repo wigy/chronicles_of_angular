@@ -1,9 +1,6 @@
 (function() {
 
-
-    // TODO: Make index.js for this.
-    var module = angular.module('coa.audio.player', []);
-
+    var module = angular.module('coa.audio');
 
     // Audio files loaded as object with audio names as keys and `Audio` instances
     // as values.
@@ -11,7 +8,6 @@
 
     /**
      * Load sound files.
-     * TODO: Documentation.
      */
     function load(mapping) {
         angular.forEach(mapping, function(v, k) {audio[k] = new Audio(v);});
@@ -35,7 +31,6 @@
 
     /**
      * Service to play sounds.
-     * TODO: Documentation.
      */
     module.service('coaPlayer', [function() {
         return {

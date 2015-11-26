@@ -6,9 +6,11 @@
     <title>CoA Test Page</title>
     <script src="lib/angular.min.js"></script>
     <script src="src/globals.js"></script>
+    <script src="src/audio/index.js"></script>
     <script src="src/auth/index.js"></script>
     <script src="src/core/index.js"></script>
     <script src="src/data/index.js"></script>
+    <script src="src/input/index.js"></script>
     <script src="src/audio/player.js"></script>
     <script src="src/auth/User.js"></script>
     <script src="src/core/Class.js"></script>
@@ -26,10 +28,7 @@
   </body>
 
   <script>
-      var TestApp = angular.module('TestApp', ['coa.input.keyboard',
-                                              'coa.audio.player',
-                                              'coa.auth'
-                                              ]);
+      var TestApp = angular.module('TestApp', ['coa.input', 'coa.audio', 'coa.auth']);
 
       TestApp.controller('TestAppController', ['$scope', 'coaPlayer', 'User',
 

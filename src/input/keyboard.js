@@ -1,23 +1,21 @@
 (function() {
 
-	// TODO: Make index.js for this.
-    var module = angular.module('coa.input.keyboard', []);
+    var module = angular.module('coa.input');
 
     /**
      * Attach a key handler function from the scope.
      *
      * The given function name is called for each key-press event with the
      * simple string argument describing the key pressed.
-    *
-    * Currently this function supports few basic keys, which are returned
-    * as the following strings:
-    *
-    * 'Space'
-    * 'A' - 'Z'
-    * '0' - '9'
-    * '!' - '/'
-    * TODO: Proper documentation structure.
-    */
+     *
+     * Currently this function supports few basic keys, which are returned
+     * as the following strings:
+     *
+     * 'Space'
+     * 'A' - 'Z'
+     * '0' - '9'
+     * '!' - '/'
+     */
     module.directive('coaKeyHandler', [function() {
 
         var map = {
