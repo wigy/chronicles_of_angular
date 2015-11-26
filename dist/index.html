@@ -17,10 +17,7 @@
   </body>
 
   <script>
-      var TestApp = angular.module('TestApp', ['coa.input.keyboard',
-                                              'coa.audio.player',
-                                              'coa.auth'
-                                              ]);
+      var TestApp = angular.module('TestApp', ['coa.input', 'coa.audio', 'coa.auth']);
 
       TestApp.controller('TestAppController', ['$scope', 'coaPlayer', 'User',
 

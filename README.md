@@ -9,6 +9,9 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* 0.3.0
+    - Support fully *Chronicles of Grunt* build system.
+    - Documentation for existing code.
 * 0.2.0
     - New d() dump utility and audio player. Rename keyHandler to coaKeyHandler.
 * 0.1.0
@@ -19,9 +22,6 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 ### Not Yet Done
-
-* Support fully Chronicles of Grunt build system.
-* Documentation system and documents.
 
 ## Future Ideas
 

@@ -294,30 +294,63 @@ SHORTMONTH:"Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec".split(" "),WEEKENDR
 negSuf:"",posPre:"\u00a4",posSuf:""}]},id:"en-us",pluralCat:function(a,c){var e=a|0,f=c;u===f&&(f=Math.min(b(a),3));Math.pow(10,f);return 1==e&&0==f?"one":"other"}})}]),B(X).ready(function(){Zd(X,yc)}))})(window,document);!window.angular.$$csp().noInlineStyle&&window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 //# sourceMappingURL=angular.min.js.map
 
-// TODO: Proper documentation.
-
 /**
- * Dump all arguments.
+ * Dump all arguments to the console.
+ *
+ * @param arg1 {any} Any number of arguments can be given.
+ * @param ...
+ * @param argN {any}
+ * @return The last argument <i>argN</i>.
  */
-function d(arg) {
-    console.log.apply(console, arguments);
+function d(arg1, arg2, argN) {
+
+    var args = Array.prototype.slice.call(arguments);
+    if (args.length === 0) {
+        return;
+    }
+    console.log.apply(console, args);
+    return args[args.length - 1];
 }
 
-// TODO: Module docs.
+/**
+ * Tools for playing audio files.
+ *
+ * @module audio
+ */
+angular.module('coa.audio', []);
+
+/**
+ * Data containers and utilities needed for user management and authentication handling.
+ *
+ * @module auth
+ */
 angular.module('coa.auth', ['coa.data']);
 
-// TODO: Module docs.
+/**
+ * Core classes needed by all other <i>CoA</i> modules.
+ *
+ * @module core
+ */
 angular.module('coa.core', []);
 
-// TODO: Module docs.
+/**
+ * Classes needed for storing and presenting data and its meta information-
+ *
+ * @module data
+ * @requires module:core
+ */
 angular.module('coa.data', ['coa.core']);
+
+/**
+ * Input device handling helpers.
+ *
+ * @module input
+ */
+angular.module('coa.input', []);
 
 (function() {
 
-
-    // TODO: Make index.js for this.
-    var module = angular.module('coa.audio.player', []);
-
+    var module = angular.module('coa.audio');
 
     // Audio files loaded as object with audio names as keys and `Audio` instances
     // as values.
@@ -325,7 +358,6 @@ angular.module('coa.data', ['coa.core']);
 
     /**
      * Load sound files.
-     * TODO: Documentation.
      */
     function load(mapping) {
         angular.forEach(mapping, function(v, k) {audio[k] = new Audio(v);});
@@ -349,7 +381,6 @@ angular.module('coa.data', ['coa.core']);
 
     /**
      * Service to play sounds.
-     * TODO: Documentation.
      */
     module.service('coaPlayer', [function() {
         return {
@@ -386,8 +417,13 @@ angular.module('coa.data', ['coa.core']);
 
     module.factory('Class', [function() {
 
-        // TODO: Docs
-        function Class(data) {
+        /**
+         * @memberof module:core
+         * @classdesc Base class for all other classes in <i>CoA</i>.
+         *
+         * @constructs Class
+         */
+        function Class() {
         }
 
         Class.prototype = {};
@@ -401,18 +437,22 @@ angular.module('coa.data', ['coa.core']);
 
     var module = angular.module('coa.data');
 
-    // TODO: Document code conventions (Uppercase models, module directories).
-    // TODO: Model template generator for Grunt.
-
     module.factory('Type', ['Class', function(Class) {
 
-        function Type(data) {
+        /**
+         * @memberof module:data
+         * @classdesc Type description to be used as a prototype for any data container class.
+         * @extends module:core.Class
+         *
+         * @constructs Type
+         * @param  {Object} definition Definition of each member of the data object.
+         */
+        function Type(definition) {
         }
 
         Type.prototype = new Class();
 
         Type.prototype.init = function(data) {
-            // TODO: Implement.
             d(data);
         };
 
@@ -423,24 +463,22 @@ angular.module('coa.data', ['coa.core']);
 
 (function() {
 
-	// TODO: Make index.js for this.
-    var module = angular.module('coa.input.keyboard', []);
+    var module = angular.module('coa.input');
 
     /**
      * Attach a key handler function from the scope.
      *
      * The given function name is called for each key-press event with the
      * simple string argument describing the key pressed.
-    *
-    * Currently this function supports few basic keys, which are returned
-    * as the following strings:
-    *
-    * 'Space'
-    * 'A' - 'Z'
-    * '0' - '9'
-    * '!' - '/'
-    * TODO: Proper documentation structure.
-    */
+     *
+     * Currently this function supports few basic keys, which are returned
+     * as the following strings:
+     *
+     * 'Space'
+     * 'A' - 'Z'
+     * '0' - '9'
+     * '!' - '/'
+     */
     module.directive('coaKeyHandler', [function() {
 
         var map = {
