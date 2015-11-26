@@ -23,10 +23,11 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
-## Future Ideas
-
 * Angular-JSdoc documentation for audio player.
 * Angular-JSdoc documentation for keyboard input.
+
+## Future Ideas
+
 * Implement type system.
 * Document coding conventions (Uppercase models, module directory structure).
 * Model template generator for Grunt (it needs ability for CoG to recognize local tasks).
