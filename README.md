@@ -22,3 +22,6 @@ Licensed under the GPL-2.0 license.
 * Documentation system and documents.
 
 ## Future Ideas
+
+* Document code conventions (Uppercase models, module directory structure).
+* Model template generator for Grunt.

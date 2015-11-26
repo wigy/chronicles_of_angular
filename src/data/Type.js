@@ -2,18 +2,23 @@
 
     var module = angular.module('coa.data');
 
-    // TODO: Document code conventions (Uppercase models, module directories).
-    // TODO: Model template generator for Grunt.
-
     module.factory('Type', ['Class', function(Class) {
 
-        function Type(data) {
+        /**
+         * @memberof module:data
+         * @classdesc Type description to be used as a prototype for any data container class.
+         * @extends module:core.Class
+         *
+         * @constructs Type
+         * @param  {Object} definition Definition of each member of the data object.
+         */
+        function Type(definition) {
         }
 
         Type.prototype = new Class();
 
         Type.prototype.init = function(data) {
-            // TODO: Implement.
+            // Need to define how data is specified and implement with documentation.
             d(data);
         };
 

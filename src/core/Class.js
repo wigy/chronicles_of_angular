@@ -4,8 +4,13 @@
 
     module.factory('Class', [function() {
 
-        // TODO: Docs
-        function Class(data) {
+        /**
+         * @memberof module:core
+         * @classdesc Base class for all other classes in <i>CoA</i>.
+         *
+         * @constructs Class
+         */
+        function Class() {
         }
 
         Class.prototype = {};
