@@ -9,8 +9,10 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
-* v0.2.0 New d() dump utility and audio player. Rename keyHandler to coaKeyHandler.
-* v0.1.0 keyHandler directive.
+* 0.2.0
+    - New d() dump utility and audio player. Rename keyHandler to coaKeyHandler.
+* 0.1.0
+    - keyHandler directive.
 
 ## Next Version
 
@@ -23,5 +25,6 @@ Licensed under the GPL-2.0 license.
 
 ## Future Ideas
 
+* Implement type system.
 * Document code conventions (Uppercase models, module directory structure).
 * Model template generator for Grunt.

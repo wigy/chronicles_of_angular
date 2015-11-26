@@ -8,7 +8,7 @@ module.exports = function(grunt) {
               name: "coa",
               external: {
                   lib: ['angular'],
-                  unittestlib: ['jasmine'],
+                  unittestlib: ['jasmine', 'angular-mock'],
                   unittestcss: ['jasmine'],
               },
               src: {
@@ -19,7 +19,7 @@ module.exports = function(grunt) {
                   sounds: ['sounds/*.mp3'],
               },
               test: {
-                  unit: 'test/*_spec.js'
+                  unit: 'test/**/*_spec.js'
               },
               index: {
                   app: 'index.html',

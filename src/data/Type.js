@@ -18,7 +18,6 @@
         Type.prototype = new Class();
 
         Type.prototype.init = function(data) {
-            // Need to define how data is specified and implement with documentation.
             d(data);
         };
 
