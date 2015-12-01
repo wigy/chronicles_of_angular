@@ -1,6 +1,6 @@
 # Wigy's Chronicles of Angular
 
-Wigy's collection of useful utilities for AngularJS.
+Wigy's collection of useful code pieces for AngularJS.
 
 ## License
 
@@ -31,3 +31,5 @@ Licensed under the GPL-2.0 license.
 * Implement type system.
 * Document coding conventions (Uppercase models, module directory structure).
 * Model template generator for Grunt (it needs ability for CoG to recognize local tasks).
+* Data handling system to generate pre-loaded file to contain all data.
+* Template handling system to compile all templates into pre-loaded cache content.
