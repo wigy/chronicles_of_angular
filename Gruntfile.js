@@ -6,11 +6,7 @@ module.exports = function(grunt) {
       build: {
           options: {
               name: "coa",
-              external: {
-                  lib: ['angular'],
-                  unittestlib: ['jasmine', 'angular-mock'],
-                  unittestcss: ['jasmine'],
-              },
+              external: ['angular', 'jasmine', 'angular-mock'],
               src: {
                   config: [],
                   models: [],
