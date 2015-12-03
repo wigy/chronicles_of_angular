@@ -3,19 +3,25 @@
 module.exports = function(grunt) {
 
   grunt.initConfig({
-      build: {
+      cog: {
           options: {
               name: "coa",
-              external: ['angular', 'jasmine', 'angular-mock'],
+              external: ['angular'],
               src: {
                   config: [],
                   models: [],
                   data: [],
                   code: ['src/globals.js', 'src/**/index.js', 'src/**/*.js'],
-                  sounds: ['sounds/*.mp3'],
+              },
+              media: {
+                  sounds: 'sounds/*.mp3',
               },
               test: {
-                  unit: 'test/**/*_spec.js'
+                  unit: {
+                      tests: 'test/**/*_spec.js',
+                      lib: ['jasmine', 'angular-mock'],
+                      css: ['jasmine']
+                  }
               },
               index: {
                   app: 'index.html',
