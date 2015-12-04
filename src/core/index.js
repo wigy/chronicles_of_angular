@@ -1,6 +1,6 @@
 /**
  * Core classes needed by all other <i>CoA</i> modules.
  *
- * @module core
+ * @namespace core
  */
 angular.module('coa.core', []);

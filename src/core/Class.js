@@ -5,10 +5,9 @@
     module.factory('Class', [function() {
 
         /**
-         * @memberof module:core
-         * @classdesc Base class for all other classes in <i>CoA</i>.
-         *
-         * @constructs Class
+         * Base class for all other classes in <i>CoA</i>.
+         * @class core.Class
+         * @memberof core
          */
         function Class() {
         }

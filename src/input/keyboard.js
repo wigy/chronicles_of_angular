@@ -5,16 +5,36 @@
     /**
      * Attach a key handler function from the scope.
      *
+     * @class input.coaKeyHandler
+     * @memberof input
+     * @desc
+     *
+     * This directive sets up a keyboard handler.
+     *
      * The given function name is called for each key-press event with the
      * simple string argument describing the key pressed.
      *
      * Currently this function supports few basic keys, which are returned
      * as the following strings:
      *
-     * 'Space'
-     * 'A' - 'Z'
-     * '0' - '9'
-     * '!' - '/'
+     * <ul>
+     *  <li>'Space'
+     *  <li>'A' - 'Z'
+     *  <li>'0' - '9'
+     *  <li>'!' - '/'
+     * </ul>
+     *
+     * @example <caption>Setting up handler in HTML</caption>
+     * <body coa-key-handler="keyHandler">
+     * </body>
+     *
+     * @example <caption>Defining handler in controller</caption>
+     * $scope.keyHandler = function(key) {
+     *    if (key === '!') {
+     *       // Handle it
+     *    }
+     * }
+     *
      */
     module.directive('coaKeyHandler', [function() {
 

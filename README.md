@@ -23,13 +23,9 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
-* Angular-JSdoc documentation for audio player.
-* Angular-JSdoc documentation for keyboard input.
-
 ## Future Ideas
 
 * Implement type system.
 * Document coding conventions (Uppercase models, module directory structure).
-* Model template generator for Grunt (it needs ability for CoG to recognize local tasks).
-* Data handling system to generate pre-loaded file to contain all data.
-* Template handling system to compile all templates into pre-loaded cache content.
+* Data handling system to generate pre-loaded file to contain all data (use CoG build).
+* Template handling system to compile all templates into pre-loaded cache content (use CoG build).

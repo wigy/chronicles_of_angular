@@ -1,6 +1,6 @@
 /**
  * Tools for playing audio files.
  *
- * @module audio
+ * @namespace audio
  */
 angular.module('coa.audio', []);
