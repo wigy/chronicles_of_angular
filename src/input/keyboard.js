@@ -3,11 +3,11 @@
     var module = angular.module('coa.input');
 
     /**
+     * @ngdoc service
+     * @name coa.input.service:keyboard
+     * @description
+     * TODO: Correct docs.
      * Attach a key handler function from the scope.
-     *
-     * @class input.coaKeyHandler
-     * @memberof input
-     * @desc
      *
      * This directive sets up a keyboard handler.
      *
@@ -24,17 +24,19 @@
      *  <li>'!' - '/'
      * </ul>
      *
-     * @example <caption>Setting up handler in HTML</caption>
-     * <body coa-key-handler="keyHandler">
-     * </body>
+     * @example
+     * <pre>
+     * &lt;body coa-key-handler="keyHandler">
+     * &lt;/body>
+     * </pre>
      *
-     * @example <caption>Defining handler in controller</caption>
+     * <pre>
      * $scope.keyHandler = function(key) {
      *    if (key === '!') {
      *       // Handle it
      *    }
      * }
-     *
+     * </pre>
      */
     module.directive('coaKeyHandler', [function() {
 

@@ -5,19 +5,30 @@
     module.factory('Type', ['Class', function(Class) {
 
         /**
-         * Type description to be used as a prototype for any data container class.
-         * @class data.Type
-         * @memberof data
-         * @extends core.Class
+         * @ngdoc object
+         * @name coa.data.class:Type
+         * @description
          *
-         * @constructs Type
-         * @param  {Object} definition Definition of each member of the data object.
+         * Type description to be used as a prototype for any data container class.
+         *
+         * @param {Object} definition
+         * The definition object is an object containing all data members of the class
+         * as keys and their definitions as values.
          */
         function Type(definition) {
         }
 
         Type.prototype = new Class();
 
+        /**
+         * @ngdoc method
+         * @name init
+         * @methodOf coa.data.class:Type
+         * @description
+         *
+         * Initialize an object instance with new data.
+         * @param {Object} data Initial data to be filled in when instantiating members.
+         */
         Type.prototype.init = function(data) {
             d(data);
         };

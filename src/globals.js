@@ -1,11 +1,5 @@
 /**
- * Dump all arguments to the console.
- *
- * @fuction d
- * @param arg1 {any} Any number of arguments can be given.
- * @param ...
- * @param argN {any}
- * @return The last argument <i>argN</i>.
+ * TODO: Docs
  */
 function d(arg1, arg2, argN) {
 

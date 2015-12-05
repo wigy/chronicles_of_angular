@@ -1,7 +1,9 @@
 /**
- * Classes needed for storing and presenting data and its meta information-
+ * @ngdoc overview
+ * @name coa.data
+ * @requires coa.core
+ * @description
  *
- * @namespace data
- * @requires {@link core}
+ * Classes needed for storing and presenting data and its meta information.
  */
 angular.module('coa.data', ['coa.core']);

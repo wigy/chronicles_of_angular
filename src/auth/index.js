@@ -1,6 +1,8 @@
 /**
- * Data containers and utilities needed for user management and authentication handling.
+ * @ngdoc overview
+ * @name coa.auth
+ * @description
  *
- * @namespace auth
+ * Data containers and utilities needed for user management and authentication handling.
  */
 angular.module('coa.auth', ['coa.data']);

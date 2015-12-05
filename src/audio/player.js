@@ -7,23 +7,27 @@
     var audio = {};
 
     /**
-     * Load sound files.
+     * @ngdoc method
+     * @name load
+     * @methodOf coa.audio.service:player
+     * @param {Object} mapping An object with sound names as keys and paths to the sound files as values.
+     * @description
      *
-     * @function audio.coaPlayer.load
-     * @memberof audio.coaPlayer
-     * @param mapping {Object} An object with sound names as key and paths to the sound files as values.
+     * Load sound files.
      */
     function load(mapping) {
         angular.forEach(mapping, function(v, k) {audio[k] = new Audio(v);});
     }
 
     /**
-     * Play the sound.
+     * @ngdoc method
+     * @name play
+     * @methodOf coa.audio.service:player
+     * @param {String} name The name of the sound to play.
+     * @param {String} timestamp If DEBUG is set, then names are printed on console with optional timestamp string.
+     * @description
      *
-     * @function audio.coaPlayer.play
-     * @memberof audio.coaPlayer
-     * @param name {String} The name of the sound to play.
-     * @param timestamp {String} If DEBUG is set, then names are printed on console with optional timestamp string.
+     * Play the sound.
      */
     function play(name, timestamp) {
         if (name === 'list') {
@@ -42,12 +46,21 @@
     }
 
     /**
-     * Service to load and play sounds.
+     * @ngdoc service
+     * @name coa.audio.service:player
+     * @description
      *
-     * @class audio.coaPlayer
-     * @memberof audio
+     * Service to load and play sounds.
+     * <pre>
+     *   coaPlayer.load({
+     *       one : 'sounds/one.mp3',
+     *       two : 'sounds/two.mp3',
+     *   });
+     *   ...
+     *   coaPlayer.play('one');
+     * </pre>
      */
-    module.service('coaPlayer', [function() {
+    module.service('player', [function() {
         return {
             load: load,
             play: play,

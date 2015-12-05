@@ -5,9 +5,11 @@
     module.factory('Class', [function() {
 
         /**
-         * Base class for all other classes in <i>CoA</i>.
-         * @class core.Class
-         * @memberof core
+         * @ngdoc object
+         * @name coa.core.class:Class
+         * @description
+         *
+         * A base class for all other classes.
          */
         function Class() {
         }

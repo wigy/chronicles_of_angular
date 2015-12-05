@@ -1,6 +1,8 @@
 /**
- * Input device handling helpers.
+ * @ngdoc overview
+ * @name coa.input
+ * @description
  *
- * @namespace input
+ * Input device handling helpers.
  */
 angular.module('coa.input', []);
