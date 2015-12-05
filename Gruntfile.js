@@ -6,6 +6,7 @@ module.exports = function(grunt) {
       cog: {
           options: {
               name: "coa",
+	      title: "Chronicles of Angular",
               external: ['angular'],
               src: {
                   config: [],

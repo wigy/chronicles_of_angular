@@ -26,6 +26,7 @@ Licensed under the GPL-2.0 license.
 ## Future Ideas
 
 * Implement type system.
+* Update API docs to use ngdocs.
 * Document coding conventions (Uppercase models, module directory structure).
 * Data handling system to generate pre-loaded file to contain all data (use CoG build).
 * Template handling system to compile all templates into pre-loaded cache content (use CoG build).
