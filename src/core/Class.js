@@ -5,7 +5,7 @@
     module.factory('Class', [function() {
 
         /**
-         * @ngdoc object
+         * @ngdoc function
          * @name coa.core.class:Class
          * @description
          *

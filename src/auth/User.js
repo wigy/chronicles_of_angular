@@ -5,7 +5,7 @@
     module.factory('User', ['Type', function(Type) {
 
         /**
-         * @ngdoc object
+         * @ngdoc function
          * @name coa.auth.class:User
          * @description
          *

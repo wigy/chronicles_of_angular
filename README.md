@@ -21,9 +21,9 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-### Not Yet Done
-
 * Update API docs to use ngdocs.
+
+### Not Yet Done
 
 ## Future Ideas
 

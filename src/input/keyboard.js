@@ -4,10 +4,8 @@
 
     /**
      * @ngdoc service
-     * @name coa.input.service:keyboard
+     * @name coa.input.directive:keyHandler
      * @description
-     * TODO: Correct docs.
-     * Attach a key handler function from the scope.
      *
      * This directive sets up a keyboard handler.
      *
@@ -25,11 +23,12 @@
      * </ul>
      *
      * @example
+     * In the template one can define the key handler function:
      * <pre>
      * &lt;body coa-key-handler="keyHandler">
      * &lt;/body>
      * </pre>
-     *
+     * In the scope we provide a function <i>keyHandler</i> to react key pressing.
      * <pre>
      * $scope.keyHandler = function(key) {
      *    if (key === '!') {
@@ -38,7 +37,7 @@
      * }
      * </pre>
      */
-    module.directive('coaKeyHandler', [function() {
+    module.directive('keyHandler', [function() {
 
         var map = {
             32: 'Space',
