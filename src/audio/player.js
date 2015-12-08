@@ -52,12 +52,12 @@
      *
      * Service to load and play sounds.
      * <pre>
-     *   coaPlayer.load({
+     *   player.load({
      *       one : 'sounds/one.mp3',
      *       two : 'sounds/two.mp3',
      *   });
      *   ...
-     *   coaPlayer.play('one');
+     *   player.play('one');
      * </pre>
      */
     module.service('player', [function() {

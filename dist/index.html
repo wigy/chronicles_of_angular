@@ -8,10 +8,10 @@
     <script src="coa.min.js"></script>
   </head>
 
-  <body ng-controller="TestAppController" coa-key-handler="storeKey">
+  <body ng-controller="TestAppController" key-handler="storeKey">
       <h1>Audio</h1>
         <h2>Player</h2>
-            <button ng-click="coaPlayer.play('test')">Test Sound</button>
+            <button ng-click="player.play('test')">Test Sound</button>
       <h1>Input</h1>
         <h2>Keyboard</h2>
             Key pressed: {{keyPressed}}
@@ -20,16 +20,16 @@
   <script>
       var TestApp = angular.module('TestApp', ['coa.input', 'coa.audio', 'coa.auth']);
 
-      TestApp.controller('TestAppController', ['$scope', 'coaPlayer', 'User',
+      TestApp.controller('TestAppController', ['$scope', 'player', 'User',
 
-          function($scope, coaPlayer, User) {
+          function($scope, player, User) {
 
               d(new User({name: "wigy"}));
 
-              coaPlayer.load({'test' : 'sounds/test.mp3'});
+              player.load({'test' : 'sounds/test.mp3'});
 
               $scope.keyPressed = '-';
-              $scope.coaPlayer = coaPlayer;
+              $scope.player = player;
 
               $scope.storeKey = function(name) {
                   $scope.keyPressed = name;

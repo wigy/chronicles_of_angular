@@ -67,7 +67,7 @@
                         key = map[event.charCode];
                     }
 
-                    var handler = $scope.$eval($attrs.coaKeyHandler);
+                    var handler = $scope.$eval($attrs.keyHandler);
                     if (handler) {
                         $scope.$apply(function() {
                             handler(key);
