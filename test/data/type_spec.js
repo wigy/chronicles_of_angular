@@ -9,4 +9,23 @@ describe('Class Type', function() {
         });
     });
 
+    it('can initialize objects from single strings', function() {
+        inject(function(Type, TypeStr){
+
+            function Team(data) {
+                this.name = null;
+                this.init(data);
+            }
+
+            Team.prototype = new Type([
+                {name: {type: TypeStr, label: "Name of the team", options: {}}}
+            ]);
+
+            d(new Team({name: "TRC"}))
+            expect(true).toBe(true);
+        });
+    });
+    // TODO: Add support for d() to collect and return all failures.
+    // TODO: Test invalid initialization.
+
 });
