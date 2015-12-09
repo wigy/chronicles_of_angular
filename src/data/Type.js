@@ -42,7 +42,7 @@
          *
          * Type description to be used as a prototype for any data container class.
          *
-         * @param {Array} definitions
+         * @param {Array} definitions A list of member definitions.
          *
          */
         function Type(definitions) {
