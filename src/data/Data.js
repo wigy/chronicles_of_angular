@@ -42,7 +42,19 @@
         }
         Data.prototype = new Class();
 
-// TODO: Implement toString() for data and types.
+// TODO: Add fully qualified class name as required attribute and use it here as '$class' and '$module'.
+
+        Data.prototype.toJSON = function() {
+            ret = {};
+            for (var k = 0; k < this._members.length; k++ ) {
+                ret[this._members[k].name] = this._members[k].toJSON(this[this._members[k].name]);
+            }
+            return ret;
+        };
+
+        Data.prototype.toString = function() {
+            return JSON.stringify(this.toJSON());
+        }
 
         /**
          * Create member types based on the definitions.

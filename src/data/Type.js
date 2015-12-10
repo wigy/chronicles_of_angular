@@ -55,6 +55,11 @@
             return value;
         };
 
+        // TODO: Docs.
+        Type.prototype.toJSON = function(value) {
+            return value;
+        };
+
         /**
          * @ngdoc method
          * @name set
