@@ -34,6 +34,18 @@ describe('Class Data', function() {
         expect(d.errors().length > 0).toBe(true);
         expect(team.name).toBe('default name');
     });
-    // TODO: Test invalid initialization.
-    // TODO: Prevent defining the same member twice.
+
+    it('refuses to define same member twice', function() {
+        d.quiet();
+        function Testing(data) {
+            this.init(data);
+        }
+        Testing.prototype = new Data([
+            {name: {type: TypeStr}},
+            {name: {type: TypeStr}},
+        ]);
+        var testing = new Testing();
+        expect(d.errors().length > 0).toBe(true);
+        expect(testing.getMembers().length).toBe(1);
+    });
 });

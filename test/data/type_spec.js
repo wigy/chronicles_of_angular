@@ -12,7 +12,6 @@ describe('Class Type', function() {
 
     it('can provide default labels', function() {
         function Testing(data) {
-            this.testing_name = null;
             this.init(data);
         }
         Testing.prototype = new Data([

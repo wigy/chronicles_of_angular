@@ -62,7 +62,7 @@
          * @param {Data} target Target object.
          * @param {String} name Name of the member to set.
          * @param {any} value Any value aimed for this type.
-         * @return {any} Value after the conversion.
+         * @return {any} Value that has been set.
          * @description
          *
          * Set the member of the target object using the given value. The value is converted using

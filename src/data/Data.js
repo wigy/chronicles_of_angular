@@ -78,6 +78,12 @@
 
             var type = new (definition.type)();
             type.init(name, definition.default, definition.label, definition.options);
+
+            if (this._types[name]) {
+                d("Trying to define member", name, "as", type, "but it has been already defined as", this._types[name], "in", this);
+                return;
+            }
+
             this._members.push(type);
             this._types[name] = type;
         };
@@ -127,6 +133,16 @@
                 d("Invalid initial values", data, "for", this);
             }
         };
+
+        /**
+         * @ngdoc method
+         * @name getMembers
+         * @methodOf coa.data.class:Data
+         * @return {Array} A list of member type defintions.
+         */
+        Data.prototype.getMembers = function() {
+            return this._members;
+        }
 
         /**
          * @ngdoc method
