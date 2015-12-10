@@ -7,10 +7,10 @@ module.exports = function(grunt) {
                 title: "Chronicles of Angular",
                 external: ['angular'],
                 src: {
-                    config: [],
+                    config: ['src/globals.js', 'src/string.js'],
                     models: [],
                     data: [],
-                    code: ['src/globals.js', 'src/**/index.js', 'src/**/*.js'],
+                    code: ['src/**/index.js', 'src/**/*.js'],
                 },
                 media: {
                     sounds: 'sounds/*.mp3',

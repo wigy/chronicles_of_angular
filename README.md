@@ -25,9 +25,10 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* Implement type system with two types: string and data.
+
 ## Future Ideas
 
-* Implement type system.
 * Document coding conventions (Uppercase models, module directory structure).
 * Data handling system to generate pre-loaded file to contain all data (use CoG build).
 * Template handling system to compile all templates into pre-loaded cache content (use CoG build).
