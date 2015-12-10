@@ -2,7 +2,7 @@
 
     var module = angular.module('coa.auth');
 
-    module.factory('User', ['Type', function(Type) {
+    module.factory('User', ['Data', function(Data) {
 
         /**
          * @ngdoc function
@@ -18,7 +18,7 @@
             this.init(data);
         }
 
-        User.prototype = new Type({'name' : {}});
+        User.prototype = new Data({'name' : {}});
 
         return User;
     }]);

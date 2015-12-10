@@ -7,16 +7,16 @@
  * Classes needed for storing and presenting data and its meta information.
  *
  * To define new data container, you need to write a constructor for it which
- * defines member variable initial values and then {@link coa.data.class:Type#methods_init initializes} the instance. Then you
- * attach prototype created from {@link coa.data.class:Type Type} class.
- * Each member is defined in the means of member types
+ * defines member variable initial values and then {@link coa.data.class:Data#methods_init initializes} the instance. Then you
+ * attach prototype created from {@link coa.data.class:Data Data} class.
+ * Each member is defined in the means of member types derived from {@link coa.data.class:Type Type}
  * <pre>
  * function MyClass(data) {
  *     this.name = null;
  *     this.init(data);
  * }
  *
- * MyClass.prototype = new Type([{name: {type: TypeStr, label: "Name of the thing"}}]);
+ * MyClass.prototype = new Data([{name: {type: TypeStr, label: "Name of the thing"}}]);
  * </pre>
  *
  * Standard member types are:
