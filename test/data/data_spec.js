@@ -1,7 +1,6 @@
 describe('Class Data', function() {
 
     function Team(data) {
-        this.name = null;
         this.init(data);
     }
 
@@ -13,7 +12,7 @@ describe('Class Data', function() {
             Data = _Data_;
             TypeStr = _TypeStr_;
             Team.prototype = new Data([
-                {name: {type: TypeStr, label: "Name of the team", options: {}}}
+                {name: {type: TypeStr, label: "Name of the team", default: 'default name', options: {}}}
             ]);
         });
     });
@@ -24,8 +23,11 @@ describe('Class Data', function() {
         expect((new Team({name: 21122})).name).toBe('21122');
         expect((new Team({name: null})).name).toBe(null);
     });
+
+    it('fills in default values for members', function() {
+        expect((new Team()).name).toBe('default name');
+    });
     // TODO: Add support for d() to collect and return all failures.
     // TODO: Test invalid initialization.
-    // TODO: Test initialization without parameters.
     // TODO: Prevent defining the same member twice.
 });

@@ -16,6 +16,7 @@
         function Type() {
             this.name = null;
             this.label = null;
+            this.default = null;
             this.options = null;
         }
 
@@ -26,14 +27,16 @@
          * @name init
          * @methodOf coa.data.class:Type
          * @param {String} name Name of the member this type instance specifies in the data object.
+         * @param {any} def Default value for the member.
          * @param {String} label Human readable title for the name (default: human readable version of name).
          * @param {Object} options Type specific options (default: none).
          * @description
          *
          * Initialize member type definition.
          */
-        Type.prototype.init = function(name, label, options) {
+        Type.prototype.init = function(name, def, label, options) {
             this.name = name;
+            this.default = this.convert(def || null);
             this.label = label || name.code2human();
             this.options = options || {};
         };

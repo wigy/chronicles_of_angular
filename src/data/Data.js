@@ -50,7 +50,6 @@
                 d("Invalid arguments", definitions, "for Data");
                 return;
             }
-            // TODO: Check if it is possible to record initial values from 'this' object as well.
             for (var i = 0; i < definitions.length; i++) {
                 // More than one key is allowed as well.
                 // So all members can be given in a single object, if order is not important.
@@ -65,6 +64,7 @@
          * Add a member instantiating appropriate type.
          */
         Data.prototype._addMember = function(name, definition) {
+
             if (typeof(name) !== "string") {
                 d("Invalid name for a data member", name, "with definition", definition);
                 return;
@@ -73,10 +73,24 @@
                 d("Invalid type for", name, "given in definition", definition);
                 return;
             }
+
             var type = new (definition.type)();
-            type.init(name, definition.label, definition.options);
+            type.init(name, definition.default, definition.label, definition.options);
             this._members.push(type);
             this._types[name] = type;
+        };
+
+        /**
+         * @ngdoc method
+         * @name reset
+         * @methodOf coa.data.class:Data
+         * @description
+         * Reset all member values to defaults.
+         */
+        Data.prototype.reset = function() {
+            for (var k = 0; k < this._members.length; k++ ) {
+                this[this._members[k].name] = this._members[k].default;
+            }
         };
 
         /**
@@ -93,11 +107,12 @@
         Data.prototype.init = function(data) {
 
             if (data === undefined) {
-                // TODO: Call here reset function, which initializes all variables.
+                this.reset();
                 return;
             }
 
             if(data instanceof Object) {
+                // TODO: Track members given and reset the members not given a value. Add test.
                 for(var k in data) {
                     var t = this._types[k];
                     if (t) {
