@@ -72,7 +72,7 @@
             var set = this.convert(value);
             if (set === undefined) {
                 d("Invalid value", value, "for member of type", this, "for object", target);
-                set = null;
+                set = this.default;
             }
             target[name] = set;
             return set;

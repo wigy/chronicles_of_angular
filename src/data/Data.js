@@ -42,6 +42,8 @@
         }
         Data.prototype = new Class();
 
+// TODO: Implement toString() for data and types.
+
         /**
          * Create member types based on the definitions.
          */

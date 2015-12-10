@@ -27,7 +27,13 @@ describe('Class Data', function() {
     it('fills in default values for members', function() {
         expect((new Team()).name).toBe('default name');
     });
-    // TODO: Add support for d() to collect and return all failures.
+
+    it('refuses to initialize undefined values', function() {
+        d.quiet();
+        var team = new Team({name: undefined})
+        expect(d.errors().length > 0).toBe(true);
+        expect(team.name).toBe('default name');
+    });
     // TODO: Test invalid initialization.
     // TODO: Prevent defining the same member twice.
 });

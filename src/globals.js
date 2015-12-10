@@ -26,6 +26,40 @@ function d(arg1, arg2, argN) {
     if (args.length === 0) {
         return;
     }
-    console.log.apply(console, args);
+    var msg = '';
+    for (var i = 0; i < args.length; i++) {
+        if (i) {
+            msg += ' ';
+        }
+        msg += args[i];
+    }
+    d.messages.push(msg);
+    if (!d.silenced) {
+        console.log.apply(console, args);
+    }
     return args[args.length - 1];
 }
+
+// If set, do not show messages.
+d.silenced = false;
+// Messages recorded by d().
+d.messages = [];
+
+/**
+ * A test helper to silence messaging and clear the message collection.
+ */
+d.quiet = function() {
+    d.messages = [];
+    d.silenced = true;
+};
+
+/**
+ * This function helps in testing to detect if there are messages after an operation.
+ * Every call to this funciton also cleans up the error list and re-enables message displaying.
+ */
+d.errors = function() {
+    var ret = d.messages;
+    d.messages = [];
+    d.silenced = false;
+    return ret;
+};
