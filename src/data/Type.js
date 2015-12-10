@@ -2,9 +2,18 @@
 
     var module = angular.module('coa.data');
 
-    // TODO: Docs for TypeBaseClass
     module.factory('TypeBaseClass', ['Class', function(Class) {
 
+// TODO: Rename TypeBaseClass class to Type.
+        /**
+         * @ngdoc function
+         * @name coa.data.class:TypeBaseClass
+         * @requires coa.data.class:Class
+         * @description
+         * A base class for all member type definition classes. These classes
+         * are used when initializing {@link coa.data.class:Type Type}
+         * instances as prototypes for data container classes.
+         */
         function TypeBaseClass() {
             this.name = null;
             this.label = null;
@@ -13,46 +22,134 @@
 
         TypeBaseClass.prototype = new Class();
 
+        /**
+         * @ngdoc method
+         * @name init
+         * @methodOf coa.data.class:TypeBaseClass
+         * @param {String} name Name of the member this type instance specifies in the data object.
+         * @param {String} label Human readable title for the name (default: human readable version of name).
+         * @param {Object} options Type specific options (default: none).
+         * @description
+         *
+         * Initialize member type definition.
+         */
         TypeBaseClass.prototype.init = function(name, label, options) {
             this.name = name;
+            // TODO: Add files to globals providing extensions to basic types.
+            // TODO: Convert name to human readable using String.code2human.
             this.label = label || name;
             this.options = options || {};
+        };
+
+        /**
+         * @ngdoc method
+         * @name convert
+         * @methodOf coa.data.class:TypeBaseClass
+         * @param {any} value The value to convert.
+         * @return {any} Value in the format used internally or undefined if not able to convert.
+         * @description
+         *
+         * Convert any value to this type.
+         */
+        TypeBaseClass.prototype.convert = function(value) {
+            return value;
+        };
+
+        /**
+         * @ngdoc method
+         * @name set
+         * @methodOf coa.data.class:TypeBaseClass
+         * @param {Type} target Target object.
+         * @param {String} name Name of the member to set.
+         * @param {any} value Any value aimed for this type.
+         * @return {any} Value after the conversion.
+         * @description
+         *
+         * Set the member of the target object using the given value. The value is converted using
+         * this type and if not successfull, error is displayed and null value used instead.
+         */
+        TypeBaseClass.prototype.set = function(target, name, value) {
+            var set = this.convert(value);
+            if (set === undefined) {
+                d("Invalid value", value, "for member of type", this, "for object", target);
+                set = null;
+            }
+            target[name] = set;
+            return set;
         };
 
         return TypeBaseClass;
     }]);
 
-    // TODO: Docs for TypeStr
     module.factory('TypeStr', ['TypeBaseClass', function(TypeBaseClass) {
 
+        /**
+         * @ngdoc function
+         * @name coa.data.class:TypeStr
+         * @requires coa.data.class:TypeBaseClass
+         * @description
+         * A string or null.
+         */
         function TypeStr(definition) {
         }
 
         TypeStr.prototype = new TypeBaseClass();
+
+        TypeStr.prototype.convert = function(value) {
+            if (value === undefined) {
+                return undefined;
+            }
+            return value === null ? null : value + '';
+        };
 
         return TypeStr;
     }]);
 
     module.factory('Type', ['Class', function(Class) {
 
+// TODO: Rename Type class to Data.
         /**
          * @ngdoc function
          * @name coa.data.class:Type
+         * @requires coa.core.class:Class
          * @description
          *
          * Type description to be used as a prototype for any data container class.
          *
-         * @param {Array} definitions A list of member definitions.
+         * @param {Array} definitions A list of <i>member definitions</i>.
+         * An array can contain one ore more objects with definitions. Each member definition has
+         * the following format:
+         * <pre>
+         * {
+         *   name: {
+         *      type: TypeStr,
+         *      label: 'Name of the foo',
+         *      options: {
+         *      }
+         *   }
+         * }
+         * </pre>
+         * The <code>type</code> is one of the member type definition classes.
+         * See more about them in {@link coa.data.class:TypeBaseClass TypeBaseClass}.
+         * The <code>label</code> defines user readable label for that member and <code>options</code>
+         * are type specific options.
          *
+         * For the list of standard types and examples, see {@link coa.data}.
          */
         function Type(definitions) {
+            // This is list of members in order.
             this._members = [];
+            // This is mapping from member names to the types listed in _members.
             this._types = {};
-            this._createMembers(definitions);
+            if (arguments.length) {
+                this._createMembers(definitions);
+            }
         }
         Type.prototype = new Class();
 
-        // TODO: Docs for _createMembers.
+        /**
+         * Create member types based on the definitions.
+         */
         Type.prototype._createMembers = function(definitions) {
             if (!(definitions instanceof Array)) {
                 d("Invalid arguments", definitions, "for Type");
@@ -60,7 +157,7 @@
             }
             for (var i = 0; i < definitions.length; i++) {
                 // More than one key is allowed as well.
-                // So all members can be given in a single object, of order is not important.
+                // So all members can be given in a single object, if order is not important.
                 var keys = Object.keys(definitions[i]);
                 for (var j = 0; j < keys.length; j++) {
                    this._addMember(keys[j], definitions[i][keys[j]]);
@@ -68,7 +165,9 @@
             }
         };
 
-        // TODO: Docs for _addMember.
+        /**
+         * Add a member instantiating appropriate type.
+         */
         Type.prototype._addMember = function(name, definition) {
             if (typeof(name) !== "string") {
                 d("Invalid name for a data member", name, "with definition", definition);
@@ -91,24 +190,20 @@
          * @param {Object} data Initial data to be filled to members.
          * @description
          *
-         * Initialize an object instance with new data from a single object. Typically this is called
-         * inside a data class constructor
-         * <pre>
-         * function MyClass(data) {
-         *     this.name = null;
-         *     this.init(data);
-         * }
-         *
-         * MyClass.prototype = new Type([{name: {type: 'str'}}]);
-         * </pre>
-         *
+         * This function is used in constructors of data classes. It takes an object with raw
+         * data having member names as keys. The values are then transformed using member types
+         * and assigned to the object itself.
          */
         Type.prototype.init = function(data) {
 
-            // TODO: More docs.
             if(data instanceof Object) {
                 for(var k in data) {
-                    // TODO: Inject data into object via type and validate.
+                    var t = this._types[k];
+                    if (t) {
+                        t.set(this, k, data[k]);
+                    } else {
+                        d("Invalid member name", name, "in initial data", data, "for", this);
+                    }
                 }
             } else {
                 d("Invalid initial values", data, "for", this);

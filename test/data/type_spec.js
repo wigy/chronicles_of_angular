@@ -1,31 +1,36 @@
 describe('Class Type', function() {
 
-    beforeEach(module('coa.data'));
+    function Team(data) {
+        this.name = null;
+        this.init(data);
+    }
 
-    it('has Class as its base-class', function() {
-        inject(function(Class, Type){
-            var t = new Type();
-            expect(t instanceof Class).toBe(true);
-        });
-    });
+    var Class, Type, TypeStr
 
-    it('can initialize objects from single strings', function() {
-        inject(function(Type, TypeStr){
-
-            function Team(data) {
-                this.name = null;
-                this.init(data);
-            }
-
+    beforeEach(function() {
+        module('coa.data');
+        inject(function(_Class_, _Type_, _TypeStr_){
+            Class = _Class_;
+            Type = _Type_;
+            TypeStr = _TypeStr_;
             Team.prototype = new Type([
                 {name: {type: TypeStr, label: "Name of the team", options: {}}}
             ]);
-
-            d(new Team({name: "TRC"}))
-            expect(true).toBe(true);
         });
+    });
+
+    it('has Class as its base-class', function() {
+        expect((new Type()) instanceof Class).toBe(true);
+    });
+
+    it('can initialize string members', function() {
+        expect((new Team({name: 'TRC'})).name).toBe('TRC');
+        expect((new Team({name: true})).name).toBe('true');
+        expect((new Team({name: 21122})).name).toBe('21122');
+        d(new Team({name: undefined}))
     });
     // TODO: Add support for d() to collect and return all failures.
     // TODO: Test invalid initialization.
-
+    // TODO: Test initialization without parameters.
+    // TODO: Test null handling.
 });
