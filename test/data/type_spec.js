@@ -1,4 +1,4 @@
-describe('Class Type', function() {
+describe('module coa.data, class Type', function() {
 
     var Data, TypeStr
 

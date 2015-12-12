@@ -22,6 +22,7 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Update API docs to use ngdocs.
+* Generic Data instance factory.
 
 ### Not Yet Done
 

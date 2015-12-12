@@ -1,4 +1,4 @@
-describe('Class Data', function() {
+describe('module coa.data, class Data', function() {
 
     function Team(data) {
         this.init(data);

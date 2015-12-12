@@ -17,6 +17,7 @@
     <script src="src/core/Class.js"></script>
     <script src="src/data/Data.js"></script>
     <script src="src/data/Type.js"></script>
+    <script src="src/data/factory.js"></script>
     <script src="src/input/keyboard.js"></script>
   </head>
 
@@ -30,7 +31,7 @@
   </body>
 
   <script>
-      var TestApp = angular.module('TestApp', ['coa.input', 'coa.audio']);
+      var TestApp = angular.module('TestApp', ['coa.input', 'coa.audio', 'coa.data']);
 
       TestApp.controller('TestAppController', ['$scope', 'player',
 
