@@ -2,7 +2,7 @@
 
     var module = angular.module('coa.auth');
 
-    module.factory('User', ['Data', function(Data) {
+    module.factory('User', ['Data', 'TypeStr', function(Data, TypeStr) {
 
         /**
          * @ngdoc function
