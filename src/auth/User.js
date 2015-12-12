@@ -18,7 +18,7 @@
             this.init(data);
         }
 
-        User.prototype = new Data({'name' : {}});
+        User.prototype = new Data([{name: {type: TypeStr}}]);
 
         return User;
     }]);
