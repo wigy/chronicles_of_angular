@@ -11,9 +11,8 @@ describe('module coa.data, class Data', function() {
         inject(function(_Data_, _TypeStr_){
             Data = _Data_;
             TypeStr = _TypeStr_;
-            Team.prototype = new Data([
-                {name: {type: TypeStr, label: "Name of the team", default: 'default name', options: {}}}
-            ]);
+            Team.prototype = new Data('Team', 'unit-testing',
+                [{name: {type: TypeStr, label: "Name of the team", default: 'default name', options: {}}}]);
         });
     });
 
@@ -40,7 +39,7 @@ describe('module coa.data, class Data', function() {
         function Testing(data) {
             this.init(data);
         }
-        Testing.prototype = new Data([
+        Testing.prototype = new Data('Testing', 'unit-testing', [
             {name: {type: TypeStr}},
             {name: {type: TypeStr}},
         ]);

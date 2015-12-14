@@ -12,6 +12,8 @@
          *
          * Data description to be used as a prototype for any data container class.
          *
+         * @param {String} name The name of the class.
+         * @param {String} mode The name of the module class belongs to.
          * @param {Array} definitions A list of <i>member definitions</i>.
          * An array can contain one ore more objects with definitions. Each member definition has
          * the following format:
@@ -31,7 +33,11 @@
          *
          * For the list of standard types and examples, see {@link coa.data}.
          */
-        function Data(definitions) {
+        function Data(name, mod, definitions) {
+            // The name of the class.
+            this._class = name;
+            // The name of the module class belongs to.
+            this._module = mod;
             // This is list of members in order.
             this._members = [];
             // This is mapping from member names to the types listed in _members.
@@ -42,8 +48,6 @@
         }
         Data.prototype = new Class();
 
-// TODO: Add fully qualified class name as required attribute and use it here as '$class' and '$module'.
-
         Data.prototype.toJSON = function() {
             ret = {};
             for (var k = 0; k < this._members.length; k++ ) {
@@ -53,7 +57,7 @@
         };
 
         Data.prototype.toString = function() {
-            return JSON.stringify(this.toJSON());
+            return this._module + '.' + this._class + JSON.stringify(this.toJSON());
         }
 
         /**
