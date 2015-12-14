@@ -18,13 +18,11 @@
   </body>
 
   <script>
-      var TestApp = angular.module('TestApp', ['coa.input', 'coa.audio', 'coa.auth']);
+      var TestApp = angular.module('TestApp', ['coa.input', 'coa.audio', 'coa.data']);
 
-      TestApp.controller('TestAppController', ['$scope', 'player', 'User',
+      TestApp.controller('TestAppController', ['$scope', 'player',
 
-          function($scope, player, User) {
-
-              d(new User({name: "wigy"}));
+          function($scope, player) {
 
               player.load({'test' : 'sounds/test.mp3'});
 
