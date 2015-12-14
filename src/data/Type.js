@@ -2,23 +2,23 @@
 
     var module = angular.module('coa.data');
 
-    module.factory('Type', ['Class', function(Class) {
+    /**
+     * @ngdoc function
+     * @name coa.data.class:Type
+     * @requires coa.data.class:Class
+     * @description
+     * A base class for all member type definition classes. These classes
+     * are used when initializing {@link coa.data.class:Data Data}
+     * instances as prototypes for data container classes.
+     */
+    function Type() {
+        this.name = null;
+        this.label = null;
+        this.default = null;
+        this.options = null;
+    }
 
-        /**
-         * @ngdoc function
-         * @name coa.data.class:Type
-         * @requires coa.data.class:Class
-         * @description
-         * A base class for all member type definition classes. These classes
-         * are used when initializing {@link coa.data.class:Data Data}
-         * instances as prototypes for data container classes.
-         */
-        function Type() {
-            this.name = null;
-            this.label = null;
-            this.default = null;
-            this.options = null;
-        }
+    module.factory('Type', ['Class', function(Class) {
 
         Type.prototype = new Class();
 
@@ -124,17 +124,17 @@
         return Type;
     }]);
 
-    module.factory('TypeStr', ['Type', function(Type) {
+    /**
+     * @ngdoc function
+     * @name coa.data.class:TypeStr
+     * @requires coa.data.class:Type
+     * @description
+     * A string or null.
+     */
+    function TypeStr(definition) {
+    }
 
-        /**
-         * @ngdoc function
-         * @name coa.data.class:TypeStr
-         * @requires coa.data.class:Type
-         * @description
-         * A string or null.
-         */
-        function TypeStr(definition) {
-        }
+    module.factory('TypeStr', ['Type', function(Type) {
 
         TypeStr.prototype = new Type();
 
@@ -148,17 +148,17 @@
         return TypeStr;
     }]);
 
-    module.factory('TypeInt', ['Type', function(Type) {
+    /**
+     * @ngdoc function
+     * @name coa.data.class:TypeInt
+     * @requires coa.data.class:Type
+     * @description
+     * An integer or null.
+     */
+    function TypeInt(definition) {
+    }
 
-        /**
-         * @ngdoc function
-         * @name coa.data.class:TypeInt
-         * @requires coa.data.class:Type
-         * @description
-         * An integer or null.
-         */
-        function TypeInt(definition) {
-        }
+    module.factory('TypeInt', ['Type', function(Type) {
 
         TypeInt.prototype = new Type();
 
@@ -172,18 +172,18 @@
         return TypeInt;
     }]);
 
-    module.factory('TypeObj', ['Type', 'Data', 'factory', function(Type, Data, factory) {
+    /**
+     * @ngdoc function
+     * @name coa.data.class:TypeObj
+     * @requires coa.data.class:Type
+     * @description
+     * An instance of another class. Required option is <code>class</code>, which is fully
+     * qualified class name including module, for example <code>"coa.auth.User"</code>.
+     */
+    function TypeObj(definition) {
+    }
 
-        /**
-         * @ngdoc function
-         * @name coa.data.class:TypeObj
-         * @requires coa.data.class:Type
-         * @description
-         * An instance of another class. Required option is <code>class</code>, which is fully
-         * qualified class name including module, for example <code>"coa.auth.User"</code>.
-         */
-        function TypeObj(definition) {
-        }
+    module.factory('TypeObj', ['Type', 'Data', 'factory', function(Type, Data, factory) {
 
         TypeObj.prototype = new Type();
 

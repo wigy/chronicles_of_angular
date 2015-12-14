@@ -13,20 +13,6 @@
      *         var user = factory.create('coa.auth', 'User', {name: 'Wigy'});
      *     }]
      * </pre>
-     * Note that constructor provided by the <i>factory</i> is not the same than the one, which
-     * is injected directly from the corresponding module. You need explicitly get the constructor
-     * from this service in order to use <code>instanceof</code>. For example
-     * <pre>
-     *     ['User', 'factory', function(User, factory) {
-     *         var user = factory.create('coa.auth', 'User', {name: 'Wigy'});
-     *         user instanceof User; // false
-     *         user instanceof factory.constructor('coa.auth', 'User'); // true
-     *
-     *         var user = new User;
-     *         user instanceof User; // true
-     *         user instanceof factory.constructor('coa.auth', 'User'); // false
-     *     }
-     * </pre>
      */
     module.service('factory', [function() {
 
@@ -47,7 +33,7 @@
             if (constructors[mod] && constructors[mod][cls]) {
                 return constructors[mod][cls];
             }
-            var injector = angular.injector([mod]);
+            var injector = angular.injector(['ng', mod]);
             if (!injector.has(cls)) {
                 d("There is no such class than", cls, "defined in the module", mod);
                 return null;
@@ -74,6 +60,7 @@
         * <code>coa.auth.Class</code>, in which case the second argument can be dropped.
         */
         function create(mod, cls, data) {
+            // TODO: Make this generally available and use in constructor as well.
             if (arguments.length === 2) {
                 var parts = mod.split('.');
                 data = cls;

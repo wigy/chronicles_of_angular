@@ -2,17 +2,17 @@
 
     var module = angular.module('coa.core');
 
-    module.factory('Class', [function() {
+    /**
+     * @ngdoc function
+     * @name coa.core.class:Class
+     * @description
+     *
+     * A base class for all other classes.
+     */
+    function Class() {
+    }
 
-        /**
-         * @ngdoc function
-         * @name coa.core.class:Class
-         * @description
-         *
-         * A base class for all other classes.
-         */
-        function Class() {
-        }
+    module.factory('Class', [function() {
 
         Class.prototype = {};
 
