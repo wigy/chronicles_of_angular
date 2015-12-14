@@ -148,6 +148,30 @@
         return TypeStr;
     }]);
 
+    module.factory('TypeInt', ['Type', function(Type) {
+
+        /**
+         * @ngdoc function
+         * @name coa.data.class:TypeInt
+         * @requires coa.data.class:Type
+         * @description
+         * An integer or null.
+         */
+        function TypeInt(definition) {
+        }
+
+        TypeInt.prototype = new Type();
+
+        TypeInt.prototype.convert = function(value) {
+            if (value === undefined) {
+                return undefined;
+            }
+            return value === null ? null : parseInt(value + '');
+        };
+
+        return TypeInt;
+    }]);
+
     module.factory('TypeObj', ['Type', 'Data', 'factory', function(Type, Data, factory) {
 
         /**

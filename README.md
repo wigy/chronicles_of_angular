@@ -22,7 +22,7 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Update API docs to use ngdocs.
-* Implement type system with two sample types: string and object.
+* Implement type system with few types: string, integer and object.
 * Generic Data instance factory.
 
 ### Not Yet Done
