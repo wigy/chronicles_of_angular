@@ -38,11 +38,24 @@
             return;
         }
 
-        if (typeof(DEBUG) !== "undefined" && DEBUG) {
+        if (timestamp) {
             d((timestamp ? timestamp : '') + "   >>> " + name + " <<<");
         } else {
             audio[name].play();
         }
+    }
+
+    /**
+     * @ngdoc method
+     * @name list
+     * @methodOf coa.audio.service:player
+     * @return {Array} A list of sound names loaded.
+     * @description
+     *
+     * Get the list of loaded sound names.
+     */
+    function list() {
+        return Object.keys(audio);
     }
 
     /**
@@ -63,6 +76,7 @@
     module.service('player', [function() {
         return {
             load: load,
+            list: list,
             play: play,
         };
     }]);
