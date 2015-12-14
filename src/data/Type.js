@@ -38,7 +38,7 @@
             this.name = name;
             this.label = label || name.code2human();
             this.options = options || {};
-            this.default = this.convert(def || null);
+            this.default = this.convert(def !==undefined ? def : null);
         };
 
         /**
