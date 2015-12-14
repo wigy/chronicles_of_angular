@@ -58,7 +58,7 @@
 
         Data.prototype.toString = function() {
             return this._module + '.' + this._class + JSON.stringify(this.toJSON());
-        }
+        };
 
         /**
          * Create member types based on the definitions.
@@ -118,8 +118,7 @@
          */
         Data.prototype.reset = function() {
             for (var k = 0; k < this._members.length; k++ ) {
-                // TODO: Clone via type and duplicate objects before using. Add test to verify.
-                this[this._members[k].name] = this._members[k].default;
+                this[this._members[k].name] = this._members[k].copy(this._members[k].default);
             }
         };
 
@@ -168,7 +167,7 @@
          */
         Data.prototype.getMembers = function() {
             return this._members;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -178,7 +177,7 @@
          */
         Data.prototype.getTypes = function() {
             return this._types;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -193,7 +192,7 @@
                 return null;
             }
             return ret;
-        }
+        };
 
         return Data;
     }]);

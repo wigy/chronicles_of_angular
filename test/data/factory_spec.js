@@ -1,4 +1,4 @@
-describe('module coa.data, service factory', function() {
+describe('module coa.data, factory service', function() {
 
     var factory;
 

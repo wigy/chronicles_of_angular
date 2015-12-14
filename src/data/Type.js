@@ -53,7 +53,7 @@
          */
         Type.prototype.validateOptions = function(options) {
             return Object.keys(options).length === 0;
-        }
+        };
 
         /**
          * @ngdoc method
@@ -69,8 +69,32 @@
             return value;
         };
 
-        // TODO: Docs.
+        /**
+         * @ngdoc method
+         * @name toJSON
+         * @methodOf coa.data.class:Type
+         * @param {any} value A legal value to convert.
+         * @return {any} Value in the JSON-format, i.e. either an atom, an array or an object.
+         * @description
+         *
+         * Convert valid data value to storable JSON-value. By default, it returns the value as is.
+         */
         Type.prototype.toJSON = function(value) {
+            return value;
+        };
+
+        /**
+         * @ngdoc method
+         * @name copy
+         * @methodOf coa.data.class:Type
+         * @param {any} value A legal value to clone.
+         * @return {any} A clone of the value.
+         * @description
+         *
+         * Create a duplicate of a value. This function is used when a clone of an original
+         * value has to be created. By default, it assumes atomic value and returns it as is.
+         */
+        Type.prototype.copy = function(value) {
             return value;
         };
 
@@ -124,7 +148,7 @@
         return TypeStr;
     }]);
 
-    module.factory('TypeObj', ['Type', 'factory', function(Type, factory) {
+    module.factory('TypeObj', ['Type', 'Data', 'factory', function(Type, Data, factory) {
 
         /**
          * @ngdoc function
@@ -140,17 +164,21 @@
         TypeObj.prototype = new Type();
 
         TypeObj.prototype.validateOptions = function(options) {
-            if (Object.keys(options).length != 1) {
+            if (Object.keys(options).length !== 1) {
                 return false;
             }
             return !!options.class;
-        }
+        };
 
         TypeObj.prototype.convert = function(value) {
             if (value === undefined) {
                 return undefined;
             }
             return factory.create(this.options.class, value);
+        };
+
+        TypeObj.prototype.copy = function(value) {
+            return factory.create(this.options.class, value.toJSON());
         };
 
         return TypeObj;

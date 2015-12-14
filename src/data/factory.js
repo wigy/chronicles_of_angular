@@ -74,14 +74,14 @@
         * <code>coa.auth.Class</code>, in which case the second argument can be dropped.
         */
         function create(mod, cls, data) {
-            if (arguments.length == 2) {
+            if (arguments.length === 2) {
                 var parts = mod.split('.');
                 data = cls;
                 cls = parts.pop();
                 mod = parts.join('.');
             }
-            var cons = constructor(mod, cls);
-            return cons ? new cons(data) : null;
+            var Cons = constructor(mod, cls);
+            return Cons ? new Cons(data) : null;
         }
 
         return {

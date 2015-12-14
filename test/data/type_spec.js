@@ -1,4 +1,4 @@
-describe('module coa.data, class Type', function() {
+describe('module coa.data, Type class', function() {
 
     var Data, TypeStr
 
@@ -21,7 +21,7 @@ describe('module coa.data, class Type', function() {
     });
 });
 
-describe('module coa.data, class TypeObj', function() {
+describe('module coa.data, TypeObj class', function() {
 
     var Data, TypeObj, TypeStr;
 
@@ -57,5 +57,17 @@ describe('module coa.data, class TypeObj', function() {
         ])
         var container = new Container();
         expect(container.user.name).toBe('Test default');
+    });
+
+    it('does not share default object', function() {
+        function Container(data) {
+            this.init(data);
+        }
+        Container.prototype = new Data('Container', 'unit-test', [
+            {user: {type: TypeObj, default: {name: 'Test default'}, options: {class: 'coa.auth.User'}}}
+        ])
+        var container1 = new Container();
+        var container2 = new Container();
+        expect(container1.user !== container2.user).toBe(true);
     });
 });
