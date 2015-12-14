@@ -22,14 +22,15 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Update API docs to use ngdocs.
+* Implement type system with two sample types: string and object.
 * Generic Data instance factory.
 
 ### Not Yet Done
 
-* Implement type system with two types: string and data.
 
 ## Future Ideas
 
 * Document coding conventions (Uppercase models, module directory structure).
+* Data persistence interface `coe.store`.
 * Data handling system to generate pre-loaded file to contain all data (use CoG build).
 * Template handling system to compile all templates into pre-loaded cache content (use CoG build).

@@ -12,13 +12,12 @@
          * A class describing user data.
          */
         function User(data) {
-            // Name of the user.
-            this.name = null;
-
             this.init(data);
         }
 
-        User.prototype = new Data('User', 'coa.auth', [{name: {type: TypeStr}}]);
+        User.prototype = new Data('User', 'coa.auth', [
+            {name: {type: TypeStr}}
+        ]);
 
         return User;
     }]);

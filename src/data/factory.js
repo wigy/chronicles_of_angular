@@ -69,9 +69,17 @@
         * @return {Data} An instance created or null if class not found.
         * @description
         *
-        * Create an instance from the given class.
+        * Create an instance from the given class. Alternatively first argument
+        * can be fully qualified class name including the module name, for example
+        * <code>coa.auth.Class</code>, in which case the second argument can be dropped.
         */
         function create(mod, cls, data) {
+            if (arguments.length == 2) {
+                var parts = mod.split('.');
+                data = cls;
+                cls = parts.pop();
+                mod = parts.join('.');
+            }
             var cons = constructor(mod, cls);
             return cons ? new cons(data) : null;
         }

@@ -36,10 +36,24 @@
          */
         Type.prototype.init = function(name, def, label, options) {
             this.name = name;
-            this.default = this.convert(def || null);
             this.label = label || name.code2human();
             this.options = options || {};
+            this.default = this.convert(def || null);
         };
+
+        /**
+         * @ngdoc method
+         * @name validateOptions
+         * @methodOf coa.data.class:Type
+         * @param {Object} options Object containing options for this type.
+         * @return {boolean} True if options are valid.
+         * @description
+         *
+         * Validate options for this type. By default only empty set of options is valid.
+         */
+        Type.prototype.validateOptions = function(options) {
+            return Object.keys(options).length === 0;
+        }
 
         /**
          * @ngdoc method
@@ -108,6 +122,38 @@
         };
 
         return TypeStr;
+    }]);
+
+    module.factory('TypeObj', ['Type', 'factory', function(Type, factory) {
+
+        /**
+         * @ngdoc function
+         * @name coa.data.class:TypeObj
+         * @requires coa.data.class:Type
+         * @description
+         * An instance of another class. Required option is <code>class</code>, which is fully
+         * qualified class name including module, for example <code>"coa.auth.User"</code>.
+         */
+        function TypeObj(definition) {
+        }
+
+        TypeObj.prototype = new Type();
+
+        TypeObj.prototype.validateOptions = function(options) {
+            if (Object.keys(options).length != 1) {
+                return false;
+            }
+            return !!options.class;
+        }
+
+        TypeObj.prototype.convert = function(value) {
+            if (value === undefined) {
+                return undefined;
+            }
+            return factory.create(this.options.class, value);
+        };
+
+        return TypeObj;
     }]);
 
 })();

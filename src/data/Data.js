@@ -93,7 +93,12 @@
             }
 
             var type = new (definition.type)();
-            type.init(name, definition.default, definition.label, definition.options);
+            var options = definition.options || {};
+            if (!type.validateOptions(options)) {
+                d("Invalid options", options, "for type", type);
+                return;
+            }
+            type.init(name, definition.default, definition.label, options);
 
             if (this._types[name]) {
                 d("Trying to define member", name, "as", type, "but it has been already defined as", this._types[name], "in", this);
@@ -113,6 +118,7 @@
          */
         Data.prototype.reset = function() {
             for (var k = 0; k < this._members.length; k++ ) {
+                // TODO: Clone via type and duplicate objects before using. Add test to verify.
                 this[this._members[k].name] = this._members[k].default;
             }
         };
@@ -130,13 +136,17 @@
          */
         Data.prototype.init = function(data) {
 
+            this.reset();
+
             if (data === undefined) {
-                this.reset();
                 return;
             }
 
+            if (data === null) {
+                data = {};
+            }
+
             if(data instanceof Object) {
-                // TODO: Track members given and reset the members not given a value. Add test.
                 for(var k in data) {
                     var t = this._types[k];
                     if (t) {

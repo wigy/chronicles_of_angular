@@ -17,4 +17,11 @@ describe('module coa.data, service factory', function() {
         expect(user.name).toBe('Factory Testing');
         expect(user instanceof userclass).toBe(true);
     });
+
+    it('supports fully qualified class names', function() {
+
+        var user = factory.create('coa.auth.User', {name: 'FQ Factory Testing'});
+
+        expect(user.name).toBe('FQ Factory Testing');
+    });
 });
