@@ -24,7 +24,7 @@ describe('module coa.data, factory service', function() {
     it('supports fully qualified class names', function() {
 
         var user = factory.create('coa.auth.User', {name: 'FQ Factory Testing'});
-
+        expect(factory.constructor('coa.auth.User') === User).toBe(true);
         expect(user.name).toBe('FQ Factory Testing');
     });
 

@@ -27,9 +27,16 @@
         * @return {Function} A constructor or null if not found.
         * @description
         *
-        * Find the constructor for the given class.
+        * Find the constructor for the given class. Alternatively first argument
+        * can be fully qualified class name including the module name, for example
+        * <code>coa.auth.Class</code>, in which case the second argument can be dropped.
         */
         function constructor(mod, cls) {
+            if (arguments.length === 1) {
+                var parts = mod.split('.');
+                cls = parts.pop();
+                mod = parts.join('.');
+            }
             if (constructors[mod] && constructors[mod][cls]) {
                 return constructors[mod][cls];
             }
@@ -60,7 +67,6 @@
         * <code>coa.auth.Class</code>, in which case the second argument can be dropped.
         */
         function create(mod, cls, data) {
-            // TODO: Make this generally available and use in constructor as well.
             if (arguments.length === 2) {
                 var parts = mod.split('.');
                 data = cls;
