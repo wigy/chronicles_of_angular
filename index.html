@@ -28,10 +28,22 @@
       <h1>Input</h1>
         <h2>Keyboard</h2>
             Key pressed: {{keyPressed}}
+      <h1>Template</h1>
+        <temp></temp>
   </body>
 
   <script>
       var TestApp = angular.module('TestApp', ['coa.input', 'coa.audio', 'coa.data']);
+
+      TestApp.run(['$templateCache', function($templateCache) {
+              $templateCache.put("foo/xxx.html","<b>Xxx</b>");
+      }]);
+
+      TestApp.directive('temp', function() {
+          return {
+              templateUrl: "foo/xxx.html"
+          };
+      });
 
       TestApp.controller('TestAppController', ['$scope', 'player',
 
