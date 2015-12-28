@@ -25,7 +25,7 @@
      * @example
      * In the template one can define the key handler function:
      * <pre>
-     * &lt;body coa-key-handler="keyHandler">
+     * &lt;body key-handler="keyHandler">
      * &lt;/body>
      * </pre>
      * In the scope we provide a function <i>keyHandler</i> to react key pressing.
