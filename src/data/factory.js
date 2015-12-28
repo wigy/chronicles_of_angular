@@ -2,6 +2,9 @@
 
     var module = angular.module('coa.data');
 
+    // The collection of injected constructors indexed by module name and class name.
+    var constructors = {};
+
     /**
      * @ngdoc service
      * @name coa.data.service:factory
@@ -15,8 +18,6 @@
      * </pre>
      */
     module.service('factory', [function() {
-
-        var constructors = {};
 
         /**
         * @ngdoc method
