@@ -68,7 +68,7 @@
         * <code>coa.auth.Class</code>, in which case the second argument can be dropped.
         */
         function create(mod, cls, data) {
-            if (arguments.length === 2) {
+            if (arguments.length < 3) {
                 var parts = mod.split('.');
                 data = cls;
                 cls = parts.pop();

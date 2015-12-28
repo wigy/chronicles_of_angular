@@ -31,11 +31,6 @@ describe('module coa.data, factory service', function() {
 
     it('provides the same constructors than directly injected classes', function() {
 
-        // Without these the prototypes are different classes and do not match.
-        // Need to investigate how to avoid that and is it because of testing system itself.
-        factory.constructor('coa.core','Class');
-        factory.constructor('coa.data','Data');
-
         var user = factory.create('coa.auth.User', {name: 'Instance1'});
         expect(user instanceof User).toBe(true);
         expect(user instanceof Data).toBe(true);
