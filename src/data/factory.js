@@ -59,7 +59,7 @@
         * @methodOf coa.data.service:factory
         * @param {String} mod The name of the module, which defines the class.
         * @param {String} cls Name of the class to instantiate.
-        * @param {Object} data Initial data structure for an instance.
+        * @param {Object} data Optional initial data structure for an instance.
         * @return {Data} An instance created or null if class not found.
         * @description
         *

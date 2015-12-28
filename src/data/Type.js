@@ -5,7 +5,7 @@
     /**
      * @ngdoc function
      * @name coa.data.class:Type
-     * @requires coa.data.class:Class
+     * @requires coa.core.class:Class
      * @description
      * A base class for all member type definition classes. These classes
      * are used when initializing {@link coa.data.class:Data Data}
