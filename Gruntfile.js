@@ -10,7 +10,7 @@ module.exports = function(grunt) {
                     config: ['src/globals.js', 'src/string.js'],
                     models: [],
                     data: [],
-                    code: ['src/**/index.js', 'src/**/*.js'],
+                    libs: ['src/**/index.js', 'src/**/*.js'],
                     templates: 'sample/template.html'
                 },
                 media: {
