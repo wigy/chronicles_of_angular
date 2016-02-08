@@ -21,9 +21,8 @@ module.exports = function(grunt) {
                 },
                 test: {
                     unit: {
+                        external: ['jasmine', 'angular-mock'],
                         tests: 'test/**/*_spec.js',
-                        lib: ['jasmine', 'angular-mock'],
-                        css: ['jasmine']
                     }
                 },
                 index: {
