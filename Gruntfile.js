@@ -6,6 +6,9 @@ module.exports = function(grunt) {
                 name: "coa",
                 title: "Chronicles of Angular",
                 external: ['angular'],
+                paths: {
+                    template: 'sample/templates.js'
+                },
                 src: {
                     config: ['src/globals.js', 'src/string.js'],
                     models: [],
