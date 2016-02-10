@@ -32,6 +32,35 @@ describe('module coa.datetime, TimeStr class', function() {
         expect(time.toString()).toBe('16:01:02');
     });
 
-    // TODO: Test comparison.
-    // TODO: Support and test negative additions.
+    it('compares times correctly', function() {
+
+        var t0 = new TimeStr({time: '15:00:00'});
+        var t1 = new TimeStr({time: '15:00:00'});
+        var t2 = new TimeStr({time: '15:00:01'});
+
+        expect(t0.notYet(t1)).toBe(false);
+        expect(t2.notYet(t1)).toBe(false);
+        expect(t1.notYet(t2)).toBe(true);
+
+        expect(t0.isPast(t1)).toBe(false);
+        expect(t2.isPast(t1)).toBe(true);
+        expect(t1.isPast(t2)).toBe(false);
+
+        expect(t0.isAlready(t1)).toBe(true);
+        expect(t2.isAlready(t1)).toBe(true);
+        expect(t1.isAlready(t2)).toBe(false);
+
+    });
+
+    it('adds negative seconds correctly', function() {
+        var time = new TimeStr({time: '01:01:50'});
+        time.addSeconds(-5)
+        expect(time.toString()).toBe('01:01:45');
+        time.addSeconds(-60*60)
+        expect(time.toString()).toBe('00:01:45');
+        time.addSeconds(-60)
+        expect(time.toString()).toBe('00:00:45');
+        time.addSeconds(-50)
+        expect(time.toString()).toBe('-00:00:05');
+    });
 });

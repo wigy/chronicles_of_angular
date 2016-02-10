@@ -48,6 +48,7 @@
             this._members = [];
             // This is mapping from member names to the types listed in _members.
             this._types = {};
+            // TODO: Support for options and add an option 'primary_field' to automatically assign atom value from constructor.
 
             this._createMembers(definitions);
         };
