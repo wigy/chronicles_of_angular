@@ -99,11 +99,24 @@
         Type.prototype.optionHandlers = function() {
             return [{
                 required: {
+                    message: "Value cannot be a null",
+                    type: "boolean",
                     isValid: function(value) {
                         return value !== null && value !== undefined;
-                    }
+                    },
                 }
             }];
+        };
+
+        Type.prototype.isInvalid = function() {
+            // TODO: Implement this returning error list.
+            // TODO: Add validation function for Data class collecting all errors.
+            return false;
+        };
+
+        // TODO: Docs.
+        Type.prototype.isValid = function() {
+            return !this.isInvalid();
         };
 
         /**
@@ -146,17 +159,12 @@
          * @description
          *
          * Set the member of the target object using the given value. The value is converted using
-         * this type and if not successfull, error is displayed and default value used instead.
+         * this type and if not successfull, error is displayed and default value is used instead.
          */
         Type.prototype.set = function(target, name, value) {
             var set = this.convert(value);
             if (set === undefined) {
                 d("Invalid kind of value", value, "for member of type", this, "for object", target);
-                set = this.default;
-            }
-            else if (!this.isValid(set)) {
-                // TODO: This should not be here. Make separate validation function.
-                d("A value", value, "fails validation as a member of type", this, "for object", target);
                 set = this.default;
             }
             target[name] = set;
