@@ -3,6 +3,7 @@
     var module = angular.module('coa.data');
 
     var Type;
+    var TypeBool;
     var TypeStr;
     var TypeInt;
     var TypeObj;
@@ -133,6 +134,38 @@
         return Type;
     }]);
 
+    // TODO: Implement general option 'required', which disables ability to use 'null' as valid value.
+
+    module.factory('TypeBool', ['Type', function(Type) {
+
+        if (TypeBool) {
+            return TypeBool;
+        }
+
+        /**
+         * @ngdoc function
+         * @name coa.data.class:TypeBool
+         * @requires coa.data.class:Type
+         * @description
+         * A boolean value or null.
+         */
+        TypeBool = function() {
+        }
+
+        TypeBool.prototype = new Type();
+
+        TypeBool.prototype.convert = function(value) {
+            if (value === null || value === false || value === true) {
+                return value;
+            }
+            return undefined;
+        };
+
+        // TODO: Tests for TypeBool.
+        return TypeBool;
+    }]);
+
+
     module.factory('TypeStr', ['Type', function(Type) {
 
         if (TypeStr) {
@@ -161,6 +194,7 @@
         return TypeStr;
     }]);
 
+
     module.factory('TypeInt', ['Type', function(Type) {
 
         if (TypeInt) {
@@ -188,6 +222,7 @@
 
         return TypeInt;
     }]);
+
 
     module.factory('TypeObj', ['Type', 'Data', 'factory', function(Type, Data, factory) {
 
