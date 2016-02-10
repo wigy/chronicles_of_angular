@@ -53,6 +53,36 @@
 
         /**
          * @ngdoc method
+         * @name convert
+         * @methodOf coa.data.class:Type
+         * @param {any} value A value to convert.
+         * @return {any} Value in the format used internally or undefined if not able to convert.
+         * @description
+         *
+         * Convert any value to this type. This function only converts to the allowed value space
+         * in the internal format. It does not validate any further details.
+         */
+        Type.prototype.convert = function(value) {
+            return value;
+        };
+
+        /**
+         * @ngdoc method
+         * @name isValid
+         * @methodOf coa.data.class:Type
+         * @param {any} value A value to test having already correct kind of type.
+         * @return {any} True if the value is valid.
+         * @description
+         *
+         * Test that all restrictions to the value is fulfilled.
+         */
+        Type.prototype.isValid = function(value) {
+            // TODO: Check options from optionHandlers().
+            return true;
+        };
+
+        /**
+         * @ngdoc method
          * @name validateOptions
          * @methodOf coa.data.class:Type
          * @param {Object} options Object containing options for this type.
@@ -62,21 +92,18 @@
          * Validate options for this type. By default only empty set of options is valid.
          */
         Type.prototype.validateOptions = function(options) {
+            // TODO: Check options from optionHandlers().
             return Object.keys(options).length === 0;
         };
 
-        /**
-         * @ngdoc method
-         * @name convert
-         * @methodOf coa.data.class:Type
-         * @param {any} value The value to convert.
-         * @return {any} Value in the format used internally or undefined if not able to convert.
-         * @description
-         *
-         * Convert any value to this type.
-         */
-        Type.prototype.convert = function(value) {
-            return value;
+        Type.prototype.optionHandlers = function() {
+            return [{
+                required: {
+                    isValid: function(value) {
+                        return value !== null && value !== undefined;
+                    }
+                }
+            }];
         };
 
         /**
@@ -124,7 +151,11 @@
         Type.prototype.set = function(target, name, value) {
             var set = this.convert(value);
             if (set === undefined) {
-                d("Invalid value", value, "for member of type", this, "for object", target);
+                d("Invalid kind of value", value, "for member of type", this, "for object", target);
+                set = this.default;
+            }
+            else if (!this.isValid(set)) {
+                d("A value", value, "fails validation as a member of type", this, "for object", target);
                 set = this.default;
             }
             target[name] = set;
@@ -161,7 +192,6 @@
             return undefined;
         };
 
-        // TODO: Tests for TypeBool.
         return TypeBool;
     }]);
 
