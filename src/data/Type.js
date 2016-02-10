@@ -146,7 +146,7 @@
          * @description
          *
          * Set the member of the target object using the given value. The value is converted using
-         * this type and if not successfull, error is displayed and null value used instead.
+         * this type and if not successfull, error is displayed and default value used instead.
          */
         Type.prototype.set = function(target, name, value) {
             var set = this.convert(value);
@@ -155,6 +155,7 @@
                 set = this.default;
             }
             else if (!this.isValid(set)) {
+                // TODO: This should not be here. Make separate validation function.
                 d("A value", value, "fails validation as a member of type", this, "for object", target);
                 set = this.default;
             }
