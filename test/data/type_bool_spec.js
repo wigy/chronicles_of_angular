@@ -30,4 +30,30 @@ describe('module coa.data, TypeBool class', function() {
             [{flag: {type: TypeBool, default: true, options: {}}}]);
         expect((new Flagged()).flag).toBe(true);
     });
+
+    it('validates options correctly', function() {
+
+        var type = new TypeBool();
+
+        var options =  {};
+        expect(type.validateOptions(options)).toBe(true);
+        options = {required: false};
+        expect(type.validateOptions(options)).toBe(true);
+        options = {required: true};
+        expect(type.validateOptions(options)).toBe(true);
+        options = {required: 0};
+        expect(type.validateOptions(options)).toBe(false);
+
+        options = {required: true};
+        type.init('name', null, 'Label', options);
+        expect(type.isInvalid(false)).toEqual(false);
+        expect(type.isInvalid(true)).toEqual(false);
+        expect(type.isInvalid(null)).toEqual(['This value is required.']);
+
+        options = {required: false};
+        type.init('name', null, 'Label', options);
+        expect(type.isInvalid(false)).toEqual(false);
+        expect(type.isInvalid(true)).toEqual(false);
+        expect(type.isInvalid(null)).toEqual(false);
+    });
 });

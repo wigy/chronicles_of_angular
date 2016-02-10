@@ -68,21 +68,6 @@
 
         /**
          * @ngdoc method
-         * @name isValid
-         * @methodOf coa.data.class:Type
-         * @param {any} value A value to test having already correct kind of type.
-         * @return {any} True if the value is valid.
-         * @description
-         *
-         * Test that all restrictions to the value is fulfilled.
-         */
-        Type.prototype.isValid = function(value) {
-            // TODO: Check options from optionHandlers().
-            return true;
-        };
-
-        /**
-         * @ngdoc method
          * @name validateOptions
          * @methodOf coa.data.class:Type
          * @param {Object} options Object containing options for this type.
@@ -92,31 +77,68 @@
          * Validate options for this type. By default only empty set of options is valid.
          */
         Type.prototype.validateOptions = function(options) {
-            // TODO: Check options from optionHandlers().
-            return Object.keys(options).length === 0;
-        };
-
-        Type.prototype.optionHandlers = function() {
-            return [{
-                required: {
-                    message: "Value cannot be a null",
-                    type: "boolean",
-                    isValid: function(value) {
-                        return value !== null && value !== undefined;
-                    },
+            var handlers = this.optionHandlers();
+            for (var k in options) {
+                if (!handlers[k]) {
+                    return false;
                 }
-            }];
-        };
-
-        Type.prototype.isInvalid = function() {
-            // TODO: Implement this returning error list.
-            // TODO: Add validation function for Data class collecting all errors.
-            return false;
+                if (typeof(options[k]) != handlers[k].type) {
+                    return false;
+                }
+            }
+            return true;
         };
 
         // TODO: Docs.
-        Type.prototype.isValid = function() {
-            return !this.isInvalid();
+        Type.prototype.optionHandlers = function() {
+            return {
+                required: {
+                    message: "This value is required.",
+                    type: "boolean",
+                    default: false,
+                    test: function(options, value) {
+                        return (value !== null && value !== undefined) || !options.required;
+                    },
+                }
+            };
+        };
+
+        /**
+         * @ngdoc method
+         * @name isInvalid
+         * @methodOf coa.data.class:Type
+         * @param {any} value A value to test having already correct kind of type.
+         * @return {any} False the value is valid or an array with failure messages.
+         * @description
+         *
+         * Test that all restrictions to the value are fulfilled and collect failures.
+         */
+        Type.prototype.isInvalid = function(value) {
+
+            var ret = [];
+            var handlers = this.optionHandlers();
+            for (var k in handlers) {
+                if (!handlers[k].test(this.options, value)) {
+                    ret.push(handlers[k].message);
+                }
+            }
+            return ret.length ? ret : false;
+
+            // TODO: Add similar validation function for Data class collecting all errors.
+        };
+
+        /**
+         * @ngdoc method
+         * @name isValid
+         * @methodOf coa.data.class:Type
+         * @param {any} value A value to test having already correct kind of type.
+         * @return {any} True if the value is valid or false otherwise.
+         * @description
+         *
+         * Test that all restrictions to the value are fulfilled.
+         */
+        Type.prototype.isValid = function(value) {
+            return !this.isInvalid(value);
         };
 
         /**
