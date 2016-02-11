@@ -106,12 +106,7 @@
             }
 
             var type = new (definition.type)();
-            var options = definition.options || {};
-            if (!type.validateOptions(options)) {
-                d("Invalid options", options, "for type", type);
-                return;
-            }
-            type.init(name, definition.default, definition.label, options);
+            type.init(name, definition.default, definition.label, definition.options || {});
 
             if (this._types[name]) {
                 d("Trying to define member", name, "as", type, "but it has been already defined as", this._types[name], "in", this);

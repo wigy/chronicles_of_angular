@@ -46,9 +46,18 @@
          */
         Type.prototype.init = function(name, def, label, options) {
             this.name = name;
+            this.default = undefined;
             this.label = label || name.code2human();
-            this.options = options || {};
-            this.default = this.convert(def !==undefined ? def : null);
+            this.options = {};
+
+            var validatedOptions = this.validateOptions(options || {});
+            if (!validatedOptions) {
+                d("Invalid options", options, "for type", this);
+                return;
+            }
+            this.options = validatedOptions;
+
+            this.default = this.convert(def !== undefined ? def : null);
         };
 
         /**
@@ -71,31 +80,81 @@
          * @name validateOptions
          * @methodOf coa.data.class:Type
          * @param {Object} options Object containing options for this type.
-         * @return {boolean} True if options are valid.
+         * @return {Object} Object with all options or null if invalid.
          * @description
          *
-         * Validate options for this type. By default only empty set of options is valid.
+         * Validate options for this type and fill in missing options with their default values.
          */
         Type.prototype.validateOptions = function(options) {
+
             var handlers = this.optionHandlers();
             for (var k in options) {
                 if (!handlers[k]) {
-                    return false;
+                    return null;
                 }
                 if (typeof(options[k]) != handlers[k].type) {
-                    return false;
+                    return null;
                 }
             }
-            return true;
+
+            var ret;
+
+            for (var k in handlers) {
+                if (!options[k]) {
+                    if (handlers[k].required) {
+                        return null;
+                    }
+                    if (!ret) {
+                        ret = {};
+                        angular.extend(ret, options);
+                    }
+                    ret[k] = handlers[k].default;
+                }
+            }
+
+            return ret ? ret : options;
         };
 
-        // TODO: Docs.
+        /**
+         * @ngdoc method
+         * @name optionHandlers
+         * @methodOf coa.data.class:Type
+         * @return {Object} A collection of option descriptions for this type.
+         * The format of the descriptor is
+         * <pre>
+         * {
+         *     option_name: {
+         *         message: "Text to describe failure.",
+         *         type: "string",
+         *         default: "default value",
+         *         required: false,
+         *         test: function(option, value) {
+         *             // This function tests value canditate that it
+         *             // fullfils the conditions of this option.
+         *             return true;
+         *         },
+         *     }
+         * }
+         * </pre>
+         *
+         * Each type iherited should copy options from the parent class unlesss
+         * they are overridden intentionally. Note that they should be copied in order
+         * to avoid modifying prototype of existing type class. For example
+         * <pre>
+            return angular.extend({}, Type.prototype.optionHandlers(), {
+                my_option: {
+                    ...
+                }
+            });
+         * </pre>
+         */
         Type.prototype.optionHandlers = function() {
             return {
                 required: {
                     message: "This value is required.",
                     type: "boolean",
                     default: false,
+                    required: false,
                     test: function(option, value) {
                         return !(option && value === null);
                     },
@@ -194,7 +253,6 @@
         return Type;
     }]);
 
-    // TODO: Implement general option 'required', which disables ability to use 'null' as valid value.
 
     module.factory('TypeBool', ['Type', function(Type) {
 
@@ -323,25 +381,36 @@
 
         TypeObj.prototype = new Type();
 
-        TypeObj.prototype.validateOptions = function(options) {
-            // TODO: Use standard way of defining options.
-            // TODO: Add support for required option in the type system.
-            // TODO: Check required option in test.
-            if (Object.keys(options).length !== 1) {
-                return false;
-            }
-            return !!options.class;
+        // TODO: Support for %o in validation.
+        // TODO: Add test for correct class validation.
+        TypeObj.prototype.optionHandlers = function() {
+            return angular.extend({}, Type.prototype.optionHandlers(), {
+                class: {
+                    message: "Value must belong to class %o",
+                    type: "string",
+                    required: true,
+                    test: function(option, value) {
+                        // TODO: Test against correct class from object metadata _class and _module.
+                        return value === null || (value instanceof Data);
+                    },
+                }
+            });
         };
 
+        /**
+         * Valid values are null, Data instances and Object instances that are converted to class instances.
+         */
         TypeObj.prototype.convert = function(value) {
             if (value === undefined) {
                 return undefined;
             }
-            if (value === null) {
-                return null;
+            if (value === null || (value instanceof Data)) {
+                return value;
             }
-            // TODO: Make more specific check for object and Data and use toJSON if available.
-            return factory.create(this.options.class, value);
+            if (value instanceof Object) {
+                return factory.create(this.options.class, value);
+            }
+            return undefined;
         };
 
         TypeObj.prototype.copy = function(value) {

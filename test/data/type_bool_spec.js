@@ -36,13 +36,13 @@ describe('module coa.data, TypeBool class', function() {
         var type = new TypeBool();
 
         var options =  {};
-        expect(type.validateOptions(options)).toBe(true);
+        expect(type.validateOptions(options)).toEqual({required: false});
         options = {required: false};
-        expect(type.validateOptions(options)).toBe(true);
+        expect(type.validateOptions(options)).toEqual({required: false});
         options = {required: true};
-        expect(type.validateOptions(options)).toBe(true);
+        expect(type.validateOptions(options)).toEqual({required: true});
         options = {required: 0};
-        expect(type.validateOptions(options)).toBe(false);
+        expect(type.validateOptions(options)).toBe(null);
 
         options = {required: true};
         type.init('name', null, 'Label', options);

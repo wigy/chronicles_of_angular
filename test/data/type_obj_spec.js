@@ -45,6 +45,7 @@ describe('module coa.data, TypeObj class', function() {
         ]);
         var container1 = new Container();
         var container2 = new Container();
+
         expect(container1.user !== container2.user).toBe(true);
     });
 });
