@@ -15,12 +15,22 @@
  *     this.init(data);
  * }
  *
- * MyClass.prototype = new Data([{name: {type: TypeStr, default: "default name", label: "Name of the thing"}}]);
+ * MyClass.prototype = new Data([
+ *      {name: {type: TypeStr,
+ *              default: "default name",
+ *              label: "Name of the thing",
+ *              options: {required: true},
+ *              }
+ *      }
+ * ]);
  * </pre>
  *
  * Standard member types are:
  * <dl>
+ *   <dt>boolean</dt><dd>{@link coa.data.class:TypeBool TypeBool}</dd>
  *   <dt>string</dt><dd>{@link coa.data.class:TypeStr TypeStr}</dd>
+ *   <dt>integer</dt><dd>{@link coa.data.class:TypeInt TypeInt}</dd>
+ *   <dt>object</dt><dd>{@link coa.data.class:TypeObj TypeObj}</dd>
  * </dl>
  */
 angular.module('coa.data', ['coa.core']);

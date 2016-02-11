@@ -123,8 +123,6 @@
                 }
             }
             return ret.length ? ret : false;
-
-            // TODO: Add similar validation function for Data class collecting all errors.
         };
 
         /**
@@ -210,6 +208,11 @@
          * @requires coa.data.class:Type
          * @description
          * A boolean value or null.
+         *
+         * <h1>Options:</h1>
+         * <dl>
+         *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
+         * </dl>
          */
         TypeBool = function() {
         }
@@ -239,6 +242,11 @@
          * @requires coa.data.class:Type
          * @description
          * A string or null.
+         *
+         * <h1>Options:</h1>
+         * <dl>
+         *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
+         * </dl>
          */
         TypeStr = function() {
         }
@@ -268,6 +276,11 @@
          * @requires coa.data.class:Type
          * @description
          * An integer or null.
+         *
+         * <h1>Options:</h1>
+         * <dl>
+         *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
+         * </dl>
          */
         TypeInt = function() {
         }
@@ -298,6 +311,12 @@
          * @description
          * An instance of another class. Required option is <code>class</code>, which is fully
          * qualified class name including module, for example <code>"coa.auth.User"</code>.
+         *
+         * <h1>Options:</h1>
+         * <dl>
+         *   <dt>class</dt><dd>Fully qualified class name of the object.</dd>
+         *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
+         * </dl>
          */
         TypeObj = function () {
         }
@@ -305,6 +324,9 @@
         TypeObj.prototype = new Type();
 
         TypeObj.prototype.validateOptions = function(options) {
+            // TODO: Use standard way of defining options.
+            // TODO: Add support for required option in the type system.
+            // TODO: Check required option in test.
             if (Object.keys(options).length !== 1) {
                 return false;
             }
@@ -315,6 +337,10 @@
             if (value === undefined) {
                 return undefined;
             }
+            if (value === null) {
+                return null;
+            }
+            // TODO: Make more specific check for object and Data and use toJSON if available.
             return factory.create(this.options.class, value);
         };
 

@@ -207,6 +207,43 @@
             return ret;
         };
 
+        /**
+         * @ngdoc method
+         * @name isInvalid
+         * @methodOf coa.data.class:Data
+         * @return {Boolean | Object} False if no invalid fields or otherwise the following structure
+         * containing all invalid fields with messages:
+         * <pre>
+         * {
+         *    field1: ["Error message 1.", "Error message 2."],
+         *    field2: ["Error message 3."],
+         * }
+         * </pre>
+         */
+        Data.prototype.isInvalid = function() {
+            var errors = {};
+            var failed = false;
+            for (var i=0; i < this._members.length; i++) {
+                var errs = this._members[i].isInvalid(this[this._members[i].name]);
+                if (errs) {
+                    errors[this._members[i].name] = errs;
+                    failed = true;
+                }
+            }
+
+            return failed ? errors : false;
+        };
+
+        /**
+         * @ngdoc method
+         * @name isValid
+         * @methodOf coa.data.class:Data
+         * @return {Boolean} True if all fields are valid, false otherwise.
+         */
+        Data.prototype.isValid = function() {
+            return !this.isInvalid();
+        };
+
         return Data;
     }]);
 
