@@ -22,7 +22,7 @@
         };
 
         User.prototype = new Data('User', 'coa.auth', [
-            {name: {type: TypeStr}}
+            {name: {type: TypeStr, options: {required: true}}}
         ]);
 
         return User;

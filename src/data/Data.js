@@ -167,6 +167,8 @@
             }
         };
 
+        // TODO: Copy function using types and test for it verifying that references are not the same.
+
         /**
          * @ngdoc method
          * @name getMembers
@@ -201,6 +203,8 @@
             }
             return ret;
         };
+
+        // TODO: Implement toJSON() and add test for it.
 
         /**
          * @ngdoc method

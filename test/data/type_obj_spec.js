@@ -1,13 +1,15 @@
 describe('module coa.data, TypeObj class', function() {
 
-    var Data, TypeObj, TypeStr;
+    var Data, TypeObj, TypeStr, User;
 
     beforeEach(function() {
         module('coa.data');
-        inject(function(_Data_, _TypeObj_, _TypeStr_){
+        module('coa.auth');
+        inject(function(_Data_, _TypeObj_, _TypeStr_, _User_){
             Data = _Data_;
             TypeObj = _TypeObj_;
             TypeStr = _TypeStr_;
+            User = _User_;
         });
     });
 
@@ -47,5 +49,25 @@ describe('module coa.data, TypeObj class', function() {
         var container2 = new Container();
 
         expect(container1.user !== container2.user).toBe(true);
+    });
+
+    it('validates options correctly', function() {
+
+        var type = new TypeObj();
+        var options =  {};
+        expect(type.validateOptions(options)).toEqual(null);
+        options = {class: 'coa.auth.User'};
+        expect(type.validateOptions(options)).toEqual({class: 'coa.auth.User', required: false});
+
+        type.init('name', null, 'Label', options);
+        expect(type.isInvalid(null)).toEqual(false);
+        expect(type.isInvalid({})).toEqual(['Value must belong to coa.auth.User class.']);
+        expect(type.isInvalid(new User())).toEqual(false);
+
+        function Dummy(data) {
+            this.init(data);
+        }
+        Dummy.prototype = new Data('Dummy', 'unit-test', []);
+        expect(type.isInvalid(new Dummy())).toEqual(['Value must belong to coa.auth.User class.']);
     });
 });

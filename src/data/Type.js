@@ -178,7 +178,7 @@
             var handlers = this.optionHandlers();
             for (var k in handlers) {
                 if (!handlers[k].test(this.options[k], value)) {
-                    ret.push(handlers[k].message);
+                    ret.push(handlers[k].message.replace(/%o/g, this.options[k]));
                 }
             }
             return ret.length ? ret : false;
@@ -381,17 +381,20 @@
 
         TypeObj.prototype = new Type();
 
-        // TODO: Support for %o in validation.
-        // TODO: Add test for correct class validation.
+        /**
+         * Class definition is required. Value needs to be of instance of correct class or null.
+         */
         TypeObj.prototype.optionHandlers = function() {
             return angular.extend({}, Type.prototype.optionHandlers(), {
                 class: {
-                    message: "Value must belong to class %o",
+                    message: "Value must belong to %o class.",
                     type: "string",
                     required: true,
                     test: function(option, value) {
-                        // TODO: Test against correct class from object metadata _class and _module.
-                        return value === null || (value instanceof Data);
+                        if (value instanceof Data) {
+                            return option == value._module + '.' + value._class;
+                        }
+                        return value === null;
                     },
                 }
             });
@@ -420,6 +423,7 @@
             return factory.create(this.options.class, value.toJSON());
         };
 
+        // TODO: Implement toJSON() and add test for it.
         return TypeObj;
     }]);
 
