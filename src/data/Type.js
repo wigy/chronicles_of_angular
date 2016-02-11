@@ -96,8 +96,8 @@
                     message: "This value is required.",
                     type: "boolean",
                     default: false,
-                    test: function(options, value) {
-                        return (value !== null && value !== undefined) || !options.required;
+                    test: function(option, value) {
+                        return !(option && value === null);
                     },
                 }
             };
@@ -118,7 +118,7 @@
             var ret = [];
             var handlers = this.optionHandlers();
             for (var k in handlers) {
-                if (!handlers[k].test(this.options, value)) {
+                if (!handlers[k].test(this.options[k], value)) {
                     ret.push(handlers[k].message);
                 }
             }
@@ -345,6 +345,9 @@
         };
 
         TypeObj.prototype.copy = function(value) {
+            if (value === null) {
+                return null;
+            }
             return factory.create(this.options.class, value.toJSON());
         };
 

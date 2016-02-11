@@ -27,7 +27,7 @@ describe('module coa.data, TypeObj class', function() {
             {user: {type: TypeObj, options: {class: 'coa.auth.User'}}}
         ]);
         var container = new Container();
-        expect(container.user.name).toBe(null);
+        expect(container.user).toBe(null);
 
         Container.prototype = new Data('Container', 'unit-test', [
             {user: {type: TypeObj, default: {name: 'Test default'}, options: {class: 'coa.auth.User'}}}
