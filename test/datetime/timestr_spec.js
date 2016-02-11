@@ -24,6 +24,21 @@ describe('module coa.datetime, TimeStr class', function() {
         // TODO: Initialize with single string (needs support in Data.init() and definition of primary field).
     });
 
+    it('validates values correctly', function() {
+
+        var t0 = new TimeStr({time: '15:00:0'});
+        var t1 = new TimeStr({time: ''});
+        var t2 = new TimeStr({time: '1:00:00'});
+        var t3 = new TimeStr({time: '12:00:00'});
+        var t4 = new TimeStr({time: '12:00:00'});
+
+        expect(t0.isInvalid()).toEqual({time: ['Value does not have correct format.']});
+        expect(t1.isInvalid()).toEqual({time: ['Value does not have correct format.']});
+        expect(t2.isInvalid()).toEqual({time: ['Value does not have correct format.']});
+        expect(t3.isInvalid()).toEqual(false);
+        expect(t4.isInvalid()).toEqual(false);
+    });
+
     it('adds hours, minutes and seconds correctly', function() {
         var time = new TimeStr({time: '15:00:00'});
         time.addSeconds(1)
@@ -34,6 +49,7 @@ describe('module coa.datetime, TimeStr class', function() {
 
     it('compares times correctly', function() {
 
+        var t0 = new TimeStr({time: '15:00:0'});
         var t0 = new TimeStr({time: '15:00:00'});
         var t1 = new TimeStr({time: '15:00:00'});
         var t2 = new TimeStr({time: '15:00:01'});

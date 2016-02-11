@@ -33,4 +33,27 @@ describe('module coa.data, TypeStr class', function() {
         expect(d.errors().length > 0).toBe(true);
         expect(team.name).toBe('default name');
     });
+
+    it('validates options correctly', function() {
+
+        var type = new TypeStr();
+
+        var options =  {};
+        expect(type.validateOptions(options)).toEqual({required: false, pattern: null});
+        options = {pattern: 12};
+        expect(type.validateOptions(options)).toEqual(null);
+        options = {pattern: /xxx/};
+        expect(type.validateOptions(options)).toEqual({required: false, pattern: /xxx/});
+
+        options = {pattern: /xxx/};
+        type.init('name', null, 'Label', options);
+        expect(type.isInvalid(null)).toEqual(false);
+        expect(type.isInvalid('x')).toEqual(['Value does not have correct format.']);
+        expect(type.isInvalid('axxxb')).toEqual(false);
+
+        options = {pattern: /^xxx/};
+        type.init('name', null, 'Label', options);
+        expect(type.isInvalid(null)).toEqual(false);
+        expect(type.isInvalid('axxxb')).toEqual(['Value does not have correct format.']);
+    });
 });

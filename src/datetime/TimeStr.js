@@ -42,8 +42,7 @@
         };
 
         TimeStr.prototype = new Data('Time', 'coa.datetime', [
-            {time: {type: TypeStr, default: '00:00:00'}},
-            // TODO: Validation against /^\d\d:\d\d:\d\d$/
+            {time: {type: TypeStr, default: '00:00:00', options: {pattern: /^\d\d:\d\d:\d\d$/}}},
             {negative: {type: TypeBool, default: false}}
             // TODO: Add support for 'overflow' boolean as well.
         ]);

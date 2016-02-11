@@ -92,7 +92,12 @@
                 if (!handlers[k]) {
                     return null;
                 }
-                if (typeof(options[k]) != handlers[k].type) {
+                if (handlers[k].type instanceof Function) {
+                    if (!handlers[k].type(options[k])) {
+                        return null;
+                    }
+                }
+                else if (typeof(options[k]) != handlers[k].type) {
                     return null;
                 }
             }
@@ -136,6 +141,7 @@
          *     }
          * }
          * </pre>
+         * Type can be either string result of typeof() or validation function.
          *
          * Each type iherited should copy options from the parent class unlesss
          * they are overridden intentionally. Note that they should be copied in order
@@ -304,6 +310,7 @@
          * <h1>Options:</h1>
          * <dl>
          *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
+         *   <dt>pattern</dt><dd>If set to regex, value must match the expression.</dd>
          * </dl>
          */
         TypeStr = function() {
@@ -317,6 +324,29 @@
             }
             return value === null ? null : value + '';
         };
+
+        /**
+         * Provides regex pattern validation.
+         */
+        TypeStr.prototype.optionHandlers = function() {
+            return angular.extend({}, Type.prototype.optionHandlers(), {
+                pattern: {
+                    message: "Value does not have correct format.",
+                    type: function(option) {
+                        return option === null || (option instanceof RegExp);
+                    },
+                    required: false,
+                    default: null,
+                    test: function(option, value) {
+                        if (value === null || !option) {
+                            return true;
+                        }
+                        return option.test(value);
+                    },
+                }
+            });
+        };
+
 
         return TypeStr;
     }]);
