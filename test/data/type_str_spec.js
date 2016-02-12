@@ -11,7 +11,7 @@ describe('module coa.data, TypeStr class', function() {
         inject(function(_Data_, _TypeStr_){
             Data = _Data_;
             TypeStr = _TypeStr_;
-            Team.prototype = new Data('Team', 'unit-testing',
+            Team.prototype = new Data('unit-testing', 'Team',
                 [{name: {type: TypeStr, label: "Name of the team", default: 'default name', options: {}}}]);
         });
     });

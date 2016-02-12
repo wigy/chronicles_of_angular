@@ -14,7 +14,7 @@ describe('module coa.data, Type class', function() {
         function Testing(data) {
             this.init(data);
         }
-        Testing.prototype = new Data('Testing', 'unit-test', [
+        Testing.prototype = new Data('unit-testing', 'Testing', [
             {testing_name: {type: TypeStr}}
         ]);
         expect((new Testing()).getType('testing_name').label).toBe('Testing Name');

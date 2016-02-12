@@ -18,8 +18,8 @@
         *
         * Data description to be used as a prototype for any data container class.
         *
-        * @param {String} name The name of the class.
         * @param {String} mode The name of the module class belongs to.
+        * @param {String} name The name of the class.
         * @param {Array} definitions A list of <i>member definitions</i>.
         * An array can contain one ore more objects with definitions. Each member definition has
         * the following format:
@@ -39,11 +39,11 @@
         *
         * For the list of standard types and examples, see {@link coa.data}.
         */
-        Data = function(name, mod, definitions) {
-            // The name of the class.
-            this._class = name;
+        Data = function(mod, name, definitions) {
             // The name of the module class belongs to.
             this._module = mod;
+            // The name of the class.
+            this._class = name;
             // This is list of members in order.
             this._members = [];
             // This is mapping from member names to the types listed in _members.

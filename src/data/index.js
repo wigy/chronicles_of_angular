@@ -15,7 +15,7 @@
  *     this.init(data);
  * }
  *
- * MyClass.prototype = new Data([
+ * MyClass.prototype = new Data(['my.module', 'MyClass',
  *      {name: {type: TypeStr,
  *              default: "default name",
  *              label: "Name of the thing",
