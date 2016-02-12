@@ -453,7 +453,13 @@
             return factory.create(this.options.class, value.toJSON());
         };
 
-        // TODO: Implement toJSON() and add test for it.
+        TypeObj.prototype.toJSON = function(value) {
+            if (value === null) {
+                return null;
+            }
+            return value.toJSON();
+        };
+
         return TypeObj;
     }]);
 

@@ -22,16 +22,13 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 * Update API docs to use ngdocs.
-* Implement type system with few types: string, integer and object.
+* Implement type system with few types: boolean, string, integer and object.
+* Data validation.
 * Generic Data instance factory.
 
 ### Not Yet Done
 
-
 ## Future Ideas
 
-* Document coding conventions (Uppercase models, module directory structure).
 * Data persistence interface `coe.store`.
 * Data handling system to generate pre-loaded file to contain all data (use CoG build).
-* Find out is it possible to make consistent handling for classes, i.e. factory generated object
-  is an instance of class injected directly to function. (See factory_spec.js)

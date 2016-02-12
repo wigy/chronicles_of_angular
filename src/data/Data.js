@@ -59,7 +59,7 @@
          * Concstruct an object of memebers.
          */
         Data.prototype.toJSON = function() {
-            ret = {};
+            var ret = {};
             for (var k = 0; k < this._members.length; k++ ) {
                 ret[this._members[k].name] = this._members[k].toJSON(this[this._members[k].name]);
             }
@@ -203,8 +203,6 @@
             }
             return ret;
         };
-
-        // TODO: Implement toJSON() and add test for it.
 
         /**
          * @ngdoc method

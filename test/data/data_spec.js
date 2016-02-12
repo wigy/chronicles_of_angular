@@ -1,12 +1,15 @@
 describe('module coa.data, Data class', function() {
 
-    var Data;
+    var Data, TypeStr, TypeBool, TypeInt, TypeObj;
 
     beforeEach(function() {
         module('coa.data');
-        inject(function(_Data_, _TypeStr_){
+        inject(function(_Data_, _TypeStr_, _TypeInt_, _TypeBool_, _TypeObj_){
             Data = _Data_;
             TypeStr = _TypeStr_;
+            TypeInt = _TypeInt_;
+            TypeBool = _TypeBool_;
+            TypeObj = _TypeObj_;
         });
     });
 
@@ -59,5 +62,33 @@ describe('module coa.data, Data class', function() {
         testing.name2 = "0";
         expect(testing.isInvalid()).toEqual(false);
         expect(testing.isValid()).toEqual(true);
+    });
+
+    it('converts to JSON', function() {
+
+        function Testing(data) {
+            this.init(data);
+        }
+
+        Testing.prototype = new Data('Testing', 'unit-testing', [
+            {var1: {type: TypeBool, default: true, options: {}}},
+            {var2: {type: TypeStr, options: {}}},
+            {var3: {type: TypeInt, default: -1, options: {}}},
+            {var4: {type: TypeObj, options: {class: 'unit-testing.Testing'}}},
+        ]);
+
+        var obj = new Testing({var2: 'x', var4: new Testing({var2: 'y'})});
+
+        expect(obj.toJSON()).toEqual({
+            var1: true,
+            var2: 'x',
+            var3: -1,
+            var4: {
+                var1: true,
+                var2: 'y',
+                var3: -1,
+                var4: null
+            }
+        });
     });
 });

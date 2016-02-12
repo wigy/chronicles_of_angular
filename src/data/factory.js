@@ -41,7 +41,13 @@
             if (constructors[mod] && constructors[mod][cls]) {
                 return constructors[mod][cls];
             }
-            var injector = angular.injector(['ng', mod]);
+            var injector;
+            try {
+                injector = angular.injector(['ng', mod]);
+            } catch(e) {
+                d("There is no such module than", mod);
+                return null;
+            }
             if (!injector.has(cls)) {
                 d("There is no such class than", cls, "defined in the module", mod);
                 return null;
