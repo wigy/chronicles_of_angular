@@ -1,11 +1,13 @@
 describe('module coa.data, Data class', function() {
 
-    var Data, TypeStr, TypeBool, TypeInt, TypeObj;
+    var Data, TimeStr, TypeStr, TypeBool, TypeInt, TypeObj;
 
     beforeEach(function() {
         module('coa.data');
-        inject(function(_Data_, _TypeStr_, _TypeInt_, _TypeBool_, _TypeObj_){
+        module('coa.datetime');
+        inject(function(_Data_, _TimeStr_, _TypeStr_, _TypeInt_, _TypeBool_, _TypeObj_){
             Data = _Data_;
+            TimeStr = _TimeStr_;
             TypeStr = _TypeStr_;
             TypeInt = _TypeInt_;
             TypeBool = _TypeBool_;
@@ -91,5 +93,26 @@ describe('module coa.data, Data class', function() {
                 var4: null
             }
         });
+    });
+
+    it('can copy objects', function() {
+
+        function Testing(data) {
+            this.init(data);
+        }
+
+        Testing.prototype = new Data('unit-testing', 'Testing', [
+            {name: {type: TypeStr}},
+            {time: {type: TypeObj, options: {class: 'coa.datetime.TimeStr'}}},
+        ]);
+
+        var time = new TimeStr({time: '01:02:03'});
+        var obj = new Testing({name: 'Cloned', time: time});
+        var clone = new Testing();
+        clone.copy(obj);
+
+        expect(clone.time===obj.time).toBe(false);
+        expect(clone.name).toBe('Cloned');
+        expect(clone.time.time).toBe('01:02:03');
     });
 });

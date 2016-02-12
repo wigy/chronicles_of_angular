@@ -132,6 +132,20 @@
 
         /**
          * @ngdoc method
+         * @name copy
+         * @methodOf coa.data.class:Data
+         * @param {Data} target Another .
+         * @description
+         * Clone the target object into this.
+         */
+        Data.prototype.copy = function(target) {
+            for (var k = 0; k < this._members.length; k++ ) {
+                this[this._members[k].name] = this._members[k].copy(target[this._members[k].name]);
+            }
+        };
+
+        /**
+         * @ngdoc method
          * @name init
          * @methodOf coa.data.class:Data
          * @param {Object} data Initial data to be filled to members.
@@ -166,8 +180,6 @@
                 d("Invalid initial values", data, "for", this);
             }
         };
-
-        // TODO: Copy function using types and test for it verifying that references are not the same.
 
         /**
          * @ngdoc method
