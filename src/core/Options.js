@@ -112,15 +112,15 @@
          * @param {Object} options An object defining options. For example
          * <pre>
          * {
-         *        required: {
-         *            text: "This value is required.",
-         *            type: "boolean",
-         *            default: false,
-         *            required: false,
-         *            op: function(option, value) {
-         *                return !(option && value === null);
-         *            },
-         *        }
+         *    required: {
+         *        text: "This value is required.",
+         *        type: "boolean",
+         *        default: false,
+         *        required: false,
+         *        op: function(option, value) {
+         *            return !(option && value === null);
+         *        },
+         *    }
          * }
          * </pre>
          * Each named option is instantiated as an {@link coa.core.class:Option Option}
