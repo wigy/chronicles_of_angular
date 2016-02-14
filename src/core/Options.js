@@ -65,6 +65,28 @@
             this.op = definitions.op === undefined ?  function(){return null;} : definitions.op;
         };
 
+        /**
+         * @ngdoc method
+         * @name operate
+         * @methodOf coa.core.class:Option
+         * @param {Any} option Value set for this option in the context.
+         * @param {Any} args Any arguments depending on the context.
+         * @return {Any} Return value of the operation function defined for this option.
+         * @description
+         *
+         * This function checks that option value is not undefined in which case warning
+         * is given and undefined returned. Otherwise the operation function defined for
+         * this option is called and its return value returned.
+         */
+        Option.prototype.operate = function(option, args) {
+            if (option === undefined) {
+                d("Undefined value given for Option.operate() option", this);
+                return undefined;
+            }
+            var args = Array.prototype.slice.call(arguments);
+            return this.op.apply(this, args);
+        };
+
         return Option;
     }]);
 
@@ -221,12 +243,7 @@
             var names = Object.keys(this);
             for (var i = 0; i < names.length; i++) {
                 opArgs[0] = options[names[i]];
-                if (opArgs[0] === undefined) {
-                    d("Undefined value in", options, "given for Options.operate() option '" + names[i] + "' in", this);
-                    ret[names[i]] = undefined;
-                    continue;
-                }
-                ret[names[i]] = this[names[i]].op.apply(this[names[i]], opArgs);
+                ret[names[i]] = this[names[i]].operate.apply(this[names[i]], opArgs);
             }
 
             return ret;
@@ -267,7 +284,7 @@
          * </pre>
          *
          * It is possible to use <code>%o</code> to embed value of the option in the text. Similarly
-         * <code>%v</code> in the text of the option is replaced with the value given in additional
+         * <code>%v</code> in the text of the option is replaced with the value given as first additional
          * argument for this function.
          */
         Options.prototype.test = function(options, args) {
@@ -277,15 +294,10 @@
             var names = Object.keys(this);
             for (var i = 0; i < names.length; i++) {
                 opArgs[0] = options[names[i]];
-                if (opArgs[0] === undefined) {
-                    d("Undefined value in", options, "given for Options.test() option '" + names[i] + "' in", this);
-                    ret[names[i]] = undefined;
+                if (this[names[i]].operate.apply(this[names[i]], opArgs)) {
                     continue;
                 }
-                if (this[names[i]].op.apply(this[names[i]], opArgs)) {
-                    continue;
-                }
-                ret.push(this[names[i]].text.replace(/%o/g, opArgs[0]).replace(/%v/g, args));
+                ret.push(this[names[i]].text.replace(/%o/g, opArgs[0]).replace(/%v/g, opArgs[1]));
             }
 
             return ret;
