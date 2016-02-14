@@ -155,6 +155,7 @@
          * </pre>
          */
         Type.prototype.optionHandlers = function() {
+            // TODO: Refactor this and move it to Option class in core.
             return {
                 required: {
                     message: "This value is required.",
