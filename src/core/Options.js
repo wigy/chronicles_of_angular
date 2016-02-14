@@ -141,7 +141,7 @@
             var names = Object.keys(this);
             var ret = new Options();
             for (var i=0; i < names.length; i++) {
-                ret[names[i]] = angular.extend({}, this[names[i]]);
+                ret[names[i]] = new Option(angular.extend({}, this[names[i]]));
             }
             ret.init(options);
             return ret;
@@ -215,7 +215,6 @@
          * are collected into the object using an option names as keys.
          */
         Options.prototype.operate = function(options, args) {
-            d(options)
             var ret = {};
             var opArgs = Array.prototype.splice.call(arguments, 1);
             opArgs.splice(0, 0, null);

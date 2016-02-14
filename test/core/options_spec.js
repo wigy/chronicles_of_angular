@@ -33,6 +33,7 @@ describe('module coa.core, Options class', function() {
             }
         });
         expect(extended.added.text).toBe("Added option.");
+        expect(extended.required instanceof Option).toBe(true);
 
         extended.required.text = 'Original must be unaffected.';
         expect(options.required.text).toBe("This value is required.");
@@ -69,7 +70,6 @@ describe('module coa.core, Options class', function() {
                 }
             }
         });
-
         expect(extended.validate({})).toEqual({required: false, added: null, as_well: 'xyz'});
         expect(extended.validate({x: 1})).toBe(null);
         expect(extended.validate({added: 2})).toBe(null);
