@@ -222,11 +222,66 @@
             for (var i = 0; i < names.length; i++) {
                 opArgs[0] = options[names[i]];
                 if (opArgs[0] === undefined) {
-                    d("Undefined value given for Options.operate() option '" + names[i] + "' in", this);
+                    d("Undefined value in", options, "given for Options.operate() option '" + names[i] + "' in", this);
                     ret[names[i]] = undefined;
                     continue;
                 }
                 ret[names[i]] = this[names[i]].op.apply(this, opArgs);
+            }
+
+            return ret;
+        };
+
+        /**
+         * @ngdoc method
+         * @name test
+         * @methodOf coa.core.class:Options
+         * @param {Options} options Options applied to the data.
+         * @param {Object} args An object containing a value for each option indexed by option names.
+         * @return {Array} Empty array if no tests failing. Otherwise the list of texts of all failed tests.
+         * @description
+         *
+         * This function assumes that options are validated. Then each operation-function is
+         * called for every option defined with the value found from <code>args</code> with the same
+         * name as the option. If the return value of the call is <code>true</code>, then it is
+         * considered success. Otherwise
+         * it is a failure and the <code>text</code> of the option is added to the list of failures.
+         *
+         * For example:
+         * <pre>
+         * var options = new Options({
+         *   required: {
+         *     text: "Value cannot be %v since option is set to %o.",
+         *     op: function(option, value) {
+         *         return !option || value;
+         *     },
+         * });
+         *
+         * options.test({required: true}, {required: 0});
+         * // => ['Value cannot be 0 since option is set to true.']
+         * options.test({required: true}, {required: 1});
+         * // => []
+         *
+         * </pre>
+         *
+         * It is possible to use <code>%o</code> to embed value of the option in the text. Similarly
+         * <code>%v</code> in the text of the option is replaced with the value given in additional
+         * argument for this function.
+         */
+        Options.prototype.test = function(options, args) {
+            var ret = [];
+            var names = Object.keys(this);
+            for (var i = 0; i < names.length; i++) {
+                var opArgs = [options[names[i]], args[names[i]]];
+                if (opArgs[0] === undefined) {
+                    d("Undefined value in", options, "given for Options.test() option '" + names[i] + "' in", this);
+                    ret[names[i]] = undefined;
+                    continue;
+                }
+                if (this[names[i]].op.apply(this, opArgs)) {
+                    continue;
+                }
+                ret.push(this[names[i]].text.replace(/%o/g, opArgs[0]).replace(/%v/g, opArgs[1]));
             }
 
             return ret;

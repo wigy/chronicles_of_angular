@@ -41,11 +41,11 @@ describe('module coa.core, Options class', function() {
         expect(extended.required.text).toBe("Original must be unaffected.");
     });
 
-    it('validates, operates and tests options correctly', function() {
+    it('validates and operates options correctly', function() {
 
         var extended = options.inherit({
             added: {
-                text: 'Added option.',
+                text: 'Added option need to be %o.',
                 type: function(val) {
                     return val === 1;
                 }
@@ -67,10 +67,25 @@ describe('module coa.core, Options class', function() {
         expect(extended.validate({as_well: 'ABC'})).toEqual({required: false, added: null, as_well: 'ABC'});
         expect(extended.validate({as_well: null})).toBe(null);
         expect(extended.validate({as_well: 0})).toBe(null);
+    });
 
-        expect(extended.operate(extended.validate({}), 'ARG')).toEqual({
-            required: 'required:false ARG',
-            added: null,
-            as_well: 'as_well:xyz ARG' });
+    it('runs tests for options correctly', function() {
+
+        var options = new Options({
+                required: {
+                    text: "Value cannot be %v since option is set to %o.",
+                    op: function(option, value) {
+                        return !option || value;
+                    },
+                }
+        });
+
+        var values = options.validate({required: true});
+        expect(options.test(values, {})).toEqual(['Value cannot be undefined since option is set to true.']);
+        expect(options.test(values, {required: 1})).toEqual([]);
+
+        values = options.validate({required: false});
+        expect(options.test(values, {})).toEqual([]);
+        expect(options.test(values, {required: 1})).toEqual([]);
     });
 });
