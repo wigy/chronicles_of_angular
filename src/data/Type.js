@@ -28,7 +28,7 @@
             this.label = null;
             this.default = null;
             this.options = null;
-        }
+        };
 
         Type.prototype = new Class();
 
@@ -87,8 +87,9 @@
          */
         Type.prototype.validateOptions = function(options) {
 
-            var handlers = this.optionHandlers();
-            for (var k in options) {
+            var k, handlers = this.optionHandlers();
+
+            for (k in options) {
                 if (!handlers[k]) {
                     return null;
                 }
@@ -97,14 +98,14 @@
                         return null;
                     }
                 }
-                else if (typeof(options[k]) != handlers[k].type) {
+                else if (typeof(options[k]) !== handlers[k].type) {
                     return null;
                 }
             }
 
             var ret;
 
-            for (var k in handlers) {
+            for (k in handlers) {
                 if (!options[k]) {
                     if (handlers[k].required) {
                         return null;
@@ -280,7 +281,7 @@
          * </dl>
          */
         TypeBool = function() {
-        }
+        };
 
         TypeBool.prototype = new Type();
 
@@ -315,7 +316,7 @@
          * </dl>
          */
         TypeStr = function() {
-        }
+        };
 
         TypeStr.prototype = new Type();
 
@@ -372,7 +373,7 @@
          * </dl>
          */
         TypeInt = function() {
-        }
+        };
 
         TypeInt.prototype = new Type();
 
@@ -408,7 +409,7 @@
          * </dl>
          */
         TypeObj = function () {
-        }
+        };
 
         TypeObj.prototype = new Type();
 
@@ -423,7 +424,7 @@
                     required: true,
                     test: function(option, value) {
                         if (value instanceof Data) {
-                            return option == value._module + '.' + value._class;
+                            return option === value._module + '.' + value._class;
                         }
                         return value === null;
                     },

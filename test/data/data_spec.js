@@ -55,7 +55,7 @@ describe('module coa.data, Data class', function() {
             {name2: {type: TypeStr, options: {}}},
         ]);
 
-        var testing = new Testing();
+        testing = new Testing();
         expect(testing.isInvalid()).toEqual(false);
         expect(testing.isValid()).toEqual(true);
         testing.name1 = "";

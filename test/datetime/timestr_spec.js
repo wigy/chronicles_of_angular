@@ -41,7 +41,7 @@ describe('module coa.datetime, TimeStr class', function() {
 
     it('adds hours, minutes and seconds correctly', function() {
         var time = new TimeStr({time: '15:00:00'});
-        time.addSeconds(1)
+        time.addSeconds(1);
         expect(time.toString()).toBe('15:00:01');
         time.add(1, 1, 1);
         expect(time.toString()).toBe('16:01:02');
@@ -49,7 +49,6 @@ describe('module coa.datetime, TimeStr class', function() {
 
     it('compares times correctly', function() {
 
-        var t0 = new TimeStr({time: '15:00:0'});
         var t0 = new TimeStr({time: '15:00:00'});
         var t1 = new TimeStr({time: '15:00:00'});
         var t2 = new TimeStr({time: '15:00:01'});
@@ -70,13 +69,13 @@ describe('module coa.datetime, TimeStr class', function() {
 
     it('adds negative seconds correctly', function() {
         var time = new TimeStr({time: '01:01:50'});
-        time.addSeconds(-5)
+        time.addSeconds(-5);
         expect(time.toString()).toBe('01:01:45');
-        time.addSeconds(-60*60)
+        time.addSeconds(-60*60);
         expect(time.toString()).toBe('00:01:45');
-        time.addSeconds(-60)
+        time.addSeconds(-60);
         expect(time.toString()).toBe('00:00:45');
-        time.addSeconds(-50)
+        time.addSeconds(-50);
         expect(time.toString()).toBe('-00:00:05');
     });
 });

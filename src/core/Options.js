@@ -161,10 +161,12 @@
          * complete, then the original object is returned. Otherwise new object instance is created.
          */
         Options.prototype.validate = function(options) {
+
+            var k;
             options = options || {};
 
             // Validate given options.
-            for(var k in options) {
+            for(k in options) {
                 if (!this[k]) {
                     return null;
                 }
@@ -173,7 +175,7 @@
                         return null;
                     }
                 }
-                else if (typeof(options[k]) != this[k].type) {
+                else if (typeof(options[k]) !== this[k].type) {
                     return null;
                 }
             }
@@ -183,7 +185,7 @@
             // Check for required and fill in empty options.
             var names = Object.keys(this);
             for (var i = 0; i < names.length; i++) {
-                var k = names[i];
+                k = names[i];
                 if (!options[k]) {
                     if (this[k].required) {
                         return null;
