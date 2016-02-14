@@ -215,6 +215,7 @@
          * are collected into the object using an option names as keys.
          */
         Options.prototype.operate = function(options, args) {
+            d(options)
             var ret = {};
             var opArgs = Array.prototype.splice.call(arguments, 1);
             opArgs.splice(0, 0, null);
@@ -226,7 +227,7 @@
                     ret[names[i]] = undefined;
                     continue;
                 }
-                ret[names[i]] = this[names[i]].op.apply(this, opArgs);
+                ret[names[i]] = this[names[i]].op.apply(this[names[i]], opArgs);
             }
 
             return ret;
@@ -282,7 +283,7 @@
                     ret[names[i]] = undefined;
                     continue;
                 }
-                if (this[names[i]].op.apply(this, opArgs)) {
+                if (this[names[i]].op.apply(this[names[i]], opArgs)) {
                     continue;
                 }
                 ret.push(this[names[i]].text.replace(/%o/g, opArgs[0]).replace(/%v/g, args));

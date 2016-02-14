@@ -1,7 +1,6 @@
 describe('module coa.core, Options class', function() {
 
     var Option, Options;
-    var options;
 
     beforeEach(function() {
         module('coa.core');
@@ -9,8 +8,11 @@ describe('module coa.core, Options class', function() {
             Option = _Option_;
             Options = _Options_;
         });
+    });
 
-        options = new Options({
+    it('manages option collection correctly', function() {
+
+        var options = new Options({
                 required: {
                     text: "This value is required.",
                     type: "boolean",
@@ -21,10 +23,6 @@ describe('module coa.core, Options class', function() {
                     },
                 }
         });
-
-    });
-
-    it('manages option collection correctly', function() {
 
         expect(options.required instanceof Option).toBe(true);
         expect(options.required.text).toBe("This value is required.");
@@ -42,6 +40,18 @@ describe('module coa.core, Options class', function() {
     });
 
     it('validates and operates options correctly', function() {
+
+        var options = new Options({
+                required: {
+                    text: "This value is required.",
+                    type: "boolean",
+                    default: false,
+                    required: false,
+                    op: function(option, extra) {
+                        return 'required:' + option + ' ' + extra;
+                    },
+                }
+        });
 
         var extended = options.inherit({
             added: {
@@ -67,6 +77,12 @@ describe('module coa.core, Options class', function() {
         expect(extended.validate({as_well: 'ABC'})).toEqual({required: false, added: null, as_well: 'ABC'});
         expect(extended.validate({as_well: null})).toBe(null);
         expect(extended.validate({as_well: 0})).toBe(null);
+
+        expect(extended.operate(extended.validate({as_well: 'x'}), 'OP-ARG')).toEqual({
+            required: 'required:false OP-ARG',
+            added: null,
+            as_well: 'as_well:x OP-ARG'
+        });
     });
 
     it('runs tests for options correctly', function() {
