@@ -199,6 +199,37 @@
             return ret ? ret : options;
         };
 
+        /**
+         * @ngdoc method
+         * @name operate
+         * @methodOf coa.core.class:Options
+         * @param {Options} options Options applied to the data.
+         * @param {Any} args Any arguments depending on the context options are used.
+         * @return {Object} Return values indexed by the names of options after operation.
+         * @description
+         *
+         * This function assumes that options are validated. Then each operation-function is
+         * called for every option defined with the additional arguments given. Return values
+         * are collected into the object using an option names as keys.
+         */
+        Options.prototype.operate = function(options, args) {
+            var ret = {};
+            var opArgs = Array.prototype.splice.call(arguments, 1);
+            opArgs.splice(0, 0, null);
+            var names = Object.keys(this);
+            for (var i = 0; i < names.length; i++) {
+                opArgs[0] = options[names[i]];
+                if (opArgs[0] === undefined) {
+                    d("Undefined value given for Options.operate() option '" + names[i] + "' in", this);
+                    ret[names[i]] = undefined;
+                    continue;
+                }
+                ret[names[i]] = this[names[i]].op.apply(this, opArgs);
+            }
+
+            return ret;
+        };
+
         return Options;
     }]);
 

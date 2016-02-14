@@ -41,7 +41,7 @@ describe('module coa.core, Options class', function() {
         expect(extended.required.text).toBe("Original must be unaffected.");
     });
 
-    it('validates and operates options correctly', function() {
+    it('validates, operates and tests options correctly', function() {
 
         var extended = options.inherit({
             added: {
@@ -68,6 +68,9 @@ describe('module coa.core, Options class', function() {
         expect(extended.validate({as_well: null})).toBe(null);
         expect(extended.validate({as_well: 0})).toBe(null);
 
-        // TODO: Handle operations.
+        expect(extended.operate(extended.validate({}), 'ARG')).toEqual({
+            required: 'required:false ARG',
+            added: null,
+            as_well: 'as_well:xyz ARG' });
     });
 });
