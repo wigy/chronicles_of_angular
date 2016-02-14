@@ -16,8 +16,8 @@ describe('module coa.core, Options class', function() {
                     type: "boolean",
                     default: false,
                     required: false,
-                    test: function(option, value) {
-                        return !(option && value === null);
+                    op: function(option, extra) {
+                        return 'required:' + option + ' ' + extra;
                     },
                 }
         });
@@ -38,5 +38,36 @@ describe('module coa.core, Options class', function() {
 
         extended.required.text = 'Original must be unaffected.';
         expect(options.required.text).toBe("This value is required.");
+        expect(extended.required.text).toBe("Original must be unaffected.");
+    });
+
+    it('validates and operates options correctly', function() {
+
+        var extended = options.inherit({
+            added: {
+                text: 'Added option.',
+                type: function(val) {
+                    return val === 1;
+                }
+            },
+            as_well: {
+                text: 'Another one.',
+                type: 'string',
+                default: 'xyz',
+                op: function(option, extra) {
+                    return 'as_well:' + option + ' ' + extra;
+                }
+            }
+        });
+
+        expect(extended.validate({})).toEqual({required: false, added: null, as_well: 'xyz'});
+        expect(extended.validate({x: 1})).toBe(null);
+        expect(extended.validate({added: 2})).toBe(null);
+        expect(extended.validate({required: true, added: 1})).toEqual({required: true, added: 1, as_well: 'xyz'});
+        expect(extended.validate({as_well: 'ABC'})).toEqual({required: false, added: null, as_well: 'ABC'});
+        expect(extended.validate({as_well: null})).toBe(null);
+        expect(extended.validate({as_well: 0})).toBe(null);
+
+        // TODO: Handle operations.
     });
 });

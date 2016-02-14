@@ -83,7 +83,9 @@
          * @description
          *
          * A collection of {@link coa.core.class:Option Option} instances providing
-         * validation services for options.
+         * validation services and operations for options. The collection stores only
+         * definitions and not actual option values. Option values are passed through
+         * {@link coa.core.class:Options#methods_validate validation function} and stored separately.
          *
          * @param {Object} options An object defining options. For example
          * <pre>
@@ -143,6 +145,58 @@
             }
             ret.init(options);
             return ret;
+        };
+
+        /**
+         * @ngdoc method
+         * @name validate
+         * @methodOf coa.core.class:Options
+         * @param {Object} data Option values offered.
+         * @return {Object} Validated and corrected collection of option or null if invalid.
+         * @description
+         *
+         * This function scans through option values and validates them against this collection.
+         * Missing values are added from defaults unless they are required options. If any of
+         * the values is not valid, then null is returned. Note that if options are valid and
+         * complete, then the original object is returned. Otherwise new object instance is created.
+         */
+        Options.prototype.validate = function(options) {
+            options = options || {};
+
+            // Validate given options.
+            for(var k in options) {
+                if (!this[k]) {
+                    return null;
+                }
+                if (this[k].type instanceof Function) {
+                    if (!this[k].type(options[k])) {
+                        return null;
+                    }
+                }
+                else if (typeof(options[k]) != this[k].type) {
+                    return null;
+                }
+            }
+
+            var ret;
+
+            // Check for required and fill in empty options.
+            var names = Object.keys(this);
+            for (var i = 0; i < names.length; i++) {
+                var k = names[i];
+                if (!options[k]) {
+                    if (this[k].required) {
+                        return null;
+                    }
+                    if (!ret) {
+                        ret = {};
+                        angular.extend(ret, options);
+                    }
+                    ret[k] = this[k].default;
+                }
+            }
+
+            return ret ? ret : options;
         };
 
         return Options;
