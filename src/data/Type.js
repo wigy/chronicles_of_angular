@@ -8,7 +8,7 @@
     var TypeInt;
     var TypeObj;
 
-    module.factory('Type', ['Class', function(Class) {
+    module.factory('Type', ['Class', 'Options', function(Class, Options) {
 
         if (Type) {
             return Type;
@@ -31,6 +31,17 @@
         };
 
         Type.prototype = new Class();
+        Type.prototype.optionDefinitions = new Options({
+            required: {
+                text: "This value is required.",
+                type: "boolean",
+                default: false,
+                required: false,
+                op: function(option, value) {
+                    return !(option && value === null);
+                },
+            }
+        });
 
         /**
          * @ngdoc method
@@ -50,7 +61,7 @@
             this.label = label || name.code2human();
             this.options = {};
 
-            var validatedOptions = this.validateOptions(options || {});
+            var validatedOptions = this.optionDefinitions.validate(options || {});
             if (!validatedOptions) {
                 d("Invalid options", options, "for type", this);
                 return;
@@ -77,119 +88,19 @@
 
         /**
          * @ngdoc method
-         * @name validateOptions
-         * @methodOf coa.data.class:Type
-         * @param {Object} options Object containing options for this type.
-         * @return {Object} Object with all options or null if invalid.
-         * @description
-         *
-         * Validate options for this type and fill in missing options with their default values.
-         */
-        Type.prototype.validateOptions = function(options) {
-
-            var k, handlers = this.optionHandlers();
-
-            for (k in options) {
-                if (!handlers[k]) {
-                    return null;
-                }
-                if (handlers[k].type instanceof Function) {
-                    if (!handlers[k].type(options[k])) {
-                        return null;
-                    }
-                }
-                else if (typeof(options[k]) !== handlers[k].type) {
-                    return null;
-                }
-            }
-
-            var ret;
-
-            for (k in handlers) {
-                if (!options[k]) {
-                    if (handlers[k].required) {
-                        return null;
-                    }
-                    if (!ret) {
-                        ret = {};
-                        angular.extend(ret, options);
-                    }
-                    ret[k] = handlers[k].default;
-                }
-            }
-
-            return ret ? ret : options;
-        };
-
-        /**
-         * @ngdoc method
-         * @name optionHandlers
-         * @methodOf coa.data.class:Type
-         * @return {Object} A collection of option descriptions for this type.
-         * The format of the descriptor is
-         * <pre>
-         * {
-         *     option_name: {
-         *         message: "Text to describe failure.",
-         *         type: "string",
-         *         default: "default value",
-         *         required: false,
-         *         test: function(option, value) {
-         *             // This function tests value canditate that it
-         *             // fullfils the conditions of this option.
-         *             return true;
-         *         },
-         *     }
-         * }
-         * </pre>
-         * Type can be either string result of typeof() or validation function.
-         *
-         * Each type iherited should copy options from the parent class unlesss
-         * they are overridden intentionally. Note that they should be copied in order
-         * to avoid modifying prototype of existing type class. For example
-         * <pre>
-            return angular.extend({}, Type.prototype.optionHandlers(), {
-                my_option: {
-                    ...
-                }
-            });
-         * </pre>
-         */
-        Type.prototype.optionHandlers = function() {
-            // TODO: Refactor this and move it to Option class in core.
-            return {
-                required: {
-                    message: "This value is required.",
-                    type: "boolean",
-                    default: false,
-                    required: false,
-                    test: function(option, value) {
-                        return !(option && value === null);
-                    },
-                }
-            };
-        };
-
-        /**
-         * @ngdoc method
          * @name isInvalid
          * @methodOf coa.data.class:Type
          * @param {any} value A value to test having already correct kind of type.
-         * @return {any} False the value is valid or an array with failure messages.
+         * @return {Array} Null if the value is valid or an array with failure messages.
          * @description
          *
          * Test that all restrictions to the value are fulfilled and collect failures.
          */
         Type.prototype.isInvalid = function(value) {
 
-            var ret = [];
-            var handlers = this.optionHandlers();
-            for (var k in handlers) {
-                if (!handlers[k].test(this.options[k], value)) {
-                    ret.push(handlers[k].message.replace(/%o/g, this.options[k]));
-                }
-            }
-            return ret.length ? ret : false;
+            var errors = this.optionDefinitions.test(this.options, value);
+
+            return errors.length ? errors : false;
         };
 
         /**
@@ -319,6 +230,22 @@
         };
 
         TypeStr.prototype = new Type();
+        TypeStr.prototype.optionDefinitions = Type.prototype.optionDefinitions.inherit({
+            pattern: {
+                text: "Value does not have correct format.",
+                type: function(option) {
+                    return option === null || (option instanceof RegExp);
+                },
+                required: false,
+                default: null,
+                op: function(option, value) {
+                    if (value === null || !option) {
+                        return true;
+                    }
+                    return option.test(value);
+                }
+            }
+        });
 
         TypeStr.prototype.convert = function(value) {
             if (value === undefined) {
@@ -326,29 +253,6 @@
             }
             return value === null ? null : value + '';
         };
-
-        /**
-         * Provides regex pattern validation.
-         */
-        TypeStr.prototype.optionHandlers = function() {
-            return angular.extend({}, Type.prototype.optionHandlers(), {
-                pattern: {
-                    message: "Value does not have correct format.",
-                    type: function(option) {
-                        return option === null || (option instanceof RegExp);
-                    },
-                    required: false,
-                    default: null,
-                    test: function(option, value) {
-                        if (value === null || !option) {
-                            return true;
-                        }
-                        return option.test(value);
-                    },
-                }
-            });
-        };
-
 
         return TypeStr;
     }]);
@@ -412,25 +316,19 @@
         };
 
         TypeObj.prototype = new Type();
-
-        /**
-         * Class definition is required. Value needs to be of instance of correct class or null.
-         */
-        TypeObj.prototype.optionHandlers = function() {
-            return angular.extend({}, Type.prototype.optionHandlers(), {
-                class: {
-                    message: "Value must belong to %o class.",
-                    type: "string",
-                    required: true,
-                    test: function(option, value) {
-                        if (value instanceof Data) {
-                            return option === value._module + '.' + value._class;
-                        }
-                        return value === null;
-                    },
-                }
-            });
-        };
+        TypeObj.prototype.optionDefinitions = Type.prototype.optionDefinitions.inherit({
+            class: {
+                text: "Value must belong to %o class.",
+                type: "string",
+                required: true,
+                op: function(option, value) {
+                    if (value instanceof Data) {
+                        return option === value._module + '.' + value._class;
+                    }
+                    return value === null;
+                },
+            }
+        });
 
         /**
          * Valid values are null, Data instances and Object instances that are converted to class instances.

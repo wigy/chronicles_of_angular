@@ -81,11 +81,11 @@ describe('module coa.core, Options class', function() {
         });
 
         var values = options.validate({required: true});
-        expect(options.test(values, {})).toEqual(['Value cannot be undefined since option is set to true.']);
-        expect(options.test(values, {required: 1})).toEqual([]);
+        expect(options.test(values, null)).toEqual(['Value cannot be null since option is set to true.']);
+        expect(options.test(values, 1)).toEqual([]);
 
         values = options.validate({required: false});
-        expect(options.test(values, {})).toEqual([]);
-        expect(options.test(values, {required: 1})).toEqual([]);
+        expect(options.test(values, 0)).toEqual([]);
+        expect(options.test(values, 1)).toEqual([]);
     });
 });

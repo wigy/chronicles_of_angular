@@ -55,9 +55,9 @@ describe('module coa.data, TypeObj class', function() {
 
         var type = new TypeObj();
         var options =  {};
-        expect(type.validateOptions(options)).toEqual(null);
+        expect(type.optionDefinitions.validate(options)).toEqual(null);
         options = {class: 'coa.auth.User'};
-        expect(type.validateOptions(options)).toEqual({class: 'coa.auth.User', required: false});
+        expect(type.optionDefinitions.validate(options)).toEqual({class: 'coa.auth.User', required: false});
 
         type.init('name', null, 'Label', options);
         expect(type.isInvalid(null)).toEqual(false);

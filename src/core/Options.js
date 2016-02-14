@@ -237,13 +237,13 @@
          * @name test
          * @methodOf coa.core.class:Options
          * @param {Options} options Options applied to the data.
-         * @param {Object} args An object containing a value for each option indexed by option names.
+         * @param {Object} args Additional value to be passed to the test function.
          * @return {Array} Empty array if no tests failing. Otherwise the list of texts of all failed tests.
          * @description
          *
          * This function assumes that options are validated. Then each operation-function is
-         * called for every option defined with the value found from <code>args</code> with the same
-         * name as the option. If the return value of the call is <code>true</code>, then it is
+         * called for every option defined with the additional parameter <code>args</code>.
+         * If the return value of the call is <code>true</code>, then it is
          * considered success. Otherwise
          * it is a failure and the <code>text</code> of the option is added to the list of failures.
          *
@@ -257,9 +257,11 @@
          *     },
          * });
          *
-         * options.test({required: true}, {required: 0});
+         * options.test({required: true}, 0);
          * // => ['Value cannot be 0 since option is set to true.']
-         * options.test({required: true}, {required: 1});
+         * options.test({required: true}, 1);
+         * // => []
+         * options.test({required: false}, 0);
          * // => []
          *
          * </pre>
@@ -270,9 +272,11 @@
          */
         Options.prototype.test = function(options, args) {
             var ret = [];
+            var opArgs = Array.prototype.splice.call(arguments, 1);
+            opArgs.splice(0, 0, null);
             var names = Object.keys(this);
             for (var i = 0; i < names.length; i++) {
-                var opArgs = [options[names[i]], args[names[i]]];
+                opArgs[0] = options[names[i]];
                 if (opArgs[0] === undefined) {
                     d("Undefined value in", options, "given for Options.test() option '" + names[i] + "' in", this);
                     ret[names[i]] = undefined;
@@ -281,7 +285,7 @@
                 if (this[names[i]].op.apply(this, opArgs)) {
                     continue;
                 }
-                ret.push(this[names[i]].text.replace(/%o/g, opArgs[0]).replace(/%v/g, opArgs[1]));
+                ret.push(this[names[i]].text.replace(/%o/g, opArgs[0]).replace(/%v/g, args));
             }
 
             return ret;

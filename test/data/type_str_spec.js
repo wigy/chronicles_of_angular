@@ -39,11 +39,11 @@ describe('module coa.data, TypeStr class', function() {
         var type = new TypeStr();
 
         var options =  {};
-        expect(type.validateOptions(options)).toEqual({required: false, pattern: null});
+        expect(type.optionDefinitions.validate(options)).toEqual({required: false, pattern: null});
         options = {pattern: 12};
-        expect(type.validateOptions(options)).toEqual(null);
+        expect(type.optionDefinitions.validate(options)).toEqual(null);
         options = {pattern: /xxx/};
-        expect(type.validateOptions(options)).toEqual({required: false, pattern: /xxx/});
+        expect(type.optionDefinitions.validate(options)).toEqual({required: false, pattern: /xxx/});
 
         options = {pattern: /xxx/};
         type.init('name', null, 'Label', options);
