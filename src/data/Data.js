@@ -4,7 +4,7 @@
 
     var Data;
 
-    module.factory('Data', ['Class', function(Class) {
+    module.factory('Data', ['Class', 'Options', function(Class, Options) {
 
         if (Data) {
             return Data;
@@ -38,8 +38,15 @@
         * are type specific options.
         *
         * For the list of standard types and examples, see {@link coa.data}.
+        * @param {Object} options Optional options for this Data class. Supported options are
+        * <dl>
+        *  <dt>primary_field</dt><dd>If defined, the class can be instantiated with the single atom
+        *                            parameter, which is inserted into the named field.</dd>
+        * </dl>
         */
-        Data = function(mod, name, definitions) {
+        Data = function(mod, name, definitions, options) {
+            // TODO: Combine module and class into single variable.
+            // TODO: Consider prefixing private variables and functions with '$$' instead (check Angular recommendation).
             // The name of the module class belongs to.
             this._module = mod;
             // The name of the class.
@@ -48,12 +55,23 @@
             this._members = [];
             // This is mapping from member names to the types listed in _members.
             this._types = {};
-            // TODO: Support for options and add an option 'primary_field' to automatically assign atom value from constructor.
+            // Options for this Data container.
+            this._options = this.optionDefinitions.validate(options);
 
+            if (!this._options) {
+                this.optionDefinitions.validate({});
+                d("Invalid options", options, "for Data", this, "(using defaults instead).");
+            }
             this._createMembers(definitions);
         };
 
         Data.prototype = new Class();
+        Data.prototype.optionDefinitions = new Options({
+            primary_field: {
+                text: "Default field to fill when a single atom value is given to the constructor.",
+                type: "string"
+            }
+        });
 
         /**
          * Concstruct an object of memebers.
@@ -167,6 +185,7 @@
                 data = {};
             }
 
+            // TODO: Support for atoms and primary_field.
             if(data instanceof Object) {
                 for(var k in data) {
                     var t = this._types[k];
