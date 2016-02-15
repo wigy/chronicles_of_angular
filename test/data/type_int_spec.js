@@ -23,6 +23,12 @@ describe('module coa.data, TypeInt class', function() {
         expect((new Numbering({first: null})).first).toBe(null);
     });
 
+    it('refuses invalid initial values', function() {
+        d.quiet();
+        new Numbering({first: 3.5});
+        expect(d.errors().length > 0).toBe(true);
+    });
+
     it('handles zero as default', function() {
         Numbering.prototype = new Data('unit-testing.Numbering',
             [{first: {type: TypeInt, default: 0, options: {}}}]);

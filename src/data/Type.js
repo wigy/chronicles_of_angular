@@ -268,7 +268,7 @@
          * @name coa.data.class:TypeInt
          * @requires coa.data.class:Type
          * @description
-         * An integer or null.
+         * An integer number or null.
          *
          * <h1>Options:</h1>
          * <dl>
@@ -281,10 +281,16 @@
         TypeInt.prototype = new Type();
 
         TypeInt.prototype.convert = function(value) {
-            if (value === undefined) {
+            if (value === null) {
+                return null;
+            }
+            if (typeof(value) !== "number") {
                 return undefined;
             }
-            return value === null ? null : parseInt(value + '');
+            if (value != Math.round(value)) {
+                return undefined;
+            }
+            return value;
         };
 
         return TypeInt;
