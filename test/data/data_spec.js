@@ -115,8 +115,10 @@ describe('module coa.data, Data class', function() {
         expect(clone.name).toBe('Cloned');
         expect(clone.time.time).toBe('01:02:03');
 
-        // TODO: Initialize Testing with another Testing instance (needs support in Data.init()).
-        //       Check also that sub-instances are not referencing the same like above.
+        var clone2 = new Testing(obj);
+        expect(clone2.time===obj.time).toBe(false);
+        expect(clone2.name).toBe('Cloned');
+        expect(clone2.time.time).toBe('01:02:03');
     });
 
     it('can initialize from atom value', function() {

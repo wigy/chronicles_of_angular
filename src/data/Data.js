@@ -161,18 +161,33 @@
          * @ngdoc method
          * @name init
          * @methodOf coa.data.class:Data
-         * @param {Object} data Initial data to be filled to members.
+         * @param {Any} data Initial data to be filled to members.
          * @description
          *
          * This function is used in constructors of data classes. It takes an object with raw
          * data having member names as keys. The values are then transformed using member types
          * and assigned to the object itself.
+         *
+         * If this class has an option <code>primary_field</code> set, then also atom values
+         * are supported. If atom value is given, then it is assigned to the primary field.
+         *
+         * Also another instance of the same class can be given. In that case, a clone of data
+         * is created before it is used for initializing this object instance.
          */
         Data.prototype.init = function(data) {
 
             var type;
 
             this.reset();
+
+            if (data instanceof Data) {
+                if (data._class !== this._class) {
+                    d("Cannot initialize '" + this._class + "' object", this, " from '" + data._class + "' object", data);
+                    return;
+                }
+                // Create clean copy of data.
+                data = data.toJSON();
+            }
 
             if (data === undefined) {
                 return;
