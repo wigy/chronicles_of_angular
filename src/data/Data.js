@@ -170,29 +170,37 @@
          */
         Data.prototype.init = function(data) {
 
+            var type;
+
             this.reset();
 
             if (data === undefined) {
                 return;
             }
 
-            if (data === null) {
-                data = {};
-            }
-
-            // TODO: Support for atoms and primary_field.
             if(data instanceof Object) {
                 for(var k in data) {
-                    var t = this._types[k];
-                    if (t) {
-                        t.set(this, k, data[k]);
+                    type = this._types[k];
+                    if (type) {
+                        type.set(this, k, data[k]);
                     } else {
                         d("Invalid member name", name, "in initial data", data, "for", this);
                     }
                 }
-            } else {
-                d("Invalid initial values", data, "for", this);
+                return;
             }
+
+            if (this._options.primary_field) {
+                type = this._types[this._options.primary_field];
+                if (!type) {
+                    d("Invalid primary field '" + this._options.primary_field + "' defined for", this);
+                    return;
+                }
+                type.set(this, this._options.primary_field, data);
+                return;
+            }
+
+            d("Invalid initial values", data, "for", this);
         };
 
         /**

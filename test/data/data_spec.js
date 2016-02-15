@@ -115,4 +115,22 @@ describe('module coa.data, Data class', function() {
         expect(clone.name).toBe('Cloned');
         expect(clone.time.time).toBe('01:02:03');
     });
+
+    it('can initialize from atom value', function() {
+
+        function Testing(data) {
+            this.init(data);
+        }
+
+        Testing.prototype = new Data('unit-testing.Testing', [
+            {name: {type: TypeStr}},
+            {number: {type: TypeInt}},
+        ], {primary_field: 'name'});
+
+        var obj;
+        obj = new Testing('Hello!');
+        expect(obj.name).toBe('Hello!');
+        obj = new Testing();
+        expect(obj.name).toBe(null);
+    });
 });
