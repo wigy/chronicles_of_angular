@@ -44,7 +44,6 @@
         * </dl>
         */
         Data = function(name, definitions, options) {
-            // TODO: Consider prefixing private variables and functions with '$$' instead (check Angular recommendation).
             // The fully qualified name of the module and class.
             this._class = name;
             // This is list of members in order.
@@ -194,6 +193,16 @@
             } else {
                 d("Invalid initial values", data, "for", this);
             }
+        };
+
+        /**
+         * @ngdoc method
+         * @name getModuleAndClass
+         * @methodOf coa.data.class:Data
+         * @return {String} Fully qualified name of the module and class.
+         */
+        Data.prototype.getModuleAndClass = function() {
+            return this._class;
         };
 
         /**
