@@ -45,7 +45,7 @@
             {time: {type: TypeStr, default: '00:00:00', options: {pattern: /^\d\d:\d\d:\d\d$/}}},
             {negative: {type: TypeBool, default: false}}
             // TODO: Add support for 'overflow' boolean as well.
-        ]);
+        ], {primary_field: 'time'});
 
         TimeStr.prototype.toString = function() {
             return this.negative ? '-' + this.time : this.time;
@@ -87,8 +87,7 @@
                 this.add(0, 0, num);
             }
             else {
-                // TODO: Once default atom field available can change to: new TimeStr('00:00:00');
-                var zero = new TimeStr({time: '00:00:00'});
+                var zero = new TimeStr('00:00:00');
                 var add = this.seconds() + num;
                 if (add < 0) {
                     zero.addSeconds(-add);

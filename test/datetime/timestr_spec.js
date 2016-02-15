@@ -20,8 +20,8 @@ describe('module coa.datetime, TimeStr class', function() {
         expect(time.short()).toBe('19:12');
         expect(time.seconds()).toBe(69179);
 
-        // TODO: Initialize with another Time instance (needs support in Data.init()).
-        // TODO: Initialize with single string (needs support in Data.init() and definition of primary field).
+        var atom = new TimeStr('01:10:01');
+        expect(atom.toString()).toBe('01:10:01');
     });
 
     it('validates values correctly', function() {
