@@ -18,8 +18,7 @@
         *
         * Data description to be used as a prototype for any data container class.
         *
-        * @param {String} mode The name of the module class belongs to.
-        * @param {String} name The name of the class.
+        * @param {String} name The fully qualified name of the module and class, e.g. <code>coa.auth.User</code>.
         * @param {Array} definitions A list of <i>member definitions</i>.
         * An array can contain one ore more objects with definitions. Each member definition has
         * the following format:
@@ -44,12 +43,9 @@
         *                            parameter, which is inserted into the named field.</dd>
         * </dl>
         */
-        Data = function(mod, name, definitions, options) {
-            // TODO: Combine module and class into single variable.
+        Data = function(name, definitions, options) {
             // TODO: Consider prefixing private variables and functions with '$$' instead (check Angular recommendation).
-            // The name of the module class belongs to.
-            this._module = mod;
-            // The name of the class.
+            // The fully qualified name of the module and class.
             this._class = name;
             // This is list of members in order.
             this._members = [];
@@ -88,7 +84,7 @@
          * Present name of the module and class with JSON content.
          */
         Data.prototype.toString = function() {
-            return this._module + '.' + this._class + JSON.stringify(this.toJSON());
+            return this._class + JSON.stringify(this.toJSON());
         };
 
         /**

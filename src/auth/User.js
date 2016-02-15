@@ -21,7 +21,7 @@
             this.init(data);
         };
 
-        User.prototype = new Data('coa.auth', 'User', [
+        User.prototype = new Data('coa.auth.User', [
             {name: {type: TypeStr, options: {required: true}}}
         ]);
 

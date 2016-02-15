@@ -16,17 +16,17 @@ describe('module coa.data, TypeBool class', function() {
 
     it('can initialize boolean members', function() {
 
-        Flagged.prototype = new Data('unit-testing', 'Flagged',
+        Flagged.prototype = new Data('unit-testing.Flagged',
             [{flag: {type: TypeBool, options: {}}}]);
         expect((new Flagged({flag: false})).flag).toBe(false);
         expect((new Flagged({flag: true})).flag).toBe(true);
         expect((new Flagged()).flag).toBe(null);
 
-        Flagged.prototype = new Data('unit-testing', 'Flagged',
+        Flagged.prototype = new Data('unit-testing.Flagged',
             [{flag: {type: TypeBool, default: false, options: {}}}]);
         expect((new Flagged()).flag).toBe(false);
 
-        Flagged.prototype = new Data('unit-testing', 'Flagged',
+        Flagged.prototype = new Data('unit-testing.Flagged',
             [{flag: {type: TypeBool, default: true, options: {}}}]);
         expect((new Flagged()).flag).toBe(true);
     });

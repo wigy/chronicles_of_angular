@@ -41,7 +41,7 @@
             return clock;
         };
 
-        TimeStr.prototype = new Data('coa.datetime', 'Time', [
+        TimeStr.prototype = new Data('coa.datetime.Time', [
             {time: {type: TypeStr, default: '00:00:00', options: {pattern: /^\d\d:\d\d:\d\d$/}}},
             {negative: {type: TypeBool, default: false}}
             // TODO: Add support for 'overflow' boolean as well.

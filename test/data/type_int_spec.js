@@ -11,7 +11,7 @@ describe('module coa.data, TypeInt class', function() {
         inject(function(_Data_, _TypeInt_){
             Data = _Data_;
             TypeInt = _TypeInt_;
-            Numbering.prototype = new Data('unit-testing', 'Numbering',
+            Numbering.prototype = new Data('unit-testing.Numbering',
                 [{first: {type: TypeInt, default: -1, options: {}}}]);
         });
     });
@@ -24,7 +24,7 @@ describe('module coa.data, TypeInt class', function() {
     });
 
     it('handles zero as default', function() {
-        Numbering.prototype = new Data('unit-testing', 'Numbering',
+        Numbering.prototype = new Data('unit-testing.Numbering',
             [{first: {type: TypeInt, default: 0, options: {}}}]);
         expect((new Numbering()).first).toBe(0);
     });

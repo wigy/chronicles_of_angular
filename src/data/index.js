@@ -15,14 +15,14 @@
  *     this.init(data);
  * }
  *
- * MyClass.prototype = new Data(['my.module', 'MyClass',
- *      {name: {type: TypeStr,
+ * MyClass.prototype = new Data(['my.module.MyClass', {
+ *     name: {
+ *              type: TypeStr,
  *              default: "default name",
  *              label: "Name of the thing",
  *              options: {required: true},
- *              }
- *      }
- * ]);
+ *     }
+ * }]);
  * </pre>
  *
  * Standard member types are:

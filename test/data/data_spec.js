@@ -20,7 +20,7 @@ describe('module coa.data, Data class', function() {
         function Testing(data) {
             this.init(data);
         }
-        Testing.prototype = new Data('unit-testing', 'Testing', [
+        Testing.prototype = new Data('unit-testing.Testing', [
             {name: {type: TypeStr}},
             {name: {type: TypeStr}},
         ]);
@@ -35,7 +35,7 @@ describe('module coa.data, Data class', function() {
             this.init(data);
         }
 
-        Testing.prototype = new Data('unit-testing', 'Testing', [
+        Testing.prototype = new Data('unit-testing.Testing', [
             {name1: {type: TypeStr, options: {required: true}}},
             {name2: {type: TypeStr, options: {required: true}}},
         ]);
@@ -50,7 +50,7 @@ describe('module coa.data, Data class', function() {
         expect(testing.isInvalid()).toEqual(false);
         expect(testing.isValid()).toEqual(true);
 
-        Testing.prototype = new Data('unit-testing', 'Testing', [
+        Testing.prototype = new Data('unit-testing.Testing', [
             {name1: {type: TypeStr, options: {}}},
             {name2: {type: TypeStr, options: {}}},
         ]);
@@ -72,7 +72,7 @@ describe('module coa.data, Data class', function() {
             this.init(data);
         }
 
-        Testing.prototype = new Data('unit-testing', 'Testing', [
+        Testing.prototype = new Data('unit-testing.Testing', [
             {var1: {type: TypeBool, default: true, options: {}}},
             {var2: {type: TypeStr, options: {}}},
             {var3: {type: TypeInt, default: -1, options: {}}},
@@ -101,7 +101,7 @@ describe('module coa.data, Data class', function() {
             this.init(data);
         }
 
-        Testing.prototype = new Data('unit-testing', 'Testing', [
+        Testing.prototype = new Data('unit-testing.Testing', [
             {name: {type: TypeStr}},
             {time: {type: TypeObj, options: {class: 'coa.datetime.TimeStr'}}},
         ]);

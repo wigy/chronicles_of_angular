@@ -323,7 +323,7 @@
                 required: true,
                 op: function(option, value) {
                     if (value instanceof Data) {
-                        return option === value._module + '.' + value._class;
+                        return option === value._class;
                     }
                     return value === null;
                 },
