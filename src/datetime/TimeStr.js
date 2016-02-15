@@ -18,8 +18,10 @@
         * {
         *     // Time stamp as a string (primary field).
         *     time: '01:30:00',
-        *     // Flag, which is set when time is reduced below '00:00:00'.
-        *     negative: false
+        *     // Flag, which is set when time has been reduced below '00:00:00'.
+        *     negative: false,
+        *     // Flag, which is set when time has been pushed past '23:59:59'.
+        *     overflow: false
         * }
         * </pre>
         * @description
@@ -52,8 +54,8 @@
 
         TimeStr.prototype = new Data('coa.datetime.Time', [
             {time: {type: TypeStr, default: '00:00:00', options: {pattern: /^\d\d:\d\d:\d\d$/}}},
-            {negative: {type: TypeBool, default: false}}
-            // TODO: Add support for 'overflow' boolean as well.
+            {negative: {type: TypeBool, default: false}},
+            {overflow: {type: TypeBool, default: false}}
         ], {primary_field: 'time'});
 
         TimeStr.prototype.toString = function() {
@@ -85,13 +87,19 @@
          */
         TimeStr.prototype.add = function(h, m, s) {
             var parts = this.time.split(':');
+
             s = s + parseInt(parts[2]);
             m += Math.floor(s/60);
             s = s % 60;
+
             m = m + parseInt(parts[1]);
             h += Math.floor(m/60);
             m = m % 60;
+
             h = h + parseInt(parts[0]);
+            if (h >= 24) {
+                this.overflow = true;
+            }
             h = h % 24;
 
             this.time = ('0' + h).substr(-2,2) + ':' + ('0' + m).substr(-2,2) + ':' + ('0' + s).substr(-2,2);

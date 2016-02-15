@@ -78,4 +78,20 @@ describe('module coa.datetime, TimeStr class', function() {
         time.addSeconds(-50);
         expect(time.toString()).toBe('-00:00:05');
     });
+
+    it('detects overflows', function() {
+        var time = new TimeStr({time: '23:59:00'});
+        time.addSeconds(59);
+        expect(time.toString()).toBe('23:59:59');
+        expect(time.overflow).toBe(false);
+        time.addSeconds(1);
+        expect(time.toString()).toBe('00:00:00');
+        expect(time.overflow).toBe(true);
+
+        var time2 = new TimeStr({time: '23:59:59'});
+        expect(time2.overflow).toBe(false);
+        time2.addSeconds(2);
+        expect(time2.toString()).toBe('00:00:01');
+        expect(time2.overflow).toBe(true);
+    });
 });
