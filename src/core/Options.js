@@ -83,7 +83,7 @@
                 d("Undefined value given for Option.operate() option", this);
                 return undefined;
             }
-            var args = Array.prototype.slice.call(arguments);
+            args = Array.prototype.slice.call(arguments);
             return this.op.apply(this, args);
         };
 

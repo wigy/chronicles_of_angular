@@ -287,7 +287,7 @@
             if (typeof(value) !== "number") {
                 return undefined;
             }
-            if (value != Math.round(value)) {
+            if (value !== Math.round(value)) {
                 return undefined;
             }
             return value;
