@@ -25,7 +25,7 @@ describe('module coa.data, Data class', function() {
             {name: {type: TypeStr}},
         ]);
         var testing = new Testing();
-        expect(d.errors().length > 0).toBe(true);
+        expect(d.errors()).toEqual(['Trying to define member name as [object Object] but it has been already defined as [object Object] in unit-testing.Testing{}']);
         expect(testing.getMembers().length).toBe(1);
     });
 
