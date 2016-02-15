@@ -36,7 +36,7 @@
          * @ngdoc method
          * @name now
          * @methodOf coa.datetime.class:TimeStr
-         * @preturns {TimeStr} Current time.
+         * @returns {TimeStr} Current time.
          * @description
          *
          * A static method to return current time, for example
@@ -60,9 +60,11 @@
             return this.negative ? '-' + this.time : this.time;
         };
 
-        // TODO: Proper docs for all functions.
         /**
-         * Value as <tt>HH:MM</tt>.
+         * @ngdoc method
+         * @name short
+         * @methodOf coa.datetime.class:TimeStr
+         * @returns {String} The time stamp in shortened format without seconds: <code>hh:mm</code>.
          */
         TimeStr.prototype.short = function() {
             if (this.negative) {
@@ -72,7 +74,14 @@
         };
 
         /**
-         * Add to this time.
+         * @ngdoc method
+         * @name add
+         * @methodOf coa.datetime.class:TimeStr
+         * @param {Number} h The number of hours to add.
+         * @param {Number} m The number of minutes to add.
+         * @param {Number} s The number of seconds to add.
+         * @description
+         * Add to this time. Negative numbers not supported.
          */
         TimeStr.prototype.add = function(h, m, s) {
             var parts = this.time.split(':');
@@ -89,7 +98,13 @@
         };
 
         /**
-         * Add or subtract seconds.
+         * @ngdoc method
+         * @name addSeconds
+         * @methodOf coa.datetime.class:TimeStr
+         * @param {Number} num The number of seconds to add (or subtract if negative).
+         * @description
+         * Add or subtract seconds from the time. If time goes below <code>00:00:00</code>, then
+         * the flag <code>negative</code> is set for this.
          */
         TimeStr.prototype.addSeconds = function(num) {
             if (num > 0) {
@@ -110,7 +125,11 @@
         };
 
         /**
-         * Set the time to the current time.
+         * @ngdoc method
+         * @name setNow
+         * @methodOf coa.datetime.class:TimeStr
+         * @description
+         * Set the time to the current local time.
          */
         TimeStr.prototype.setNow = function() {
             this.time = (new Date()).toJSON().substr(11, 8);
@@ -124,28 +143,46 @@
         };
 
         /**
-         * Check if this time is not already as much as the given time.
+         * @ngdoc method
+         * @name notYet
+         * @methodOf coa.datetime.class:TimeStr
+         * @param {TimeStr} time A <i>TimeStr</i> instance to compare.
+         * @return {Boolean}
+         * True if this time is not already as much as the given time.
          */
         TimeStr.prototype.notYet = function(time) {
             return this.time.toString() < time.toString();
         };
 
         /**
-         * Check if this time is already past the given time.
+         * @ngdoc method
+         * @name isPast
+         * @methodOf coa.datetime.class:TimeStr
+         * @param {TimeStr} time A <i>TimeStr</i> instance to compare.
+         * @return {Boolean}
+         * True if this time is already past the given time.
          */
         TimeStr.prototype.isPast = function(time) {
             return this.time.toString() > time.toString();
         };
 
         /**
-         * Check if this time is at least the given time.
+         * @ngdoc method
+         * @name isAlready
+         * @methodOf coa.datetime.class:TimeStr
+         * @param {TimeStr} time A <i>TimeStr</i> instance to compare.
+         * @return {Boolean}
+         * True if this time is at least the given time.
          */
         TimeStr.prototype.isAlready = function(time) {
             return this.time.toString() >= time.toString();
         };
 
         /**
-         * Convert time to seconds.
+         * @ngdoc method
+         * @name seconds
+         * @methodOf coa.datetime.class:TimeStr
+         * @return {Number} This time converted to seconds.
          */
         TimeStr.prototype.seconds = function() {
             var h, m, s;
@@ -158,6 +195,14 @@
 
         /**
          * Subtract another time from this time and return new time instance.
+         */
+        /**
+         * @ngdoc method
+         * @name diff
+         * @methodOf coa.datetime.class:TimeStr
+         * @param {TimeStr} time A <i>TimeStr</i> instance to compare.
+         * @return {Number} Number of seconds left after the <i>time</i> is subtracted
+         * from this.
          */
         TimeStr.prototype.diff = function(time) {
             var a = this.seconds(), b = time.seconds();
