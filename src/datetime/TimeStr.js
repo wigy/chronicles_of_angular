@@ -13,6 +13,15 @@
         /**
         * @ngdoc function
         * @name coa.datetime.class:TimeStr
+        * @param {Object|String} data Initial data:
+        * <pre>
+        * {
+        *     // Time stamp as a string (primary field).
+        *     time: '01:30:00',
+        *     // Flag, which is set when time is reduced below '00:00:00'.
+        *     negative: false
+        * }
+        * </pre>
         * @description
         *
         * A class describing a time stamp string of form <tt>HH:MM:SS</tt>.

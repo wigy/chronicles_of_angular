@@ -12,9 +12,7 @@ Licensed under the GPL-2.0 license.
 * v0.3.0
     - Support fully *Chronicles of Grunt* build system.
     - Documentation for existing code.
-* v0.2.0
     - New d() dump utility and audio player. Rename keyHandler to coaKeyHandler.
-* v0.1.0
     - keyHandler directive.
 
 ## Next Version
@@ -23,7 +21,7 @@ Licensed under the GPL-2.0 license.
 
 * Update API docs to use ngdocs.
 * Implement type system with few types: boolean, string, integer and object.
-* Data validation.
+* Data and option validation.
 * Generic Data instance factory.
 
 ### Not Yet Done
