@@ -151,7 +151,6 @@
          * @name set
          * @methodOf coa.data.class:Type
          * @param {Data} target Target object.
-         * @param {String} name Name of the member to set.
          * @param {any} value Any value aimed for this type.
          * @return {any} Value that has been set.
          * @description
@@ -159,13 +158,13 @@
          * Set the member of the target object using the given value. The value is converted using
          * this type and if not successfull, error is displayed and default value is used instead.
          */
-        Type.prototype.set = function(target, name, value) {
+        Type.prototype.set = function(target, value) {
             var set = this.convert(value);
             if (set === undefined) {
                 d("Invalid kind of value", value, "for member of type", this, "for object", target);
                 set = this.default;
             }
-            target[name] = set;
+            target[this.name] = set;
             return set;
         };
 

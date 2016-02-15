@@ -182,7 +182,7 @@
                 for(var k in data) {
                     type = this._types[k];
                     if (type) {
-                        type.set(this, k, data[k]);
+                        type.set(this, data[k]);
                     } else {
                         d("Invalid member name", name, "in initial data", data, "for", this);
                     }
@@ -196,7 +196,7 @@
                     d("Invalid primary field '" + this._options.primary_field + "' defined for", this);
                     return;
                 }
-                type.set(this, this._options.primary_field, data);
+                type.set(this, data);
                 return;
             }
 
