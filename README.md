@@ -9,6 +9,11 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v0.4.0
+    - Update API docs to use ngdocs.
+    - Implement type system with few types: boolean, string, integer and object.
+    - Data and option validation.
+    - Generic Data instance factory.
 * v0.3.0
     - Support fully *Chronicles of Grunt* build system.
     - Documentation for existing code.
@@ -18,11 +23,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Update API docs to use ngdocs.
-* Implement type system with few types: boolean, string, integer and object.
-* Data and option validation.
-* Generic Data instance factory.
 
 ### Not Yet Done
 
