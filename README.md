@@ -9,6 +9,8 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v0.4.1
+    - Fix distribution files and version number.
 * v0.4.0
     - Update API docs to use ngdocs.
     - Implement type system with few types: boolean, string, integer and object.
