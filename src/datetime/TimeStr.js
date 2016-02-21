@@ -202,19 +202,15 @@
         };
 
         /**
-         * Subtract another time from this time and return new time instance.
-         */
-        /**
          * @ngdoc method
          * @name diff
          * @methodOf coa.datetime.class:TimeStr
          * @param {TimeStr} time A <i>TimeStr</i> instance to compare.
-         * @return {Number} Number of seconds left after the <i>time</i> is subtracted
-         * from this.
+         * @return {TimeStr} An <i>TimeStr</i> instance with difference in hours, minutes and seconds.
          */
         TimeStr.prototype.diff = function(time) {
             var a = this.seconds(), b = time.seconds();
-            var ret = new Time();
+            var ret = new TimeStr();
 
             if (a < b) {
                 ret.add(0, 0, b-a);

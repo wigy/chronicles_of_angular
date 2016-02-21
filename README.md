@@ -26,6 +26,8 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Fix invalid reference in TimeStr.diff().
+
 ### Not Yet Done
 
 ## Future Ideas

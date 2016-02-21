@@ -65,6 +65,15 @@ describe('module coa.datetime, TimeStr class', function() {
         expect(t2.isAlready(t1)).toBe(true);
         expect(t1.isAlready(t2)).toBe(false);
 
+        var t3 = new TimeStr({time: '14:59:58'});
+        var t4 = new TimeStr({time: '01:02:03'});
+        expect(t0.diff(t3).toString()).toBe('00:00:02');
+        expect(t2.diff(t3).toString()).toBe('00:00:03');
+        expect(t3.diff(t0).toString()).toBe('-00:00:02');
+        expect(t3.diff(t2).toString()).toBe('-00:00:03');
+        expect(t0.diff(t1).toString()).toBe('00:00:00');
+        expect(t3.diff(t4).toString()).toBe('13:57:55');
+        expect(t4.diff(t3).toString()).toBe('-13:57:55');
     });
 
     it('adds negative seconds correctly', function() {
