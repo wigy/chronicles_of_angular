@@ -9,6 +9,8 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v0.4.2
+    - Fix invalid reference in TimeStr.diff().
 * v0.4.1
     - Fix distribution files and version number.
 * v0.4.0
@@ -25,8 +27,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Fix invalid reference in TimeStr.diff().
 
 ### Not Yet Done
 
