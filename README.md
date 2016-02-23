@@ -28,6 +28,9 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Support Type instance initialization directly from the constructor.
+* Add class name as a part of each prototype.
+
 ### Not Yet Done
 
 * New TypeOptions to contain options with validation.

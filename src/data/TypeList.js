@@ -31,6 +31,9 @@
         };
 
         TypeList.prototype = new Type();
+        TypeList.prototype.__class = 'coa.data.TypeList';
+
+        return TypeList;
     }]);
 
 })();

@@ -4,7 +4,7 @@
 
     var TimeStr;
 
-    module.factory('TimeStr', ['Data', 'TypeStr', 'TypeBool', function(Data, TypeStr, TypeBool) {
+    module.factory('TimeStr', ['Class', 'Data', 'TypeStr', 'TypeBool', function(Class, Data, TypeStr, TypeBool) {
 
         if (TimeStr) {
             return TimeStr;
@@ -34,6 +34,17 @@
             this.init(data);
         };
 
+        TimeStr.prototype = new Data('coa.datetime.TimeStr', [
+            {time: {type: TypeStr, default: '00:00:00', options: {pattern: /^\d\d:\d\d:\d\d$/}}},
+            {negative: {type: TypeBool, default: false}},
+            {overflow: {type: TypeBool, default: false}}
+        ], {primary_field: 'time'});
+        TimeStr.prototype.__class = 'coa.datetime.TimeStr';
+
+        TimeStr.prototype.toString = function() {
+            return this.negative ? '-' + this.time : this.time;
+        };
+
         /**
          * @ngdoc method
          * @name now
@@ -50,16 +61,6 @@
             var clock = new TimeStr();
             clock.setNow();
             return clock;
-        };
-
-        TimeStr.prototype = new Data('coa.datetime.Time', [
-            {time: {type: TypeStr, default: '00:00:00', options: {pattern: /^\d\d:\d\d:\d\d$/}}},
-            {negative: {type: TypeBool, default: false}},
-            {overflow: {type: TypeBool, default: false}}
-        ], {primary_field: 'time'});
-
-        TimeStr.prototype.toString = function() {
-            return this.negative ? '-' + this.time : this.time;
         };
 
         /**

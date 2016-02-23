@@ -31,6 +31,7 @@
         };
 
         TypeBool.prototype = new Type();
+        TypeBool.prototype.__class = 'coa.data.TypeBool';
 
         TypeBool.prototype.toString = function() {
             return "TypeBool()";

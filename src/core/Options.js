@@ -4,6 +4,7 @@
 
     var Option;
 
+// TODO: Split to another file.
     module.factory('Option', ['Class', function(Class) {
 
         if (Option) {
@@ -46,6 +47,7 @@
         };
 
         Option.prototype = new Class();
+        Option.prototype.__class = 'coa.core.Option';
 
         /**
          * @ngdoc method
@@ -131,6 +133,7 @@
         };
 
         Options.prototype = new Class();
+        Options.prototype.__class = 'coa.core.Options';
 
         /**
          * @ngdoc method

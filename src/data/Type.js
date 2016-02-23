@@ -35,6 +35,7 @@
         };
 
         Type.prototype = new Class();
+        Type.prototype.__class = 'coa.data.Type';
         Type.prototype.optionDefinitions = new Options({
             required: {
                 text: "This value is required.",
@@ -78,9 +79,9 @@
         /**
          * A string presentation of the type.
          */
-        Type.prototype.toString = function() {
-            return "Type(?)";
-        };
+//        Type.prototype.toString = function() {
+//            return "Type(?)";
+//        };
 
         /**
          * @ngdoc method

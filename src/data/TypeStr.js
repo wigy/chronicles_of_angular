@@ -32,6 +32,7 @@
         };
 
         TypeStr.prototype = new Type();
+        TypeStr.prototype.__class = 'coa.data.TypeStr';
         TypeStr.prototype.optionDefinitions = Type.prototype.optionDefinitions.inherit({
             pattern: {
                 text: "Value does not have correct format.",

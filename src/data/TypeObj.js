@@ -33,6 +33,7 @@
         };
 
         TypeObj.prototype = new Type();
+        TypeObj.prototype.__class = 'coa.data.TypeObj';
         TypeObj.prototype.optionDefinitions = Type.prototype.optionDefinitions.inherit({
             class: {
                 text: "Value must belong to %o class.",
@@ -47,9 +48,9 @@
             }
         });
 
-        TypeObj.prototype.toString = function() {
-            return "TypeObj(" + (this.options.class || '') + ")";
-        };
+//        TypeObj.prototype.toString = function() {
+//            return "TypeObj(" + (this.options.class || '') + ")";
+//        };
 
         /**
          * Valid values are null, Data instances and Object instances that are converted to class instances.

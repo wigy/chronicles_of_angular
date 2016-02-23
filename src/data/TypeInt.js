@@ -31,6 +31,7 @@
         };
 
         TypeInt.prototype = new Type();
+        TypeInt.prototype.__class = 'coa.data.TypeInt';
 
         TypeInt.prototype.toString = function() {
             return "TypeInt()";

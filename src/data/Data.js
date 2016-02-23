@@ -44,6 +44,7 @@
         * </dl>
         */
         Data = function(name, definitions, options) {
+            // TODO: Drop name, since it is in prototype.
             // The fully qualified name of the module and class.
             this._class = name;
             // This is list of members in order.
@@ -61,6 +62,7 @@
         };
 
         Data.prototype = new Class();
+        Data.prototype.__class = 'coa.data.Data';
         Data.prototype.optionDefinitions = new Options({
             primary_field: {
                 text: "Default field to fill when a single atom value is given to the constructor.",
