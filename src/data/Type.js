@@ -19,12 +19,13 @@
          * are used when initializing {@link coa.data.class:Data Data}
          * instances as prototypes for data container classes.
          */
-        Type = function(name, def, label, options) {
+        Type = function() {
             this.name = null;
             this.label = null;
             this.default = null;
             this.options = null;
         };
+        // TODO: implement also initialization from parameters here and in other types.
 
         Type.prototype = new Class();
         Type.prototype.optionDefinitions = new Options({
