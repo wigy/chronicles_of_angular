@@ -15,7 +15,7 @@ describe('module coa.data, TypeObj class', function() {
 
     it('requires class option', function() {
         d.quiet();
-        new Data('unit-testing.Testing', [
+        new Data([
             {invalid: {type: TypeObj}},
         ]);
         expect(d.errors()).toEqual(['Invalid options [object Object] for type TypeObj(default=undefined, label="Invalid", name="invalid", options={})']);
@@ -25,13 +25,13 @@ describe('module coa.data, TypeObj class', function() {
         function Container(data) {
             this.init(data);
         }
-        Container.prototype = new Data('unit-testing.Container', [
+        Container.prototype = new Data([
             {user: {type: TypeObj, options: {class: 'coa.auth.User'}}}
         ]);
         var container = new Container();
         expect(container.user).toBe(null);
 
-        Container.prototype = new Data('unit-testing.Container', [
+        Container.prototype = new Data([
             {user: {type: TypeObj, default: {name: 'Test default'}, options: {class: 'coa.auth.User'}}}
         ]);
         container = new Container();
@@ -42,7 +42,7 @@ describe('module coa.data, TypeObj class', function() {
         function Container(data) {
             this.init(data);
         }
-        Container.prototype = new Data('unit-testing.Container', [
+        Container.prototype = new Data([
             {user: {type: TypeObj, default: {name: 'Test default'}, options: {class: 'coa.auth.User'}}}
         ]);
         var container1 = new Container();
@@ -72,7 +72,7 @@ describe('module coa.data, TypeObj class', function() {
         function Dummy(data) {
             this.init(data);
         }
-        Dummy.prototype = new Data('unit-testing.Dummy', []);
+        Dummy.prototype = new Data([]);
         expect(type.isInvalid(new Dummy())).toEqual(['Value must belong to coa.auth.User class.']);
     });
 });

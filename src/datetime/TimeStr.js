@@ -34,7 +34,7 @@
             this.init(data);
         };
 
-        TimeStr.prototype = new Data('coa.datetime.TimeStr', [
+        TimeStr.prototype = new Data([
             {time: {type: TypeStr, default: '00:00:00', options: {pattern: /^\d\d:\d\d:\d\d$/}}},
             {negative: {type: TypeBool, default: false}},
             {overflow: {type: TypeBool, default: false}}

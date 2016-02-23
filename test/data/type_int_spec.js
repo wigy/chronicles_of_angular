@@ -11,7 +11,7 @@ describe('module coa.data, TypeInt class', function() {
         inject(function(_Data_, _TypeInt_){
             Data = _Data_;
             TypeInt = _TypeInt_;
-            Numbering.prototype = new Data('unit-testing.Numbering',
+            Numbering.prototype = new Data(
                 [{first: {type: TypeInt, default: -1, options: {}}}]);
         });
     });
@@ -26,14 +26,14 @@ describe('module coa.data, TypeInt class', function() {
     it('refuses invalid initial values', function() {
         d.quiet();
         new Numbering({first: 3.5});
-        expect(d.errors()).toEqual(['Invalid kind of value 3.5 for member of type TypeInt() for object unit-testing.Numbering{"first":-1}']);
+        expect(d.errors()).toEqual(['Invalid kind of value 3.5 for member of type TypeInt() for object Data(first=-1)']);
         d.quiet();
         new Numbering({first: '1'});
-        expect(d.errors()).toEqual(['Invalid kind of value 1 for member of type TypeInt() for object unit-testing.Numbering{"first":-1}']);
+        expect(d.errors()).toEqual(['Invalid kind of value 1 for member of type TypeInt() for object Data(first=-1)']);
     });
 
     it('handles zero as default', function() {
-        Numbering.prototype = new Data('unit-testing.Numbering',
+        Numbering.prototype = new Data(
             [{first: {type: TypeInt, default: 0, options: {}}}]);
         expect((new Numbering()).first).toBe(0);
     });

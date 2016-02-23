@@ -11,7 +11,7 @@ describe('module coa.data, TypeStr class', function() {
         inject(function(_Data_, _TypeStr_){
             Data = _Data_;
             TypeStr = _TypeStr_;
-            Team.prototype = new Data('unit-testing.Team',
+            Team.prototype = new Data(
                 [{name: {type: TypeStr, label: "Name of the team", default: 'default name', options: {}}}]);
         });
     });
@@ -30,7 +30,7 @@ describe('module coa.data, TypeStr class', function() {
     it('refuses to initialize undefined values', function() {
         d.quiet();
         var team = new Team({name: undefined});
-        expect(d.errors()).toEqual(['Invalid kind of value undefined for member of type TypeStr() for object unit-testing.Team{"name":"default name"}']);
+        expect(d.errors()).toEqual(['Invalid kind of value undefined for member of type TypeStr() for object Data(name="default name")']);
         expect(team.name).toBe('default name');
     });
 

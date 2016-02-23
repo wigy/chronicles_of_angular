@@ -18,7 +18,6 @@
         *
         * Data description to be used as a prototype for any data container class.
         *
-        * @param {String} name The fully qualified name of the module and class, e.g. <code>coa.auth.User</code>.
         * @param {Array} definitions A list of <i>member definitions</i>.
         * An array can contain one ore more objects with definitions. Each member definition has
         * the following format:
@@ -43,10 +42,7 @@
         *                            parameter, which is inserted into the named field.</dd>
         * </dl>
         */
-        Data = function(name, definitions, options) {
-            // TODO: Drop name, since it is in prototype.
-            // The fully qualified name of the module and class.
-            this._class = name;
+        Data = function(definitions, options) {
             // This is list of members in order.
             this._members = [];
             // This is mapping from member names to the types listed in _members.
@@ -79,13 +75,6 @@
                 ret[this._members[k].name] = this._members[k].toJSON(this[this._members[k].name]);
             }
             return ret;
-        };
-
-        /**
-         * Present name of the module and class with JSON content.
-         */
-        Data.prototype.toString = function() {
-            return this._class + JSON.stringify(this.toJSON());
         };
 
         /**
@@ -183,8 +172,8 @@
             this.reset();
 
             if (data instanceof Data) {
-                if (data._class !== this._class) {
-                    d("Cannot initialize '" + this._class + "' object", this, " from '" + data._class + "' object", data);
+                if (data.__class !== this.__class) {
+                    d("Cannot initialize '" + this.__class + "' object", this, " from '" + data.__class + "' object", data);
                     return;
                 }
                 // Create clean copy of data.
@@ -227,7 +216,7 @@
          * @return {String} Fully qualified name of the module and class.
          */
         Data.prototype.getModuleAndClass = function() {
-            return this._class;
+            return this.__class;
         };
 
         /**

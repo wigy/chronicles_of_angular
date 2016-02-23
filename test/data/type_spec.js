@@ -14,7 +14,7 @@ describe('module coa.data, Type class', function() {
         function Testing(data) {
             this.init(data);
         }
-        Testing.prototype = new Data('unit-testing.Testing', [
+        Testing.prototype = new Data([
             {testing_name: {type: TypeStr}}
         ]);
 

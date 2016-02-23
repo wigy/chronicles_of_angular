@@ -15,7 +15,7 @@
  *     this.init(data);
  * }
  *
- * MyClass.prototype = new Data(['my.module.MyClass', {
+ * MyClass.prototype = new Data([{
  *     name: {
  *              type: TypeStr,
  *              default: "default name",
@@ -31,6 +31,7 @@
  *   <dt>string</dt><dd>{@link coa.data.class:TypeStr TypeStr}</dd>
  *   <dt>integer</dt><dd>{@link coa.data.class:TypeInt TypeInt}</dd>
  *   <dt>object</dt><dd>{@link coa.data.class:TypeObj TypeObj}</dd>
+ *   <dt>list</dt><dd>{@link coa.data.class:TypeList TypeList}</dd>
  * </dl>
  */
 angular.module('coa.data', ['coa.core']);
