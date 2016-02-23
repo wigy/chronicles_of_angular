@@ -19,7 +19,7 @@
          * are used when initializing {@link coa.data.class:Data Data}
          * instances as prototypes for data container classes.
          */
-        Type = function() {
+        Type = function(name, def, label, options) {
             this.name = null;
             this.label = null;
             this.default = null;
@@ -65,6 +65,13 @@
             this.options = validatedOptions;
 
             this.default = this.convert(def !== undefined ? def : null);
+        };
+
+        /**
+         * A string presentation of the type.
+         */
+        Type.prototype.toString = function() {
+            return "Type(?)";
         };
 
         /**

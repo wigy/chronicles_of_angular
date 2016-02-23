@@ -27,6 +27,10 @@
 
         TypeBool.prototype = new Type();
 
+        TypeBool.prototype.toString = function() {
+            return "TypeBool()";
+        };
+
         TypeBool.prototype.convert = function(value) {
             if (value === null || value === false || value === true) {
                 return value;

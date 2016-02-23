@@ -27,6 +27,10 @@
 
         TypeInt.prototype = new Type();
 
+        TypeInt.prototype.toString = function() {
+            return "TypeInt()";
+        };
+
         TypeInt.prototype.convert = function(value) {
             if (value === null) {
                 return null;

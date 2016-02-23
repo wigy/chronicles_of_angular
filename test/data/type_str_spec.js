@@ -30,8 +30,13 @@ describe('module coa.data, TypeStr class', function() {
     it('refuses to initialize undefined values', function() {
         d.quiet();
         var team = new Team({name: undefined});
-        expect(d.errors()).toEqual(['Invalid kind of value undefined for member of type [object Object] for object unit-testing.Team{"name":"default name"}']);
+        expect(d.errors()).toEqual(['Invalid kind of value undefined for member of type TypeStr() for object unit-testing.Team{"name":"default name"}']);
         expect(team.name).toBe('default name');
+    });
+
+    it('has string presentation', function() {
+        var type = new TypeStr();
+        expect(type.toString()).toBe('TypeStr()');
     });
 
     it('validates options correctly', function() {

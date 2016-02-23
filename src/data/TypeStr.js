@@ -44,6 +44,10 @@
             }
         });
 
+        TypeStr.prototype.toString = function() {
+            return "TypeStr()";
+        };
+
         TypeStr.prototype.convert = function(value) {
             if (value === undefined) {
                 return undefined;
