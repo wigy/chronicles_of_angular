@@ -104,4 +104,36 @@ describe('module coa.core, Options class', function() {
         expect(options.test(values, 0)).toEqual([]);
         expect(options.test(values, 1)).toEqual([]);
     });
+
+    it('converts to string', function() {
+
+        var options1 = new Options({
+                required: {
+                    text: "Value cannot be %v since option is set to %o.",
+                    op: function(option, value) {
+                        return !option || value;
+                    },
+                    default: "Hi"
+                }
+        });
+
+        expect(options1.toString()).toEqual('Options(required=Option(default="Hi", required=false, text="Value cannot be %v since option is set to %o."))');
+
+        var options2 = new Options({
+                required: {
+                    text: "This value is required.",
+                    type: "boolean",
+                    default: false,
+                    required: true,
+                    op: function(option, extra) {
+                        return 'required:' + option + ' ' + extra;
+                    },
+                },
+                simple: {
+
+                }
+        });
+
+        expect(options2.toString()).toEqual('Options(required=Option(default=false, required=true, text="This value is required.", type="boolean"), simple=Option(default=null, required=false, text=null))');
+    });
 });

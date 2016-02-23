@@ -18,7 +18,7 @@ describe('module coa.data, TypeObj class', function() {
         new Data('unit-testing.Testing', [
             {invalid: {type: TypeObj}},
         ]);
-        expect(d.errors()).toEqual(['Invalid options [object Object] for type TypeObj(name="invalid", label="Invalid", default=undefined, options={})']);
+        expect(d.errors()).toEqual(['Invalid options [object Object] for type TypeObj(default=undefined, label="Invalid", name="invalid", options={})']);
     });
 
     it('initializes object members with default values', function() {
@@ -53,7 +53,7 @@ describe('module coa.data, TypeObj class', function() {
 
     it('has string presentation', function() {
         var type = new TypeObj('name', null, null, {class: 'unit-testing.Dummy'});
-        expect(type.toString()).toBe('TypeObj(name="name", default=null, label="Name", options={"class":"unit-testing.Dummy","required":false})');
+        expect(type.toString()).toBe('TypeObj(default=null, label="Name", name="name", options={"class":"unit-testing.Dummy","required":false})');
     });
 
     it('validates options correctly', function() {
