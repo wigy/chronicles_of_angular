@@ -14,18 +14,25 @@
          * @ngdoc function
          * @name coa.data.class:Type
          * @requires coa.core.class:Class
+         * @param {String} name Name of the member this type instance specifies in the data object.
+         * @param {any} def Default value for the member.
+         * @param {String} label Human readable title for the name (default: human readable version of name).
+         * @param {Object} options Type specific options (default: none).
          * @description
          * A base class for all member type definition classes. These classes
          * are used when initializing {@link coa.data.class:Data Data}
          * instances as prototypes for data container classes.
          */
-        Type = function() {
-            this.name = null;
-            this.label = null;
-            this.default = null;
-            this.options = null;
+        Type = function(name, label, def, options) {
+            if (name) {
+                this.init(name, label, def, options);
+            } else {
+                this.name = null;
+                this.label = null;
+                this.default = null;
+                this.options = null;
+            }
         };
-        // TODO: implement also initialization from parameters here and in other types.
 
         Type.prototype = new Class();
         Type.prototype.optionDefinitions = new Options({

@@ -52,8 +52,7 @@ describe('module coa.data, TypeObj class', function() {
     });
 
     it('has string presentation', function() {
-        var type = new TypeObj();
-        type.init('name', null, null, {class: 'unit-testing.Dummy'});
+        var type = new TypeObj('name', null, null, {class: 'unit-testing.Dummy'});
         expect(type.toString()).toBe('TypeObj(unit-testing.Dummy)');
     });
 
