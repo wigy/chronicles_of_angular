@@ -32,20 +32,19 @@
          *
          * This is default implementation for stringifying function for all classes.
          * It assumes that prototype sets correct <tt>__class</tt> member to have
-         * fully qualified class name. The return value has format <i>ClassName(member=val, member2=val2)</i>,
+         * fully qualified class name. The return value has format <i>ClassName({member: val, member2: val2})</i>,
          * where is property member is listed with their values. The names starting with underscore or dollar
          * are skipped.
          */
         Class.prototype.toString = function() {
-            var ret = this.__class.split('.').pop();
-            ret += '(';
+            var args = '';
             var members = Object.getOwnPropertyNames(this).sort();
             var added = false;
             for (var i = 0; i < members.length; i++) {
                 if (members[i][0] == '_' || members[i][0] == '$') {
                     continue;
                 }
-                var str = members[i] + "=";
+                var str = members[i] + ": ";
                 var member = this[members[i]];
                 if (member && member.__class) {
                     str += member.toString();
@@ -55,13 +54,16 @@
                     str += JSON.stringify(member);
                 }
                 if (added) {
-                    ret +=", "
+                    args +=", "
                 }
-                ret += str;
+                args += str;
                 added = true;
             }
-            ret += ')';
-            return ret;
+
+            if (args) {
+                args = '{' + args + '}';
+            }
+            return this.__class.split('.').pop() + '(' + args + ')';
         };
 
         return Class;

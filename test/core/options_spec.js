@@ -117,7 +117,7 @@ describe('module coa.core, Options class', function() {
                 }
         });
 
-        expect(options1.toString()).toEqual('Options(required=Option(default="Hi", required=false, text="Value cannot be %v since option is set to %o."))');
+        expect(options1.toString()).toEqual('Options({required: Option({default: "Hi", required: false, text: "Value cannot be %v since option is set to %o."})})');
 
         var options2 = new Options({
                 required: {
@@ -134,6 +134,6 @@ describe('module coa.core, Options class', function() {
                 }
         });
 
-        expect(options2.toString()).toEqual('Options(required=Option(default=false, required=true, text="This value is required.", type="boolean"), simple=Option(default=null, required=false, text=null))');
+        expect(options2.toString()).toEqual('Options({required: Option({default: false, required: true, text: "This value is required.", type: "boolean"}), simple: Option({default: null, required: false, text: null})})');
     });
 });
