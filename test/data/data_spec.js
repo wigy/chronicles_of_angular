@@ -26,7 +26,6 @@ describe('module coa.data, Data class', function() {
         ]);
         var testing = new Testing();
         expect(d.errors()).toEqual(['Trying to define member name as TypeStr({default: null, label: "Name", name: "name", options: {"required":false,"pattern":null}}) but it has been already defined as TypeStr({default: null, label: "Name", name: "name", options: {"required":false,"pattern":null}}) in Data()']);
-        expect(testing.getMembers().length).toBe(1);
     });
 
     it('can validate all members', function() {

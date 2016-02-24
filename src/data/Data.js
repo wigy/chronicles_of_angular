@@ -43,10 +43,9 @@
         * </dl>
         */
         Data = function(definitions, options) {
-            // TODO: Change the _members so that it is a list of names. Then change access to types so that it does not use type.name.
-            // This is list of members in order.
+            // This is list of member names in order.
             this._members = [];
-            // This is mapping from member names to the types listed in _members.
+            // This is mapping from member names to the type instances.
             this._types = {};
             // Options for this Data container.
             this._options = this.optionDefinitions.validate(options);
@@ -73,7 +72,7 @@
         Data.prototype.toJSON = function() {
             var ret = {};
             for (var k = 0; k < this._members.length; k++ ) {
-                ret[this._members[k].name] = this._members[k].toJSON(this[this._members[k].name]);
+                ret[this._members[k]] = this._types[this._members[k]].toJSON(this[this._members[k]]);
             }
             return ret;
         };
@@ -118,7 +117,7 @@
                 return;
             }
 
-            this._members.push(type);
+            this._members.push(name);
             this._types[name] = type;
         };
 
@@ -131,7 +130,7 @@
          */
         Data.prototype.reset = function() {
             for (var k = 0; k < this._members.length; k++ ) {
-                this[this._members[k].name] = this._members[k].copy(this._members[k].default);
+                this[this._members[k]] = this._types[this._members[k]].copy(this._types[this._members[k]].default);
             }
         };
 
@@ -145,7 +144,7 @@
          */
         Data.prototype.copy = function(target) {
             for (var k = 0; k < this._members.length; k++ ) {
-                this[this._members[k].name] = this._members[k].copy(target[this._members[k].name]);
+                this[this._members[k]] = this._types[this._members[k]].copy(target[this._members[k]]);
             }
         };
 
@@ -189,7 +188,7 @@
                 for(var k in data) {
                     type = this._types[k];
                     if (type) {
-                        type.set(this, data[k]);
+                        type.set(this, k, data[k]);
                     } else {
                         d("Invalid member name", name, "in initial data", data, "for", this);
                     }
@@ -203,7 +202,7 @@
                     d("Invalid primary field '" + this._options.primary_field + "' defined for", this);
                     return;
                 }
-                type.set(this, data);
+                type.set(this, this._options.primary_field, data);
                 return;
             }
 
@@ -218,16 +217,6 @@
          */
         Data.prototype.getModuleAndClass = function() {
             return this.__class;
-        };
-
-        /**
-         * @ngdoc method
-         * @name getMembers
-         * @methodOf coa.data.class:Data
-         * @return {Array} A list of member type defintions.
-         */
-        Data.prototype.getMembers = function() {
-            return this._members;
         };
 
         /**
@@ -272,9 +261,9 @@
             var errors = {};
             var failed = false;
             for (var i=0; i < this._members.length; i++) {
-                var errs = this._members[i].isInvalid(this[this._members[i].name]);
+                var errs = this._types[this._members[i]].isInvalid(this[this._members[i]]);
                 if (errs) {
-                    errors[this._members[i].name] = errs;
+                    errors[this._members[i]] = errs;
                     failed = true;
                 }
             }

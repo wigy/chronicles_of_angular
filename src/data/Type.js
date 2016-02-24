@@ -28,7 +28,6 @@
             if (name !== undefined) {
                 this.init(name, label, def, options);
             } else {
-                this.name = null;
                 this.label = null;
                 this.default = null;
                 this.options = null;
@@ -51,6 +50,10 @@
 
         // TODO: Change toString so that it displays directly options.
 
+        Type.prototype.toJSON = function(value) {
+            return value;
+        };
+
         /**
          * @ngdoc method
          * @name init
@@ -64,7 +67,6 @@
          * Initialize member type definition.
          */
         Type.prototype.init = function(name, def, label, options) {
-            this.name = name;
             this.default = undefined;
             this.label = label || (name || '').code2human();
             this.options = {};
@@ -170,13 +172,13 @@
          * Set the member of the target object using the given value. The value is converted using
          * this type and if not successfull, error is displayed and default value is used instead.
          */
-        Type.prototype.set = function(target, value) {
+        Type.prototype.set = function(target, key, value) {
             var set = this.convert(value);
             if (set === undefined) {
                 d("Invalid kind of value", value, "for member of type", this, "for object", target);
                 set = this.default;
             }
-            target[this.name] = set;
+            target[key] = set;
             return set;
         };
 
