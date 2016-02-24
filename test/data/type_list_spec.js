@@ -6,24 +6,20 @@ describe('module coa.data, TypeList class', function() {
         module('coa.data');
         module('coa.auth');
         inject(function(_Data_, _TypeStr_, _TypeObj_, _TypeList_, _User_){
-            /*
             Data = _Data_;
             TypeStr = _TypeStr_;
             TypeObj = _TypeObj_;
             TypeList = _TypeList_;
             User = _User_;
-            */
         });
     });
 
     it('requires type option', function() {
-        /*
         d.quiet();
-        new Data('unit-testing.Testing', [
-            {invalid: {type: TypeObj}},
+        new Data([
+            {invalid: {type: TypeList}},
         ]);
-        expect(d.errors()).toEqual(['Invalid options [object Object] for type TypeObj()']);
-        */
+        expect(d.errors()).toEqual(['Invalid options {} for type TypeList({default: undefined, label: "Invalid", name: "invalid", options: {}})']);
         expect(1).toEqual(1);
     });
 
@@ -49,21 +45,20 @@ describe('module coa.data, TypeList class', function() {
 
 
     it('has string presentation', function() {
-        /*
-        var type = new TypeObj('name', null, null, {class: 'unit-testing.Dummy'});
-        expect(type.toString()).toBe('TypeObj(unit-testing.Dummy)');
-        */
-        expect(1).toEqual(1);
+        var type = new TypeList('name', [], null, {type: new TypeStr('str', null, null, {required: true})});
+        expect(type.toString()).toBe('TypeList({default: [], label: "Name", name: "name", options: {"type":"type","required":null}})');
     });
 
     it('validates options correctly', function() {
-        /*
-        var type = new TypeObj();
+
+        var type = new TypeList();
+        var subtype = new TypeStr('str', null, null, {required: true});
         var options =  {};
         expect(type.optionDefinitions.validate(options)).toEqual(null);
-        options = {class: 'coa.auth.User'};
-        expect(type.optionDefinitions.validate(options)).toEqual({class: 'coa.auth.User', required: false});
+        options = {type: subtype};
+        expect(type.optionDefinitions.validate(options) instanceof Object).toEqual(true);
 
+        /*
         type.init('name', null, 'Label', options);
         expect(type.isInvalid(null)).toEqual(false);
         expect(type.isInvalid({})).toEqual(['Value must belong to coa.auth.User class.']);
@@ -75,6 +70,5 @@ describe('module coa.data, TypeList class', function() {
         Dummy.prototype = new Data('unit-testing.Dummy', []);
         expect(type.isInvalid(new Dummy())).toEqual(['Value must belong to coa.auth.User class.']);
         */
-        expect(1).toEqual(1);
     });
 });

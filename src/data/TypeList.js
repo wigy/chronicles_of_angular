@@ -32,6 +32,42 @@
 
         TypeList.prototype = new Type();
         TypeList.prototype.__class = 'coa.data.TypeList';
+        TypeList.prototype.optionDefinitions = Type.prototype.optionDefinitions.inherit({
+            required: {
+                text: "At least one is required.",
+                type: "boolean",
+                op: function(option, value) {
+                    if (!option) {
+                        return true;
+                    }
+                    if (value instanceof Array) {
+                        return value.length > 0;
+                    }
+                    return false;
+                }
+            },
+            type: {
+                text: "Value does not have correct type in this collection.",
+                type: function(value) {
+                    return value instanceof Type;
+                },
+                required: true,
+                op: function(option, value) {
+                    d("TODO:", option, value, option.isValid(option.convert(value)))
+                    return true;
+                }
+            },
+        });
+
+        /**
+         * Allow null and array.
+         */
+        TypeList.prototype.convert = function(value) {
+            if (value === null || (value instanceof Array)) {
+                return value;
+            }
+            return undefined;
+        };
 
         return TypeList;
     }]);

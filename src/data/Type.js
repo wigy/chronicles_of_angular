@@ -77,13 +77,6 @@
         };
 
         /**
-         * A string presentation of the type.
-         */
-//        Type.prototype.toString = function() {
-//            return "Type(?)";
-//        };
-
-        /**
          * @ngdoc method
          * @name convert
          * @methodOf coa.data.class:Type

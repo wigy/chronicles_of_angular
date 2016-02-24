@@ -26,10 +26,10 @@ describe('module coa.data, TypeInt class', function() {
     it('refuses invalid initial values', function() {
         d.quiet();
         new Numbering({first: 3.5});
-        expect(d.errors()).toEqual(['Invalid kind of value 3.5 for member of type TypeInt() for object Data({first: -1})']);
+        expect(d.errors()).toEqual(['Invalid kind of value 3.5 for member of type TypeInt({default: -1, label: "First", name: "first", options: {"required":false}}) for object Data({first: -1})']);
         d.quiet();
         new Numbering({first: '1'});
-        expect(d.errors()).toEqual(['Invalid kind of value 1 for member of type TypeInt() for object Data({first: -1})']);
+        expect(d.errors()).toEqual(['Invalid kind of value 1 for member of type TypeInt({default: -1, label: "First", name: "first", options: {"required":false}}) for object Data({first: -1})']);
     });
 
     it('handles zero as default', function() {

@@ -33,10 +33,6 @@
         TypeInt.prototype = new Type();
         TypeInt.prototype.__class = 'coa.data.TypeInt';
 
-        TypeInt.prototype.toString = function() {
-            return "TypeInt()";
-        };
-
         TypeInt.prototype.convert = function(value) {
             if (value === null) {
                 return null;

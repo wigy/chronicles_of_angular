@@ -31,7 +31,11 @@ function d(arg1, arg2, argN) {
         if (i) {
             msg += ' ';
         }
-        msg += args[i];
+        if (args[i] instanceof Object && !args[i].__class) {
+            msg += JSON.stringify(args[i]);
+        } else {
+            msg += args[i];
+        }
     }
     d.messages.push(msg);
     if (!d.silenced) {

@@ -48,10 +48,6 @@
             }
         });
 
-//        TypeObj.prototype.toString = function() {
-//            return "TypeObj(" + (this.options.class || '') + ")";
-//        };
-
         /**
          * Valid values are null, Data instances and Object instances that are converted to class instances.
          */

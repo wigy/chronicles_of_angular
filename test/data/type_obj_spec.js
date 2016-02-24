@@ -18,7 +18,7 @@ describe('module coa.data, TypeObj class', function() {
         new Data([
             {invalid: {type: TypeObj}},
         ]);
-        expect(d.errors()).toEqual(['Invalid options [object Object] for type TypeObj({default: undefined, label: "Invalid", name: "invalid", options: {}})']);
+        expect(d.errors()).toEqual(['Invalid options {} for type TypeObj({default: undefined, label: "Invalid", name: "invalid", options: {}})']);
     });
 
     it('initializes object members with default values', function() {
