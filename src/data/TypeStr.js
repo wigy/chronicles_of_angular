@@ -51,10 +51,10 @@
         });
 
         TypeStr.prototype.convert = function(value) {
-            if (value === undefined) {
-                return undefined;
+            if (value === null || typeof(value) === 'string') {
+                return value;
             }
-            return value === null ? null : value + '';
+            return undefined;
         };
 
         return TypeStr;

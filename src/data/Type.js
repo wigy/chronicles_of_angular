@@ -95,13 +95,17 @@
          * @ngdoc method
          * @name isInvalid
          * @methodOf coa.data.class:Type
-         * @param {any} value A value to test having already correct kind of type.
+         * @param {any} value A value to test.
          * @return {Array} Null if the value is valid or an array with failure messages.
          * @description
          *
          * Test that all restrictions to the value are fulfilled and collect failures.
          */
         Type.prototype.isInvalid = function(value) {
+
+            if (this.convert(value) === undefined) {
+                return ['Value has not correct type.'];
+            }
 
             var errors = this.optionDefinitions.test(this.options, value);
 

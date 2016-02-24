@@ -18,8 +18,6 @@ describe('module coa.data, TypeStr class', function() {
 
     it('can initialize string members', function() {
         expect((new Team({name: 'TRC'})).name).toBe('TRC');
-        expect((new Team({name: true})).name).toBe('true');
-        expect((new Team({name: 21122})).name).toBe('21122');
         expect((new Team({name: null})).name).toBe(null);
     });
 
@@ -49,6 +47,13 @@ describe('module coa.data, TypeStr class', function() {
         expect(type.optionDefinitions.validate(options)).toEqual(null);
         options = {pattern: /xxx/};
         expect(type.optionDefinitions.validate(options)).toEqual({required: false, pattern: /xxx/});
+
+        options = {};
+        type.init('name', null, 'Label', options);
+        expect(type.isInvalid(null)).toEqual(false);
+        expect(type.isInvalid({})).toEqual(['Value has not correct type.']);
+        expect(type.isInvalid(true)).toEqual(['Value has not correct type.']);
+        expect(type.isInvalid(1)).toEqual(['Value has not correct type.']);
 
         options = {pattern: /xxx/};
         type.init('name', null, 'Label', options);
