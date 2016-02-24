@@ -47,13 +47,20 @@
                 }
             },
             type: {
-                text: "Value does not have correct type in this collection.",
+                text: "Incorrect value in this collection.",
                 type: function(value) {
                     return value instanceof Type;
                 },
                 required: true,
                 op: function(option, value) {
-                    d("TODO:", option, value, option.isValid(option.convert(value)))
+                    if (value === null) {
+                        return true;
+                    }
+                    for (var i = 0; i < value.length; i++) {
+                        if (!option.isValid(value[i])) {
+                            return false;
+                        }
+                    }
                     return true;
                 }
             },

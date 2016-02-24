@@ -14,7 +14,7 @@
          * @ngdoc function
          * @name coa.data.class:Type
          * @requires coa.core.class:Class
-         * @param {String} name Name of the member this type instance specifies in the data object.
+         * @param {String} name Name of the member this type instance specifies in the containing data object.
          * @param {any} def Default value for the member.
          * @param {String} label Human readable title for the name (default: human readable version of name).
          * @param {Object} options Type specific options (default: none).
@@ -24,7 +24,7 @@
          * instances as prototypes for data container classes.
          */
         Type = function(name, label, def, options) {
-            if (name) {
+            if (name !== undefined) {
                 this.init(name, label, def, options);
             } else {
                 this.name = null;
@@ -52,7 +52,7 @@
          * @ngdoc method
          * @name init
          * @methodOf coa.data.class:Type
-         * @param {String} name Name of the member this type instance specifies in the data object.
+         * @param {String} name Name of the member this type instance specifies in the containing data object.
          * @param {any} def Default value for the member.
          * @param {String} label Human readable title for the name (default: human readable version of name).
          * @param {Object} options Type specific options (default: none).
@@ -63,7 +63,7 @@
         Type.prototype.init = function(name, def, label, options) {
             this.name = name;
             this.default = undefined;
-            this.label = label || name.code2human();
+            this.label = label || (name || '').code2human();
             this.options = {};
 
             var validatedOptions = this.optionDefinitions.validate(options || {});

@@ -52,23 +52,26 @@ describe('module coa.data, TypeList class', function() {
     it('validates options correctly', function() {
 
         var type = new TypeList();
-        var subtype = new TypeStr('str', null, null, {required: true});
+        var subtype = new TypeStr(null, null, null, {required: true});
         var options =  {};
         expect(type.optionDefinitions.validate(options)).toEqual(null);
         options = {type: subtype};
         expect(type.optionDefinitions.validate(options) instanceof Object).toEqual(true);
 
-        /*
         type.init('name', null, 'Label', options);
         expect(type.isInvalid(null)).toEqual(false);
-        expect(type.isInvalid({})).toEqual(['Value must belong to coa.auth.User class.']);
-        expect(type.isInvalid(new User())).toEqual(false);
+        expect(type.isInvalid([])).toEqual(false);
+        expect(type.isInvalid(['Hi'])).toEqual(false);
+        expect(type.isInvalid([null])).toEqual(['Incorrect value in this collection.']);
+        expect(type.isInvalid({})).toEqual(['Value has not correct type.']);
+        expect(type.isInvalid(new User())).toEqual(['Value has not correct type.']);
 
-        function Dummy(data) {
-            this.init(data);
-        }
-        Dummy.prototype = new Data('unit-testing.Dummy', []);
-        expect(type.isInvalid(new Dummy())).toEqual(['Value must belong to coa.auth.User class.']);
-        */
+        var subtype2 = new TypeStr('str', null, null, {required: false});
+        type.init('name', [], 'Label', {type: subtype2, required: true});
+        expect(type.isInvalid(null)).toEqual(['At least one is required.']);
+        expect(type.isInvalid([])).toEqual(['At least one is required.']);
+        expect(type.isInvalid(['Hi'])).toEqual(false);
+        expect(type.isInvalid([null])).toEqual(false);
+        expect(type.isInvalid([null, 'Hi', null])).toEqual(false);
     });
 });
