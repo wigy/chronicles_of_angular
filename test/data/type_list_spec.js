@@ -24,30 +24,28 @@ describe('module coa.data, TypeList class', function() {
     });
 
     it('initializes object members with default values', function() {
-        /*
+
+        var subtype = new TypeObj(null, null, null, {class: 'coa.auth.User'});
+
         function Container(data) {
             this.init(data);
         }
-        Container.prototype = new Data('unit-testing.Container', [
-            {user: {type: TypeObj, options: {class: 'coa.auth.User'}}}
+        Container.prototype = new Data([
+            {userlist: {type: TypeList, options: {type: subtype}}}
         ]);
-        var container = new Container();
-        expect(container.user).toBe(null);
+        var container = new Container({userlist: [{}, {name: "testinguser"}, null]});
 
-        Container.prototype = new Data('unit-testing.Container', [
-            {user: {type: TypeObj, default: {name: 'Test default'}, options: {class: 'coa.auth.User'}}}
-        ]);
-        container = new Container();
-        expect(container.user.name).toBe('Test default');
-        */
-        expect(1).toEqual(1);
+        expect(container.userlist[0] instanceof User).toBe(true);
+        expect(container.userlist[1].name).toBe("testinguser");
+        expect(container.userlist[2]).toBe(null);
     });
-
 
     it('has string presentation', function() {
         var type = new TypeList('name', [], null, {type: new TypeStr('str', null, null, {required: true})});
         expect(type.toString()).toBe('TypeList({default: [], label: "Name", name: "name", options: {"type":"type","required":null}})');
     });
+
+    //TODO: JSON test for list.
 
     it('validates options correctly', function() {
 

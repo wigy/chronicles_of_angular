@@ -24,6 +24,7 @@
          * instances as prototypes for data container classes.
          */
         Type = function(name, label, def, options) {
+            // TODO: Drop the name, label and default. Move label and default inside options.
             if (name !== undefined) {
                 this.init(name, label, def, options);
             } else {
@@ -47,6 +48,8 @@
                 },
             }
         });
+
+        // TODO: Change toString so that it displays directly options.
 
         /**
          * @ngdoc method

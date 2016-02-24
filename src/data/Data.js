@@ -43,6 +43,7 @@
         * </dl>
         */
         Data = function(definitions, options) {
+            // TODO: Change the _members so that it is a list of names. Then change access to types so that it does not use type.name.
             // This is list of members in order.
             this._members = [];
             // This is mapping from member names to the types listed in _members.

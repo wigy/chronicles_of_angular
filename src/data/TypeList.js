@@ -70,8 +70,15 @@
          * Allow null and array.
          */
         TypeList.prototype.convert = function(value) {
-            if (value === null || (value instanceof Array)) {
+            if (value === null) {
                 return value;
+            }
+            if (value instanceof Array) {
+                var ret = new Array(value.length);
+                for (var i=0; i < value.length; i++) {
+                    ret[i] = this.options.type.convert(value[i]);
+                }
+                return ret;
             }
             return undefined;
         };

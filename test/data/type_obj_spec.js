@@ -35,6 +35,7 @@ describe('module coa.data, TypeObj class', function() {
             {user: {type: TypeObj, default: {name: 'Test default'}, options: {class: 'coa.auth.User'}}}
         ]);
         container = new Container();
+        expect(container.user instanceof User).toBe(true);
         expect(container.user.name).toBe('Test default');
     });
 
