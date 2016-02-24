@@ -110,7 +110,7 @@
             }
 
             var type = new (definition.type)();
-            type.init(name, definition.default, definition.label, definition.options || {});
+            type.init(definition.options);
 
             if (this._types[name]) {
                 d("Trying to define member", name, "as", type, "but it has been already defined as", this._types[name], "in", this);
@@ -130,7 +130,7 @@
          */
         Data.prototype.reset = function() {
             for (var k = 0; k < this._members.length; k++ ) {
-                this[this._members[k]] = this._types[this._members[k]].copy(this._types[this._members[k]].default);
+                this[this._members[k]] = this._types[this._members[k]].copy(this._types[this._members[k]].getDefault());
             }
         };
 

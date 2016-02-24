@@ -23,11 +23,11 @@ describe('module coa.data, TypeBool class', function() {
         expect((new Flagged()).flag).toBe(null);
 
         Flagged.prototype = new Data(
-            [{flag: {type: TypeBool, default: false, options: {}}}]);
+            [{flag: {type: TypeBool, options: {default: false}}}]);
         expect((new Flagged()).flag).toBe(false);
 
         Flagged.prototype = new Data(
-            [{flag: {type: TypeBool, default: true, options: {}}}]);
+            [{flag: {type: TypeBool, options: {default: true}}}]);
         expect((new Flagged()).flag).toBe(true);
     });
 

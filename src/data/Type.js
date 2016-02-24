@@ -14,24 +14,14 @@
          * @ngdoc function
          * @name coa.data.class:Type
          * @requires coa.core.class:Class
-         * @param {String} name Name of the member this type instance specifies in the containing data object.
-         * @param {any} def Default value for the member.
-         * @param {String} label Human readable title for the name (default: human readable version of name).
-         * @param {Object} options Type specific options (default: none).
+         * @param {Object} options Type specific options.
          * @description
          * A base class for all member type definition classes. These classes
          * are used when initializing {@link coa.data.class:Data Data}
          * instances as prototypes for data container classes.
          */
-        Type = function(name, label, def, options) {
-            // TODO: Drop the name, label and default. Move label and default inside options.
-            if (name !== undefined) {
-                this.init(name, label, def, options);
-            } else {
-                this.label = null;
-                this.default = null;
-                this.options = null;
-            }
+        Type = function(options) {
+            this.init(options);
         };
 
         Type.prototype = new Class();
@@ -45,7 +35,14 @@
                 op: function(option, value) {
                     return !(option && value === null);
                 },
-            }
+            },
+            default: {
+                default: null,
+            },
+            label: {
+                type: 'string',
+                default: '',
+            },
         });
 
         // TODO: Change toString so that it displays directly options.
@@ -58,17 +55,12 @@
          * @ngdoc method
          * @name init
          * @methodOf coa.data.class:Type
-         * @param {String} name Name of the member this type instance specifies in the containing data object.
-         * @param {any} def Default value for the member.
-         * @param {String} label Human readable title for the name (default: human readable version of name).
-         * @param {Object} options Type specific options (default: none).
+         * @param {Object} options Type specific options.
          * @description
          *
          * Initialize member type definition.
          */
-        Type.prototype.init = function(name, def, label, options) {
-            this.default = undefined;
-            this.label = label || (name || '').code2human();
+        Type.prototype.init = function(options) {
             this.options = {};
 
             var validatedOptions = this.optionDefinitions.validate(options || {});
@@ -78,7 +70,7 @@
             }
             this.options = validatedOptions;
 
-            this.default = this.convert(def !== undefined ? def : null);
+            // TODO: Convert default value in options through type.convert() function.
         };
 
         /**
@@ -94,6 +86,16 @@
          */
         Type.prototype.convert = function(value) {
             return value;
+        };
+
+        /**
+         * @ngdoc method
+         * @name getDefault
+         * @methodOf coa.data.class:Type
+         * @return {any} Default value for this type.
+         */
+        Type.prototype.getDefault = function() {
+            return this.options.default;
         };
 
         /**
@@ -176,7 +178,7 @@
             var set = this.convert(value);
             if (set === undefined) {
                 d("Invalid kind of value", value, "for member of type", this, "for object", target);
-                set = this.default;
+                set = this.getDefault();
             }
             target[key] = set;
             return set;

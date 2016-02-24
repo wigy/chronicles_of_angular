@@ -39,6 +39,7 @@ function d(arg1, arg2, argN) {
     }
     d.messages.push(msg);
     if (!d.silenced) {
+        // TODO: Find file name and line number from stack.
         console.log.apply(console, args);
     }
     return args[args.length - 1];

@@ -18,6 +18,6 @@ describe('module coa.data, Type class', function() {
             {testing_name: {type: TypeStr}}
         ]);
 
-        expect((new Testing()).getType('testing_name').label).toBe('Testing Name');
+        expect((new Testing()).getType('testing_name').options.label).toBe('Testing Name');
     });
 });

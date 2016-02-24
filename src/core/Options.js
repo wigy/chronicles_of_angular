@@ -120,7 +120,7 @@
             var names = Object.keys(this);
             for (var i = 0; i < names.length; i++) {
                 k = names[i];
-                if (!options[k]) {
+                if (options[k] === undefined) {
                     if (this[k].required) {
                         return null;
                     }
