@@ -209,6 +209,10 @@
                 if (this[names[i]].operate.apply(this[names[i]], opArgs)) {
                     continue;
                 }
+                if (this[names[i]].text === null) {
+                    ret.push(null);
+                    continue;
+                }
                 ret.push(this[names[i]].text.replace(/%o/g, opArgs[0]).replace(/%v/g, opArgs[1]));
             }
 

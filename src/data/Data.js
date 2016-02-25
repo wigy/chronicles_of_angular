@@ -25,15 +25,16 @@
         * {
         *   name: {
         *      type: TypeStr,
-        *      label: 'Name of the foo',
         *      options: {
+        *          label: 'Name of the foo',
+        *          default: 'Default value',
+        *          ...
         *      }
         *   }
         * }
         * </pre>
         * The <code>type</code> is one of the member type definition classes.
-        * The <code>label</code> defines user readable label for that member and <code>options</code>
-        * are type specific options.
+        * The <code>options</code> are type specific options.
         *
         * For the list of standard types and examples, see {@link coa.data}.
         * @param {Object} options Optional options for this Data class. Supported options are

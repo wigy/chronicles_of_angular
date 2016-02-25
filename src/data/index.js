@@ -18,9 +18,11 @@
  * MyClass.prototype = new Data([{
  *     name: {
  *              type: TypeStr,
- *              default: "default name",
- *              label: "Name of the thing",
- *              options: {required: true},
+ *              options: {
+ *                  default: "default name",
+ *                  label: "Name of the thing",
+ *                  required: true
+ *              },
  *     }
  * }]);
  * </pre>

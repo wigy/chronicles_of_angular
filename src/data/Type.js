@@ -38,10 +38,16 @@
             },
             default: {
                 default: null,
+                op: function(option, value) {
+                    return true;
+                },
             },
             label: {
                 type: 'string',
                 default: '',
+                op: function(option, value) {
+                    return true;
+                },
             },
         });
 
