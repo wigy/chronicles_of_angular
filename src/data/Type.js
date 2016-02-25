@@ -51,7 +51,9 @@
             },
         });
 
-        // TODO: Change toString so that it displays directly options.
+        Type.prototype.toString = function() {
+            return this.__class.split('.').pop() + '(' + Class.prototype.toString.call(this.options) + ')';
+        };
 
         Type.prototype.toJSON = function(value) {
             return value;

@@ -97,7 +97,7 @@
         };
 
         /**
-         * Add a member instantiating appropriate type.
+         * Add a member instantiating appropriate type and generate default label if not given.
          */
         Data.prototype._addMember = function(name, definition) {
 
@@ -110,8 +110,12 @@
                 return;
             }
 
-            var type = new (definition.type)();
-            type.init(definition.options);
+            var options = definition.options || {};
+            if (!('label' in options)) {
+                options.label = name.code2human();
+            }
+
+            var type = new (definition.type)(options);
 
             if (this._types[name]) {
                 d("Trying to define member", name, "as", type, "but it has been already defined as", this._types[name], "in", this);

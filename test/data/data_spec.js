@@ -25,7 +25,7 @@ describe('module coa.data, Data class', function() {
             {name: {type: TypeStr}},
         ]);
         var testing = new Testing();
-        expect(d.errors()).toEqual(['Trying to define member name as TypeStr({default: null, label: "Name", name: "name", options: {"required":false,"pattern":null}}) but it has been already defined as TypeStr({default: null, label: "Name", name: "name", options: {"required":false,"pattern":null}}) in Data()']);
+        expect(d.errors()).toEqual(['Trying to define member name as TypeStr({default: null, label: "Name", pattern: null, required: false}) but it has been already defined as TypeStr({default: null, label: "Name", pattern: null, required: false}) in Data()']);
     });
 
     it('can validate all members', function() {
@@ -72,9 +72,9 @@ describe('module coa.data, Data class', function() {
         }
 
         Testing.prototype = new Data([
-            {var1: {type: TypeBool, default: true, options: {}}},
+            {var1: {type: TypeBool, options: {default: true}}},
             {var2: {type: TypeStr, options: {}}},
-            {var3: {type: TypeInt, default: -1, options: {}}},
+            {var3: {type: TypeInt, options: {default: -1}}},
             {var4: {type: TypeObj, options: {class: 'unit-testing.Testing'}}},
         ]);
         Testing.prototype.__class = 'unit-testing.Testing';

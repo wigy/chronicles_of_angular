@@ -14,10 +14,7 @@
          * @ngdoc function
          * @name coa.data.class:TypeObj
          * @requires coa.data.class:Type
-         * @param {String} name Name of the member this type instance specifies in the data object.
-         * @param {any} def Default value for the member.
-         * @param {String} label Human readable title for the name (default: human readable version of name).
-         * @param {Object} options Type specific options (default: none).
+         * @param {Object} options Options for this type.
          * @description
          * An instance of another class. Required option is <code>class</code>, which is fully
          * qualified class name including module, for example <code>"coa.auth.User"</code>.
@@ -28,8 +25,8 @@
          *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
          * </dl>
          */
-        TypeObj = function (name, label, def, options) {
-            Type.call(this, name, label, def, options);
+        TypeObj = function (options) {
+            Type.call(this, options);
         };
 
         TypeObj.prototype = new Type();

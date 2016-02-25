@@ -60,6 +60,10 @@
                 added = true;
             }
 
+            if (!this.__class) {
+                // Support direct calls with non-Class objects.
+                return '{' + args + '}';
+            }
             if (args) {
                 args = '{' + args + '}';
             }

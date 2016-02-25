@@ -11,7 +11,7 @@
  * @name globals.function:d
  * @description
  *
- * Show all arguments on the console.
+ * Show all arguments on the console with stack trace.
  * <pre>
  * d("Cannot find", name, "from the target", obj);
  * </pre>
@@ -39,14 +39,23 @@ function d(arg1, arg2, argN) {
     }
     d.messages.push(msg);
     if (!d.silenced) {
-        // TODO: Find file name and line number from stack.
         console.log.apply(console, args);
+        if (d.stack) {
+            var err = new Error('Stack trace');
+            var stack = err.stack.split("\n");
+            stack.splice(0,2);
+            for (var j = 0; j < stack.length; j++) {
+                console.log('%c' + stack[j], 'color: red; display: none')
+            }
+        }
     }
     return args[args.length - 1];
 }
 
 // If set, do not show messages.
 d.silenced = false;
+// If set, show stack trace.
+d.stack = true;
 // Messages recorded by d().
 d.messages = [];
 
