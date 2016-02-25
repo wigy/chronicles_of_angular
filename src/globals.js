@@ -39,14 +39,22 @@ function d(arg1, arg2, argN) {
     }
     d.messages.push(msg);
     if (!d.silenced) {
-        console.log.apply(console, args);
+        var err = new Error('Stack trace');
+        var stack = err.stack.split("\n");
+        stack.splice(0,2);
         if (d.stack) {
-            var err = new Error('Stack trace');
-            var stack = err.stack.split("\n");
-            stack.splice(0,2);
+            console.log.apply(console, args);
             for (var j = 0; j < stack.length; j++) {
                 console.log('%c' + stack[j], 'color: red; display: none')
             }
+        } else {
+            var line = /\((.*)\)/.exec(stack[0]);
+            if (line) {
+                console.log('%c' + line[1], 'color: red');
+            } else {
+                console.log('%c' + stack[0], 'color: red');
+            }
+            console.log.apply(console, args);
         }
     }
     return args[args.length - 1];
@@ -54,8 +62,8 @@ function d(arg1, arg2, argN) {
 
 // If set, do not show messages.
 d.silenced = false;
-// If set, show stack trace.
-d.stack = 1+false;
+// If set, show full stack trace on call to d().
+d.stack = false;
 // Messages recorded by d().
 d.messages = [];
 

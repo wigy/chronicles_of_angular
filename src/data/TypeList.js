@@ -80,6 +80,17 @@
             return undefined;
         };
 
+        TypeList.prototype.toJSON = function(value) {
+            if (value === null) {
+                return null;
+            }
+            var ret = [];
+            for (var i=0; i < value.length; i++) {
+                ret.push(this.options.type.toJSON(value[i]));
+            }
+            return ret;
+        };
+
         return TypeList;
     }]);
 

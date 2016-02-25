@@ -45,7 +45,17 @@ describe('module coa.data, TypeList class', function() {
         expect(type.toString()).toBe('TypeList({default: [], label: "", required: null, type: TypeStr({default: null, label: "", pattern: null, required: true})})');
     });
 
-    //TODO: JSON test for list.
+    it('converts to JSON', function() {
+        function Container(data) {
+            this.init(data);
+        }
+        Container.prototype = new Data([{
+            list: {type: TypeList, options: {type: new TypeList({type: new TypeStr()})}}
+        }]);
+        var obj = new Container({list: [['x', 'y'], [], ['a', 'b']]});
+        expect(obj.isInvalid()).toBe(false);
+        expect(obj.toJSON()).toEqual({list: [['x', 'y'], [], ['a', 'b']]});
+    });
 
     it('validates options correctly', function() {
 

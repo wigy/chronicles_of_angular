@@ -23,6 +23,7 @@
         * the following format:
         * <pre>
         * {
+            TODO: Maybe one more round of simplification and expect directly Type instances here.
         *   name: {
         *      type: TypeStr,
         *      options: {
@@ -143,11 +144,16 @@
          * @ngdoc method
          * @name copy
          * @methodOf coa.data.class:Data
-         * @param {Data} target Another .
+         * @param {Data} target Another instance of the same class.
          * @description
          * Clone the target object into this.
          */
         Data.prototype.copy = function(target) {
+            if (target.__class !== this.__class) {
+                d("Mismatching classes when trying to copy", target, "into", this);
+                this.reset();
+                return;
+            }
             for (var k = 0; k < this._members.length; k++ ) {
                 this[this._members[k]] = this._types[this._members[k]].copy(target[this._members[k]]);
             }
