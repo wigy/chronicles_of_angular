@@ -21,7 +21,11 @@
          * instances as prototypes for data container classes.
          */
         Type = function(options) {
-            this.init(options);
+            if (options === undefined) {
+                this.options = this.optionDefinitions.validate({}) || {};
+            } else {
+                this.init(options);
+            }
         };
 
         Type.prototype = new Class();
@@ -77,8 +81,7 @@
                 return;
             }
             this.options = validatedOptions;
-
-            // TODO: Convert default value in options through type.convert() function.
+            this.options.default = this.convert(this.options.default);
         };
 
         /**

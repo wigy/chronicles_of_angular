@@ -55,7 +55,7 @@ function d(arg1, arg2, argN) {
 // If set, do not show messages.
 d.silenced = false;
 // If set, show stack trace.
-d.stack = true;
+d.stack = 1+false;
 // Messages recorded by d().
 d.messages = [];
 

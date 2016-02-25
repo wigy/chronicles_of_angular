@@ -12,7 +12,7 @@ describe('module coa.data, TypeStr class', function() {
             Data = _Data_;
             TypeStr = _TypeStr_;
             Team.prototype = new Data(
-                [{name: {type: TypeStr, label: "Name of the team", default: 'default name', options: {}}}]);
+                [{name: {type: TypeStr, options: {label: "Name of the team", default: 'default name'}}}]);
         });
     });
 
@@ -28,13 +28,13 @@ describe('module coa.data, TypeStr class', function() {
     it('refuses to initialize undefined values', function() {
         d.quiet();
         var team = new Team({name: undefined});
-        expect(d.errors()).toEqual(['Invalid kind of value undefined for member of type TypeStr({default: "default name", label: "Name of the team", name: "name", options: {"required":false,"pattern":null}}) for object Data({name: "default name"})']);
+        expect(d.errors()).toEqual(['Invalid kind of value undefined for member of type TypeStr({default: "default name", label: "Name of the team", pattern: null, required: false}) for object Data({name: "default name"})']);
         expect(team.name).toBe('default name');
     });
 
     it('has string presentation', function() {
         var type = new TypeStr();
-        expect(type.toString()).toBe('TypeStr({default: null, label: null, name: null, options: null})');
+        expect(type.toString()).toBe('TypeStr({default: null, label: "", pattern: null, required: false})');
     });
 
     it('validates options correctly', function() {
@@ -42,27 +42,27 @@ describe('module coa.data, TypeStr class', function() {
         var type = new TypeStr();
 
         var options =  {};
-        expect(type.optionDefinitions.validate(options)).toEqual({required: false, pattern: null});
+        expect(type.optionDefinitions.validate(options)).toEqual({ required: false, default: null, label: '', pattern: null });
         options = {pattern: 12};
         expect(type.optionDefinitions.validate(options)).toEqual(null);
         options = {pattern: /xxx/};
-        expect(type.optionDefinitions.validate(options)).toEqual({required: false, pattern: /xxx/});
+        expect(type.optionDefinitions.validate(options)).toEqual({ pattern: /xxx/, required: false, default: null, label: '' });
 
         options = {};
-        type.init('name', null, 'Label', options);
+        type.init(options);
         expect(type.isInvalid(null)).toEqual(false);
         expect(type.isInvalid({})).toEqual(['Value has not correct type.']);
         expect(type.isInvalid(true)).toEqual(['Value has not correct type.']);
         expect(type.isInvalid(1)).toEqual(['Value has not correct type.']);
 
         options = {pattern: /xxx/};
-        type.init('name', null, 'Label', options);
+        type.init(options);
         expect(type.isInvalid(null)).toEqual(false);
         expect(type.isInvalid('x')).toEqual(['Value does not have correct format.']);
         expect(type.isInvalid('axxxb')).toEqual(false);
 
         options = {pattern: /^xxx/};
-        type.init('name', null, 'Label', options);
+        type.init(options);
         expect(type.isInvalid(null)).toEqual(false);
         expect(type.isInvalid('axxxb')).toEqual(['Value does not have correct format.']);
     });

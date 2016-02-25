@@ -35,9 +35,9 @@
         };
 
         TimeStr.prototype = new Data([
-            {time: {type: TypeStr, default: '00:00:00', options: {pattern: /^\d\d:\d\d:\d\d$/}}},
-            {negative: {type: TypeBool, default: false}},
-            {overflow: {type: TypeBool, default: false}}
+            {time: {type: TypeStr, options: {default: '00:00:00', pattern: /^\d\d:\d\d:\d\d$/}}},
+            {negative: {type: TypeBool, options: {default: false}}},
+            {overflow: {type: TypeBool, options: {default: false}}}
         ], {primary_field: 'time'});
         TimeStr.prototype.__class = 'coa.datetime.TimeStr';
 

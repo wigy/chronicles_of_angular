@@ -23,7 +23,7 @@
          *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
          * </dl>
          */
-        TypeBool = function(name, options) {
+        TypeBool = function(options) {
             Type.call(this, options);
         };
 
