@@ -17,17 +17,17 @@ describe('module coa.data, TypeBool class', function() {
     it('can initialize boolean members', function() {
 
         Flagged.prototype = new Data(
-            [{flag: {type: TypeBool, options: {}}}]);
+            [{flag: new TypeBool({})}]);
         expect((new Flagged({flag: false})).flag).toBe(false);
         expect((new Flagged({flag: true})).flag).toBe(true);
         expect((new Flagged()).flag).toBe(null);
 
         Flagged.prototype = new Data(
-            [{flag: {type: TypeBool, options: {default: false}}}]);
+            [{flag: new TypeBool({default: false})}]);
         expect((new Flagged()).flag).toBe(false);
 
         Flagged.prototype = new Data(
-            [{flag: {type: TypeBool, options: {default: true}}}]);
+            [{flag: new TypeBool({default: true})}]);
         expect((new Flagged()).flag).toBe(true);
     });
 
@@ -36,11 +36,11 @@ describe('module coa.data, TypeBool class', function() {
         var type = new TypeBool();
 
         var options =  {};
-        expect(type.optionDefinitions.validate(options)).toEqual({required: false, default: null, label: ''});
+        expect(type.optionDefinitions.validate(options)).toEqual({required: false, default: null, label: null});
         options = {required: false};
-        expect(type.optionDefinitions.validate(options)).toEqual({required: false, default: null, label: ''});
+        expect(type.optionDefinitions.validate(options)).toEqual({required: false, default: null, label: null});
         options = {required: true};
-        expect(type.optionDefinitions.validate(options)).toEqual({required: true, default: null, label: ''});
+        expect(type.optionDefinitions.validate(options)).toEqual({required: true, default: null, label: null});
         options = {required: 0};
         expect(type.optionDefinitions.validate(options)).toBe(null);
 

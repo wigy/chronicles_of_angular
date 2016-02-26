@@ -48,7 +48,7 @@
             },
             label: {
                 type: 'string',
-                default: '',
+                default: null,
                 op: function(option, value) {
                     return true;
                 },

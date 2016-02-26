@@ -4,7 +4,7 @@
 
     var Data;
 
-    module.factory('Data', ['Class', 'Options', function(Class, Options) {
+    module.factory('Data', ['Class', 'Options', 'Type', function(Class, Options, Type) {
 
         if (Data) {
             return Data;
@@ -106,25 +106,23 @@
                 d("Invalid name for a data member", name, "with definition", definition);
                 return;
             }
-            if (typeof(definition.type) !== "function") {
-                d("Invalid type for", name, "given in definition", definition);
+
+            if (!(definition instanceof Type)) {
+                d("Invalid type", definition, "given for", this);
                 return;
             }
 
-            var options = definition.options || {};
-            if (!('label' in options)) {
-                options.label = name.code2human();
+            if (definition.options.label === null) {
+                definition.options.label = name.code2human();
             }
 
-            var type = new (definition.type)(options);
-
             if (this._types[name]) {
-                d("Trying to define member", name, "as", type, "but it has been already defined as", this._types[name], "in", this);
+                d("Trying to define member", name, "as", definition, "but it has been already defined as", this._types[name], "in", this);
                 return;
             }
 
             this._members.push(name);
-            this._types[name] = type;
+            this._types[name] = definition;
         };
 
         /**

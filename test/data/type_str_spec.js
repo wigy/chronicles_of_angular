@@ -12,7 +12,7 @@ describe('module coa.data, TypeStr class', function() {
             Data = _Data_;
             TypeStr = _TypeStr_;
             Team.prototype = new Data(
-                [{name: {type: TypeStr, options: {label: "Name of the team", default: 'default name'}}}]);
+                [{name: new TypeStr({label: "Name of the team", default: 'default name'})}]);
         });
     });
 
@@ -34,7 +34,7 @@ describe('module coa.data, TypeStr class', function() {
 
     it('has string presentation', function() {
         var type = new TypeStr();
-        expect(type.toString()).toBe('TypeStr({default: null, label: "", pattern: null, required: false})');
+        expect(type.toString()).toBe('TypeStr({default: null, label: null, pattern: null, required: false})');
     });
 
     it('validates options correctly', function() {
@@ -42,11 +42,11 @@ describe('module coa.data, TypeStr class', function() {
         var type = new TypeStr();
 
         var options =  {};
-        expect(type.optionDefinitions.validate(options)).toEqual({ required: false, default: null, label: '', pattern: null });
+        expect(type.optionDefinitions.validate(options)).toEqual({ required: false, default: null, label: null, pattern: null });
         options = {pattern: 12};
         expect(type.optionDefinitions.validate(options)).toEqual(null);
         options = {pattern: /xxx/};
-        expect(type.optionDefinitions.validate(options)).toEqual({ pattern: /xxx/, required: false, default: null, label: '' });
+        expect(type.optionDefinitions.validate(options)).toEqual({ pattern: /xxx/, required: false, default: null, label: null });
 
         options = {};
         type.init(options);

@@ -12,7 +12,7 @@ describe('module coa.data, TypeInt class', function() {
             Data = _Data_;
             TypeInt = _TypeInt_;
             Numbering.prototype = new Data(
-                [{first: {type: TypeInt, options: {default: -1}}}]);
+                [{first: new TypeInt({default: -1})}]);
         });
     });
 
@@ -34,7 +34,7 @@ describe('module coa.data, TypeInt class', function() {
 
     it('handles zero as default', function() {
         Numbering.prototype = new Data(
-            [{first: {type: TypeInt, options: {default: 0}}}]);
+            [{first: new TypeInt({default: 0})}]);
         expect((new Numbering()).first).toBe(0);
     });
 });

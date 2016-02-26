@@ -29,7 +29,7 @@
         };
 
         User.prototype = new Data([
-            {name: {type: TypeStr, options: {required: true}}}
+            {name: new TypeStr({required: true})}
         ]);
         User.prototype.__class = 'coa.auth.User';
 

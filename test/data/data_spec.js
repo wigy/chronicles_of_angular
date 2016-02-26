@@ -21,8 +21,8 @@ describe('module coa.data, Data class', function() {
             this.init(data);
         }
         Testing.prototype = new Data([
-            {name: {type: TypeStr}},
-            {name: {type: TypeStr}},
+            {name: new TypeStr()},
+            {name: new TypeStr()},
         ]);
         var testing = new Testing();
         expect(d.errors()).toEqual(['Trying to define member name as TypeStr({default: null, label: "Name", pattern: null, required: false}) but it has been already defined as TypeStr({default: null, label: "Name", pattern: null, required: false}) in Data()']);
@@ -35,8 +35,8 @@ describe('module coa.data, Data class', function() {
         }
 
         Testing.prototype = new Data([
-            {name1: {type: TypeStr, options: {required: true}}},
-            {name2: {type: TypeStr, options: {required: true}}},
+            {name1: new TypeStr({required: true})},
+            {name2: new TypeStr({required: true})},
         ]);
 
         var testing = new Testing();
@@ -50,8 +50,8 @@ describe('module coa.data, Data class', function() {
         expect(testing.isValid()).toEqual(true);
 
         Testing.prototype = new Data([
-            {name1: {type: TypeStr, options: {}}},
-            {name2: {type: TypeStr, options: {}}},
+            {name1: new TypeStr({})},
+            {name2: new TypeStr({})},
         ]);
 
         testing = new Testing();
@@ -72,10 +72,10 @@ describe('module coa.data, Data class', function() {
         }
 
         Testing.prototype = new Data([
-            {var1: {type: TypeBool, options: {default: true}}},
-            {var2: {type: TypeStr, options: {}}},
-            {var3: {type: TypeInt, options: {default: -1}}},
-            {var4: {type: TypeObj, options: {class: 'unit-testing.Testing'}}},
+            {var1: new TypeBool({default: true})},
+            {var2: new TypeStr({})},
+            {var3: new TypeInt({default: -1})},
+            {var4: new TypeObj({class: 'unit-testing.Testing'})},
         ]);
         Testing.prototype.__class = 'unit-testing.Testing';
         var obj = new Testing({var2: 'x', var4: new Testing({var2: 'y'})});
@@ -101,8 +101,8 @@ describe('module coa.data, Data class', function() {
         }
 
         Testing.prototype = new Data([
-            {name: {type: TypeStr}},
-            {time: {type: TypeObj, options: {class: 'coa.datetime.TimeStr'}}},
+            {name: new TypeStr()},
+            {time: new TypeObj({class: 'coa.datetime.TimeStr'})},
         ]);
 
         var time = new TimeStr({time: '01:02:03'});
@@ -127,8 +127,8 @@ describe('module coa.data, Data class', function() {
         }
 
         Testing.prototype = new Data([
-            {name: {type: TypeStr}},
-            {number: {type: TypeInt}},
+            {name: new TypeStr({})},
+            {number: new TypeInt({})},
         ], {primary_field: 'name'});
 
         var obj;

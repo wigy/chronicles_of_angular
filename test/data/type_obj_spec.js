@@ -16,7 +16,7 @@ describe('module coa.data, TypeObj class', function() {
     it('requires class option', function() {
         d.quiet();
         new Data([
-            {invalid: {type: TypeObj}},
+            {invalid: new TypeObj({})},
         ]);
         expect(d.errors()).toEqual(['Invalid options {"label":"Invalid"} for type TypeObj({})']);
     });
@@ -26,13 +26,13 @@ describe('module coa.data, TypeObj class', function() {
             this.init(data);
         }
         Container.prototype = new Data([
-            {user: {type: TypeObj, options: {class: 'coa.auth.User'}}}
+            {user: new TypeObj({class: 'coa.auth.User'})}
         ]);
         var container = new Container();
         expect(container.user).toBe(null);
 
         Container.prototype = new Data([
-            {user: {type: TypeObj, options: {class: 'coa.auth.User', default: {name: 'Test default'}}}}
+            {user: new TypeObj({class: 'coa.auth.User', default: {name: 'Test default'}})}
         ]);
         container = new Container();
         expect(container.user instanceof User).toBe(true);
@@ -44,7 +44,7 @@ describe('module coa.data, TypeObj class', function() {
             this.init(data);
         }
         Container.prototype = new Data([
-            {user: {type: TypeObj, options: {class: 'coa.auth.User', default: {name: 'Test default'}}}}
+            {user: new TypeObj({class: 'coa.auth.User', default: {name: 'Test default'}})}
         ]);
         var container1 = new Container();
         var container2 = new Container();
@@ -54,7 +54,7 @@ describe('module coa.data, TypeObj class', function() {
 
     it('has string presentation', function() {
         var type = new TypeObj({class: 'unit-testing.Dummy'});
-        expect(type.toString()).toBe('TypeObj({class: "unit-testing.Dummy", default: null, label: "", required: false})');
+        expect(type.toString()).toBe('TypeObj({class: "unit-testing.Dummy", default: null, label: null, required: false})');
     });
 
     it('validates options correctly', function() {
@@ -63,7 +63,7 @@ describe('module coa.data, TypeObj class', function() {
         var options =  {};
         expect(type.optionDefinitions.validate(options)).toEqual(null);
         options = {class: 'coa.auth.User'};
-        expect(type.optionDefinitions.validate(options)).toEqual({ class: 'coa.auth.User', required: false, default: null, label: '' });
+        expect(type.optionDefinitions.validate(options)).toEqual({ class: 'coa.auth.User', required: false, default: null, label: null });
 
         type.init(options);
         expect(type.isInvalid(null)).toEqual(false);

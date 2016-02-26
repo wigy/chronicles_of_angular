@@ -17,7 +17,7 @@ describe('module coa.data, TypeList class', function() {
     it('requires type option', function() {
         d.quiet();
         new Data([
-            {invalid: {type: TypeList}},
+            {invalid: new TypeList({})},
         ]);
         expect(d.errors()).toEqual(['Invalid options {"label":"Invalid"} for type TypeList({})']);
         expect(1).toEqual(1);
@@ -31,7 +31,7 @@ describe('module coa.data, TypeList class', function() {
             this.init(data);
         }
         Container.prototype = new Data([
-            {userlist: {type: TypeList, options: {type: subtype}}}
+            {userlist: new TypeList({type: subtype})}
         ]);
         var container = new Container({userlist: [{}, {name: "testinguser"}, null]});
 
@@ -42,7 +42,7 @@ describe('module coa.data, TypeList class', function() {
 
     it('has string presentation', function() {
         var type = new TypeList({default: [], type: new TypeStr({required: true})});
-        expect(type.toString()).toBe('TypeList({default: [], label: "", required: null, type: TypeStr({default: null, label: "", pattern: null, required: true})})');
+        expect(type.toString()).toBe('TypeList({default: [], label: null, required: null, type: TypeStr({default: null, label: null, pattern: null, required: true})})');
     });
 
     it('converts to JSON', function() {
