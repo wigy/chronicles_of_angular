@@ -19,7 +19,7 @@ describe('module coa.data, TypeList class', function() {
         new Data([
             {invalid: new TypeList({})},
         ]);
-        expect(d.errors()).toEqual(['Invalid options {"label":"Invalid"} for type TypeList({})']);
+        expect(d.errors()).toEqual(['Invalid options {} for type TypeList({})']);
         expect(1).toEqual(1);
     });
 
@@ -50,7 +50,7 @@ describe('module coa.data, TypeList class', function() {
             this.init(data);
         }
         Container.prototype = new Data([{
-            list: {type: TypeList, options: {type: new TypeList({type: new TypeStr()})}}
+            list: new TypeList({type: new TypeList({type: new TypeStr()})})
         }]);
         var obj = new Container({list: [['x', 'y'], [], ['a', 'b']]});
         expect(obj.isInvalid()).toBe(false);

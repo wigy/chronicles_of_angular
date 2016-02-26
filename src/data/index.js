@@ -17,12 +17,11 @@
  *
  * MyClass.prototype = new Data([{
  *     name: {
- *              type: TypeStr,
- *              options: {
+ *              new TypeStr({
  *                  default: "default name",
  *                  label: "Name of the thing",
  *                  required: true
- *              },
+ *              }),
  *     }
  * }]);
  * </pre>

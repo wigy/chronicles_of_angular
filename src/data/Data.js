@@ -23,14 +23,12 @@
         * the following format:
         * <pre>
         * {
-            TODO: Maybe one more round of simplification and expect directly Type instances here.
         *   name: {
-        *      type: TypeStr,
-        *      options: {
+        *      new TypeStr ({
         *          label: 'Name of the foo',
         *          default: 'Default value',
         *          ...
-        *      }
+        *      })
         *   }
         * }
         * </pre>
