@@ -28,16 +28,18 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* Support Type instance initialization directly from the constructor.
 * Add class name as a part of each prototype.
+* Support Type instance initialization directly from the constructor.
+* Change the Data initialization pattern to use Type instances.
+* New TypeList to contain instances of defined other type.
 
 ### Not Yet Done
 
 * New TypeOptions to contain options with validation.
-* New TypeList to contain instances of defined other type.
 * New TypeDict to contain generic object container.
 
 ## Future Ideas
 
 * Data persistence interface `coe.store`.
 * Data handling system to generate pre-loaded file to contain all data (use CoG build).
+

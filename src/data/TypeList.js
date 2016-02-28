@@ -64,7 +64,7 @@
         });
 
         /**
-         * Allow null and array.
+         * Allow null and array. Convert values via type.
          */
         TypeList.prototype.convert = function(value) {
             if (value === null) {

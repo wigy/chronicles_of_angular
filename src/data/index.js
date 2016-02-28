@@ -33,6 +33,7 @@
  *   <dt>integer</dt><dd>{@link coa.data.class:TypeInt TypeInt}</dd>
  *   <dt>object</dt><dd>{@link coa.data.class:TypeObj TypeObj}</dd>
  *   <dt>list</dt><dd>{@link coa.data.class:TypeList TypeList}</dd>
+ *   <dt>dict</dt><dd>{@link coa.data.class:TypeDict TypeDict}</dd>
  * </dl>
  */
 angular.module('coa.data', ['coa.core']);
