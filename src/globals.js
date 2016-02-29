@@ -32,6 +32,7 @@ function d(arg1, arg2, argN) {
             msg += ' ';
         }
         if (args[i] instanceof Object && !args[i].__class) {
+            // TODO: This could be better. See error test for TypeDict.
             msg += JSON.stringify(args[i]);
         } else {
             msg += args[i];
