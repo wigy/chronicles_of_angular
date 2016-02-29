@@ -1,6 +1,7 @@
 describe('module coa.data, TypeDict class', function() {
 
     var Data, TypeStr, TypeInt, TypeDict;
+    var dict, Dict;
 
     beforeEach(function() {
         module('coa.data');
@@ -10,84 +11,51 @@ describe('module coa.data, TypeDict class', function() {
             TypeInt = _TypeInt_;
             TypeDict = _TypeDict_;
         });
+
+        dict = new TypeDict({default: {}, type: new TypeStr()});
+
+        Dict = function(data) {
+            this.init(data);
+        }
+        Dict.prototype = new Data([
+            {elements: dict},
+        ]);
     });
 
-    it('requires type options for key and value', function() {
+    it('requires type option', function() {
         d.quiet();
         new Data([
             {invalid: new TypeDict({})},
         ]);
         expect(d.errors()).toEqual(['Invalid options {} for type TypeDict({})']);
-
-        d.quiet();
-        new Data([
-            {invalid: new TypeDict({keytype: new TypeInt()})},
-        ]);
-        expect(d.errors()).toEqual(['Invalid options {"keytype":"keytype"} for type TypeDict({})']);
-
-        d.quiet();
-        new Data([
-            {invalid: new TypeDict({valuetype: new TypeStr()})},
-        ]);
-        expect(d.errors()).toEqual(['Invalid options {"valuetype":"valuetype"} for type TypeDict({})']);
     });
 
+    it('initializes object members with default values', function() {
+
+        var obj = new Dict({elements: {12: 'Twelve'}});
+        expect(obj.elements['12']).toEqual('Twelve');
+    });
+
+
     it('has string presentation', function() {
-        expect(1).toEqual(1);
-        return;
-        var type = new TypeList({default: [], type: new TypeStr({required: true})});
-        expect(type.toString()).toBe('TypeList({default: [], label: null, required: null, type: TypeStr({default: null, label: null, pattern: null, required: true})})');
+        expect(dict.toString()).toEqual('TypeDict({default: {}, label: "Elements", required: null, type: TypeStr({default: null, label: null, pattern: null, required: false})})');
     });
 
     it('converts to JSON', function() {
-        expect(1).toEqual(1);
-        return;
-        function Container(data) {
-            this.init(data);
-        }
-        Container.prototype = new Data([{
-            list: new TypeList({type: new TypeList({type: new TypeStr()})})
-        }]);
-        var obj = new Container({list: [['x', 'y'], [], ['a', 'b']]});
-        expect(obj.isInvalid()).toBe(false);
-        expect(obj.toJSON()).toEqual({list: [['x', 'y'], [], ['a', 'b']]});
+
+        var obj = new Dict({elements: {12: 'Twelve'}});
+        expect(obj.toJSON()).toEqual({elements: {'12': 'Twelve'}});
     });
 
     it('validates options correctly', function() {
-        expect(1).toEqual(1);
-        return;
 
-        function Dict(data) {
-            this.init(data);
-        }
-        Dict.prototype = new Data([
-            {elements: new TypeDict({default: {}, keytype: new TypeInt(), valuetype: new TypeStr()})},
-        ]);
-        d(new Dict({elements: {12: 'Twelve'}}))
-        expect(1).toEqual(1);
-        return;
+        expect(dict.isInvalid(null)).toEqual(false);
+        expect(dict.isInvalid({})).toEqual(false);
+        expect(dict.isInvalid({'a': 'Hi'})).toEqual(false);
+        expect(dict.isInvalid({'a': 12})).toEqual(['Value has not correct type.']);
+        expect(dict.isInvalid({'a': null})).toEqual(false);
 
-        var subtype = new TypeStr({required: true});
-        var type = new TypeList({type: subtype});
-        var options =  {};
-        expect(type.optionDefinitions.validate(options)).toEqual(null);
-        options = {type: subtype};
-        expect(type.optionDefinitions.validate(options) instanceof Object).toEqual(true);
-
-        type.init(options);
-        expect(type.isInvalid(null)).toEqual(false);
-        expect(type.isInvalid([])).toEqual(false);
-        expect(type.isInvalid(['Hi'])).toEqual(false);
-        expect(type.isInvalid([null])).toEqual(['Incorrect value in this collection.']);
-        expect(type.isInvalid({})).toEqual(['Value has not correct type.']);
-        expect(type.isInvalid(new User())).toEqual(['Value has not correct type.']);
-
-        var subtype2 = new TypeStr({required: false});
-        type.init({default: [], type: subtype2, required: true});
-        expect(type.isInvalid(null)).toEqual(['At least one is required.']);
-        expect(type.isInvalid([])).toEqual(['At least one is required.']);
-        expect(type.isInvalid(['Hi'])).toEqual(false);
-        expect(type.isInvalid([null])).toEqual(false);
-        expect(type.isInvalid([null, 'Hi', null])).toEqual(false);
+        var dict2 = new TypeDict({default: {}, type: new TypeStr({required: true})});
+        expect(dict2.isInvalid({'a': null})).toEqual(['Incorrect value in this collection.']);
     });
 });

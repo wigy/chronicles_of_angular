@@ -16,11 +16,10 @@
          * @requires coa.data.class:Type
          * @param {Object} options Options for this type.
          * @description
-         * A key-value dictionary, i.e. an ordinary Javascript object.
+         * A key-value dictionary, i.e. an ordinary Javascript object with string keys.
          * <h1>Options:</h1>
          * <dl>
-         *   <dt>keytype</dt><dd>A <i>Type</i> instance defining allowed key elements.</dd>
-         *   <dt>valuetype</dt><dd>A <i>Type</i> instance defining allowed value elements.</dd>
+         *   <dt>type</dt><dd>A <i>Type</i> instance defining allowed value elements.</dd>
          *   <dt>required</dt><dd>If set to true, there must be at least one item in the dictionary.</dd>
          * </dl>
          */
@@ -44,26 +43,7 @@
                     return false;
                 }
             },
-            keytype: {
-                text: "Incorrect value as a key in this collection.",
-                type: function(value) {
-                    return value instanceof Type;
-                },
-                required: true,
-                op: function(option, value) {
-                    if (value === null) {
-                        return true;
-                    }
-                    var keys =  Object.keys(value);
-                    for (var i = 0; i < keys.length; i++) {
-                        if (!option.isValid(keys[i])) {
-                            return false;
-                        }
-                    }
-                    return true;
-                }
-            },
-            valuetype: {
+            type: {
                 text: "Incorrect value in this collection.",
                 type: function(value) {
                     return value instanceof Type;
@@ -96,9 +76,9 @@
                 var ret = {};
                 var k, v;
                 for (var i=0; i < keys.length; i++) {
-                    k = this.options.keytype.convert(keys[i]);
-                    v = this.options.valuetype.convert(value[keys[i]]);
-                    if (k === undefined || v === undefined) {
+                    k = keys[i];
+                    v = this.options.type.convert(value[k]);
+                    if (v === undefined) {
                         return undefined;
                     }
                     ret[k] = v;
@@ -116,8 +96,8 @@
             var ret = {};
             var k, v;
             for (var i=0; i < keys.length; i++) {
-                k = this.options.keytype.toJSON(keys[i]);
-                v = this.options.valuetype.toJSON(value[keys[i]]);
+                k = keys[i];
+                v = this.options.type.toJSON(value[k]);
                 ret[k] = v;
             }
             return ret;

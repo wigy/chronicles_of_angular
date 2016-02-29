@@ -20,4 +20,7 @@ describe('module coa.data, Type class', function() {
 
         expect((new Testing()).getType('testing_name').options.label).toBe('Testing Name');
     });
+
+   // TODO: Add explicit error message and test for invalid default value.
+
 });
