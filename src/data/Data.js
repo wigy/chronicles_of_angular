@@ -197,7 +197,7 @@
                     if (type) {
                         type.set(this, k, data[k]);
                     } else {
-                        d("Invalid member name", name, "in initial data", data, "for", this);
+                        d("Invalid member name '" + k + "' in initial data", data, "for", this);
                     }
                 }
                 return;

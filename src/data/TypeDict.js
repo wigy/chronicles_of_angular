@@ -19,7 +19,7 @@
          * A key-value dictionary, i.e. an ordinary Javascript object with string keys.
          * <h1>Options:</h1>
          * <dl>
-         *   <dt>type</dt><dd>A <i>Type</i> instance defining allowed value elements.</dd>
+         *   <dt>type</dt><dd>A  {@link coa.data.class:Type Type} instance defining allowed value instances.</dd>
          * </dl>
          */
         TypeDict = function (options) {
@@ -78,7 +78,7 @@
             if (value === null) {
                 return null;
             }
-                var keys =  Object.keys(value);
+            var keys =  Object.keys(value);
             var ret = {};
             var k, v;
             for (var i=0; i < keys.length; i++) {

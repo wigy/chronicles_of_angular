@@ -34,6 +34,7 @@
  *   <dt>object</dt><dd>{@link coa.data.class:TypeObj TypeObj}</dd>
  *   <dt>list</dt><dd>{@link coa.data.class:TypeList TypeList}</dd>
  *   <dt>dict</dt><dd>{@link coa.data.class:TypeDict TypeDict}</dd>
+ *   <dt>options</dt><dd>{@link coa.data.class:TypeOptions TypeOptions}</dd>
  * </dl>
  */
 angular.module('coa.data', ['coa.core']);

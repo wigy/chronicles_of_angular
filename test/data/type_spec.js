@@ -21,6 +21,10 @@ describe('module coa.data, Type class', function() {
         expect((new Testing()).getType('testing_name').options.label).toBe('Testing Name');
     });
 
-   // TODO: Add explicit error message and test for invalid default value.
+    it('checks for invalid default value', function() {
+        d.quiet();
+        new TypeStr({default: 12});
+        expect(d.errors()).toEqual(['Invalid default value 12 for TypeStr({default: 12, label: null, pattern: null, required: false})']);
+    });
 
 });

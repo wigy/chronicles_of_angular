@@ -81,7 +81,12 @@
                 return;
             }
             this.options = validatedOptions;
-            this.options.default = this.convert(this.options.default);
+            var def = this.convert(this.options.default);
+            if (def === undefined) {
+                d("Invalid default value", this.options.default, "for", this);
+                def = null;
+            }
+            this.options.default = def;
         };
 
         /**
@@ -188,7 +193,7 @@
         Type.prototype.set = function(target, key, value) {
             var set = this.convert(value);
             if (set === undefined) {
-                d("Invalid kind of value", value, "for member of type", this, "for object", target);
+                d("Invalid value", value, "for member of type", this, "for object", target);
                 set = this.getDefault();
             }
             target[key] = set;

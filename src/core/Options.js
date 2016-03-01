@@ -91,6 +91,8 @@
          * @description
          *
          * Create a clone of an option collection and drop unwanted options. Then add new options into it.
+         * Note that if a definition is <u>overridden</u> in new definition, it must not be listed in the
+         * deletion list or it will be deleted from the results.
          */
         Options.prototype.inheritExcept = function(drop, options) {
             var ret = this.inherit(options);
