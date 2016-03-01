@@ -83,6 +83,26 @@
 
         /**
          * @ngdoc method
+         * @name inheritExcept
+         * @methodOf coa.core.class:Options
+         * @param {String} drop A comma separated list of inherited option names to not inherit.
+         * @param {Object} data Initial data to added as new options.
+         * @return {Options} New option collection with additional options.
+         * @description
+         *
+         * Create a clone of an option collection and drop unwanted options. Then add new options into it.
+         */
+        Options.prototype.inheritExcept = function(drop, options) {
+            var ret = this.inherit(options);
+            var names = drop.split(',');
+            for (var i=0; i < names.length; i++) {
+                delete ret[names[i]];
+            }
+            return ret;
+        };
+
+        /**
+         * @ngdoc method
          * @name validate
          * @methodOf coa.core.class:Options
          * @param {Object} data Option values offered.

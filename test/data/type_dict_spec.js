@@ -38,11 +38,10 @@ describe('module coa.data, TypeDict class', function() {
 
 
     it('has string presentation', function() {
-        expect(dict.toString()).toEqual('TypeDict({default: {}, label: "Elements", required: null, type: TypeStr({default: null, label: null, pattern: null, required: false})})');
+        expect(dict.toString()).toEqual('TypeDict({default: {}, label: "Elements", type: TypeStr({default: null, label: null, pattern: null, required: false})})');
     });
 
     it('converts to JSON', function() {
-
         var obj = new Dict({elements: {12: 'Twelve'}});
         expect(obj.toJSON()).toEqual({elements: {'12': 'Twelve'}});
     });

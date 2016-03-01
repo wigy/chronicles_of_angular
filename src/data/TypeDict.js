@@ -20,7 +20,6 @@
          * <h1>Options:</h1>
          * <dl>
          *   <dt>type</dt><dd>A <i>Type</i> instance defining allowed value elements.</dd>
-         *   <dt>required</dt><dd>If set to true, there must be at least one item in the dictionary.</dd>
          * </dl>
          */
         TypeDict = function (options) {
@@ -29,20 +28,7 @@
 
         TypeDict.prototype = new Type();
         TypeDict.prototype.__class = 'coa.data.TypeDict';
-        TypeDict.prototype.optionDefinitions = Type.prototype.optionDefinitions.inherit({
-            required: {
-                text: "At least one is required.",
-                type: "boolean",
-                op: function(option, value) {
-                    if (!option) {
-                        return true;
-                    }
-                    if (value instanceof Object) {
-                        return Object.keys(value).length > 0;
-                    }
-                    return false;
-                }
-            },
+        TypeDict.prototype.optionDefinitions = Type.prototype.optionDefinitions.inheritExcept('required', {
             type: {
                 text: "Incorrect value in this collection.",
                 type: function(value) {
