@@ -37,7 +37,8 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
-## Future Ideas
-
 * Data persistence interface `coe.store`.
 * Data handling system to generate pre-loaded file to contain all data (use CoG build).
+* Write short introduction about "define once, use everywhere".
+
+## Future Ideas
