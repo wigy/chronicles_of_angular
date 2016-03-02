@@ -9,6 +9,13 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v0.5.0
+    - Add class name as a part of each prototype.
+    - Support Type instance initialization directly from the constructor.
+    - Change the Data initialization pattern to use Type instances.
+    - New TypeList to contain instances of some defined other type.
+    - New TypeDict as generic object container.
+    - New TypeOptions to contain options with validation.
 * v0.4.2
     - Fix invalid reference in TimeStr.diff().
 * v0.4.1
@@ -27,13 +34,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Add class name as a part of each prototype.
-* Support Type instance initialization directly from the constructor.
-* Change the Data initialization pattern to use Type instances.
-* New TypeList to contain instances of some defined other type.
-* New TypeDict as generic object container.
-* New TypeOptions to contain options with validation.
 
 ### Not Yet Done
 
