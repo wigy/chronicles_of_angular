@@ -20,7 +20,7 @@ describe('module coa.data, TypeOptions class', function() {
 
         Opts = function(data) {
             this.init(data);
-        }
+        };
         Opts.prototype = new Data([
             {settings: opts},
         ]);

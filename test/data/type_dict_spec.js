@@ -16,7 +16,7 @@ describe('module coa.data, TypeDict class', function() {
 
         Dict = function(data) {
             this.init(data);
-        }
+        };
         Dict.prototype = new Data([
             {elements: dict},
         ]);

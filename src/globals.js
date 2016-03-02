@@ -45,7 +45,7 @@ function d(arg1, arg2, argN) {
         if (d.stack) {
             console.log.apply(console, args);
             for (var j = 0; j < stack.length; j++) {
-                console.log('%c' + stack[j], 'color: red; display: none')
+                console.log('%c' + stack[j], 'color: red; display: none');
             }
         } else {
             var line = /\((.*)\)/.exec(stack[0]);

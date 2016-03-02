@@ -41,20 +41,20 @@
             var members = Object.getOwnPropertyNames(this).sort();
             var added = false;
             for (var i = 0; i < members.length; i++) {
-                if (members[i][0] == '_' || members[i][0] == '$') {
+                if (members[i][0] === '_' || members[i][0] === '$') {
                     continue;
                 }
                 var str = members[i] + ": ";
                 var member = this[members[i]];
                 if (member && member.__class) {
                     str += member.toString();
-                } else if (typeof(member) == 'function') {
+                } else if (typeof(member) === 'function') {
                     continue;
                 } else {
                     str += JSON.stringify(member);
                 }
                 if (added) {
-                    args +=", "
+                    args +=", ";
                 }
                 args += str;
                 added = true;
