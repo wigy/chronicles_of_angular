@@ -59,4 +59,18 @@ describe('module coa.data, TypeDict class', function() {
         var dict2 = new TypeDict({default: {}, type: new TypeStr({required: true})});
         expect(dict2.isInvalid({'a': null})).toEqual(['Incorrect value in this collection.']);
     });
+
+    it('can add dicts inside dicts', function() {
+        function DoubleDict(data) {
+            this.init(data);
+        };
+        DoubleDict.prototype = new Data([
+            {deep: new TypeDict({default: {}, type: new TypeDict({default: {}, type: new TypeStr()})})},
+        ]);
+
+        var obj = new DoubleDict({deep: {foo: {bar: "Baz"}}});
+        expect(obj.deep.foo.bar).toBe("Baz");
+        var defaults = new DoubleDict();
+        expect(defaults.deep).toEqual({});
+    });
 });
