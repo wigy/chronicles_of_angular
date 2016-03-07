@@ -54,7 +54,7 @@
         /**
          * Allow null and object. No conversion done.
          */
-        TypeDict.prototype.convert = function(value) {
+        TypeOptions.prototype.convert = function(value) {
             if (value === null) {
                 return value;
             }
@@ -68,7 +68,7 @@
         /**
          * Options are raw data and can be returned as is, but must create copy to detach references.
          */
-        TypeDict.prototype.toJSON = function(value) {
+        TypeOptions.prototype.toJSON = function(value) {
             if (value === null) {
                 return null;
             }

@@ -35,6 +35,8 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Fix prototype of TypeOptions.
+
 ### Not Yet Done
 
 * Data persistence interface `coe.store`.
