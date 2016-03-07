@@ -40,7 +40,7 @@ describe('module coa.data, TypeDict class', function() {
 
 
     it('has string presentation', function() {
-        expect(dict.toString()).toEqual('TypeDict({default: {}, label: "Elements", type: TypeStr({default: null, label: null, pattern: null, required: false})})');
+        expect(dict.toString()).toEqual('TypeDict({default: {}, label: "Elements", type: TypeStr({required: false})})');
     });
 
     it('converts to JSON', function() {

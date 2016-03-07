@@ -24,7 +24,7 @@ describe('module coa.data, Type class', function() {
     it('checks for invalid default value', function() {
         d.quiet();
         new TypeStr({default: 12});
-        expect(d.errors()).toEqual(['Invalid default value 12 for TypeStr({default: 12, label: null, pattern: null, required: false})']);
+        expect(d.errors()).toEqual(['Invalid default value 12 for TypeStr({default: 12, required: false})']);
     });
 
 });

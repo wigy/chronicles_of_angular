@@ -54,7 +54,7 @@ describe('module coa.data, TypeObj class', function() {
 
     it('has string presentation', function() {
         var type = new TypeObj({class: 'unit-testing.Dummy'});
-        expect(type.toString()).toBe('TypeObj({class: "unit-testing.Dummy", default: null, label: null, required: false})');
+        expect(type.toString()).toBe('TypeObj({class: "unit-testing.Dummy", required: false})');
     });
 
     it('validates options correctly', function() {

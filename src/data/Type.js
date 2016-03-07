@@ -56,8 +56,15 @@
         });
 
         Type.prototype.toString = function() {
-        // TODO: Drop all null valued options.
-            return this.__class.split('.').pop() + '(' + Class.prototype.toString.call(this.options) + ')';
+            // Drop all null values.
+            var keys = Object.keys(this.options);
+            var print = {};
+            for (var k=0; k < keys.length; k++) {
+                if (this.options[keys[k]] !== null) {
+                    print[keys[k]] = this.options[keys[k]];
+                }
+            }
+            return this.__class.split('.').pop() + '(' + Class.prototype.toString.call(print) + ')';
         };
 
         Type.prototype.toJSON = function(value) {

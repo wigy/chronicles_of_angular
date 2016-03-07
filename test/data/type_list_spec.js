@@ -41,7 +41,7 @@ describe('module coa.data, TypeList class', function() {
 
     it('has string presentation', function() {
         var type = new TypeList({default: [], type: new TypeStr({required: true})});
-        expect(type.toString()).toBe('TypeList({default: [], label: null, required: null, type: TypeStr({default: null, label: null, pattern: null, required: true})})');
+        expect(type.toString()).toBe('TypeList({default: [], type: TypeStr({required: true})})');
     });
 
     it('converts to JSON', function() {
