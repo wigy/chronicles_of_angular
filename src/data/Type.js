@@ -56,7 +56,7 @@
         });
 
         Type.prototype.toString = function() {
-	    // TODO: Drop all null valued options.
+        // TODO: Drop all null valued options.
             return this.__class.split('.').pop() + '(' + Class.prototype.toString.call(this.options) + ')';
         };
 

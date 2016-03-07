@@ -63,7 +63,7 @@ describe('module coa.data, TypeDict class', function() {
     it('can add dicts inside dicts', function() {
         function DoubleDict(data) {
             this.init(data);
-        };
+        }
         DoubleDict.prototype = new Data([
             {deep: new TypeDict({default: {}, type: new TypeDict({default: {}, type: new TypeStr()})})},
         ]);
