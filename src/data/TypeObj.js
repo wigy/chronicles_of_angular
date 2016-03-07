@@ -22,6 +22,8 @@
          * <h1>Options:</h1>
          * <dl>
          *   <dt>class</dt><dd>Fully qualified class name of the object.</dd>
+         *   <dt>default</dt><dd>Default value for the member of this type.</dd>
+         *   <dt>label</dt><dd>UI printable description for the member of this type.</dd>
          *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
          * </dl>
          */

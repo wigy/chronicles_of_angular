@@ -20,8 +20,10 @@
          *
          * <h1>Options:</h1>
          * <dl>
-         *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
+         *   <dt>default</dt><dd>Default value for the member of this type.</dd>
+         *   <dt>label</dt><dd>UI printable description for the member of this type.</dd>
          *   <dt>pattern</dt><dd>If set to regex, value must match the expression.</dd>
+         *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
          * </dl>
          */
         TypeStr = function(options) {

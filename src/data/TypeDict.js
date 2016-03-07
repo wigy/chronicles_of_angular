@@ -19,6 +19,8 @@
          * A key-value dictionary, i.e. an ordinary Javascript object with string keys.
          * <h1>Options:</h1>
          * <dl>
+         *   <dt>default</dt><dd>Default value for the member of this type.</dd>
+         *   <dt>label</dt><dd>UI printable description for the member of this type.</dd>
          *   <dt>type</dt><dd>A  {@link coa.data.class:Type Type} instance defining allowed value instances.</dd>
          * </dl>
          */
