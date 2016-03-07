@@ -9,6 +9,8 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v0.5.1
+    - Fix prototype of TypeOptions.
 * v0.5.0
     - Add class name as a part of each prototype.
     - Support Type instance initialization directly from the constructor.
@@ -34,8 +36,6 @@ Licensed under the GPL-2.0 license.
 ## Next Version
 
 ### Done
-
-* Fix prototype of TypeOptions.
 
 ### Not Yet Done
 
