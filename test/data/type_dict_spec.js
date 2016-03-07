@@ -34,6 +34,8 @@ describe('module coa.data, TypeDict class', function() {
 
         var obj = new Dict({elements: {12: 'Twelve'}});
         expect(obj.elements['12']).toEqual('Twelve');
+        var defaults = new Dict();
+        expect(defaults.elements instanceof Object).toBe(true);
     });
 
 
