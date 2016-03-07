@@ -35,6 +35,6 @@
   "dependencies": {
     "angular": "^1.4.8",
     "angular-mocks": "^1.4.8",
-    "chronicles_of_grunt": "^1.11.2"
+    "chronicles_of_grunt": "^1.11.3"
   }
 }
