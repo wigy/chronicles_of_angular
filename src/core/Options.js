@@ -217,7 +217,8 @@
          *
          * </pre>
          *
-         * It is possible to use <code>%o</code> to embed value of the option in the text. Similarly
+         * It is possible to use <code>%o</code> to embed value of the option in the text or <code>%n</code>
+         * to embed name of the option. Similarly
          * <code>%v</code> in the text of the option is replaced with the value given as first additional
          * argument for this function.
          */
@@ -235,7 +236,7 @@
                     ret.push(null);
                     continue;
                 }
-                ret.push(this[names[i]].text.replace(/%o/g, opArgs[0]).replace(/%v/g, opArgs[1]));
+                ret.push(this[names[i]].text.replace(/%o/g, opArgs[0]).replace(/%n/g, names[i]).replace(/%v/g, opArgs[1]));
             }
 
             return ret;

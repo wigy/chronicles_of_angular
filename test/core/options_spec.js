@@ -89,7 +89,7 @@ describe('module coa.core, Options class', function() {
 
         var options = new Options({
                 required: {
-                    text: "Value cannot be %v since option is set to %o.",
+                    text: "Value cannot be %v since the option '%n' is set to %o.",
                     op: function(option, value) {
                         return !option || value;
                     },
@@ -97,7 +97,7 @@ describe('module coa.core, Options class', function() {
         });
 
         var values = options.validate({required: true});
-        expect(options.test(values, null)).toEqual(['Value cannot be null since option is set to true.']);
+        expect(options.test(values, null)).toEqual(["Value cannot be null since the option 'required' is set to true."]);
         expect(options.test(values, 1)).toEqual([]);
 
         values = options.validate({required: false});
