@@ -46,7 +46,7 @@
                 }
             },
             type: {
-                text: "Incorrect value in this collection.",
+                text: "Incorrect value in the list.",
                 type: function(value) {
                     return value instanceof Type;
                 },

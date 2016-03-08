@@ -32,7 +32,7 @@
         TypeDict.prototype.__class = 'coa.data.TypeDict';
         TypeDict.prototype.optionDefinitions = Type.prototype.optionDefinitions.inheritExcept('required', {
             type: {
-                text: "Incorrect value in this collection.",
+                text: "Incorrect value in the collection.",
                 type: function(value) {
                     return value instanceof Type;
                 },
