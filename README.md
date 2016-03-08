@@ -39,6 +39,9 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* *TypeTuple* providing options `types` defining list of element types.
+* Sub-classes *TypePair* and *TypeTriple* of *TypeTuple*.
+
 ## Future Ideas
 
 * Data persistence interface `coe.store`.
