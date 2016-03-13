@@ -2,17 +2,17 @@
 
     var module = angular.module('coa.data');
 
-    var TypePair;
+    var TypeTriple;
 
-    module.factory('TypePair', ['Type', 'TypeTuple', function(Type, TypeTuple) {
+    module.factory('TypeTriple', ['Type', 'TypeTuple', function(Type, TypeTuple) {
 
-        if (TypePair) {
-            return TypePair;
+        if (TypeTriple) {
+            return TypeTriple;
         }
 
         /**
          * @ngdoc function
-         * @name coa.data.class:TypePair
+         * @name coa.data.class:TypeTriple
          * @requires coa.data.class:Type
          * @requires coa.data.class:TypeTuple
          * @param {Object} options Options for this type.
@@ -27,20 +27,20 @@
          *   <dt>types</dt><dd>Two <i>Type</i> instances defining the members of pair in order.</dd>
          * </dl>
          */
-        TypePair = function(options) {
+        TypeTriple = function(options) {
             Type.call(this, options);
         };
 
-        TypePair.prototype = new TypeTuple();
-        TypePair.prototype.__class = 'coa.data.TypePair';
-        TypePair.prototype.optionDefinitions = TypeTuple.prototype.optionDefinitions.inherit({});
+        TypeTriple.prototype = new TypeTuple();
+        TypeTriple.prototype.__class = 'coa.data.TypeTriple';
+        TypeTriple.prototype.optionDefinitions = TypeTuple.prototype.optionDefinitions.inherit({});
 
-        var oldValidator = TypePair.prototype.optionDefinitions.types.type;
-        TypePair.prototype.optionDefinitions.types.type = function(options) {
-            return oldValidator(options) && options.length === 2;
+        var oldValidator = TypeTriple.prototype.optionDefinitions.types.type;
+        TypeTriple.prototype.optionDefinitions.types.type = function(options) {
+            return oldValidator(options) && options.length === 3;
         }
 
-        return TypePair;
+        return TypeTriple;
     }]);
 
 })();
