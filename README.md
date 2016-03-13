@@ -37,9 +37,10 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* *TypeTuple* providing options `types` defining list of element types.
+
 ### Not Yet Done
 
-* *TypeTuple* providing options `types` defining list of element types.
 * Sub-classes *TypePair* and *TypeTriple* of *TypeTuple*.
 * Override better defaults `{}` and `[]` for *TypeDict* and *TypeList*.
 

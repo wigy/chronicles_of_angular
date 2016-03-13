@@ -34,6 +34,7 @@
  *   <dt>list</dt><dd>{@link coa.data.class:TypeList TypeList}</dd>
  *   <dt>object</dt><dd>{@link coa.data.class:TypeObj TypeObj}</dd>
  *   <dt>options</dt><dd>{@link coa.data.class:TypeOptions TypeOptions}</dd>
+ *   <dt>pair</dt><dd>{@link coa.data.class:TypePair TypePair}</dd>
  *   <dt>string</dt><dd>{@link coa.data.class:TypeStr TypeStr}</dd>
  *   <dt>tuple</dt><dd>{@link coa.data.class:TypeTuple TypeTuple}</dd>
  * </dl>

@@ -26,18 +26,45 @@ function d(arg1, arg2, argN) {
     if (args.length === 0) {
         return;
     }
+
+    function tomsg(arg) {
+        var m;
+        var msg = '';
+        if (arg instanceof Array) {
+            msg += '[';
+            for (m = 0; m < arg.length; m++) {
+                if (m) {
+                    msg += ', ';
+                }
+                msg += tomsg(arg[m])
+            }
+            msg += ']';
+        } else if (arg instanceof Object && !arg.__class) {
+            msg += '{';
+            var members = Object.getOwnPropertyNames(arg).sort();
+            for (m = 0; m < members.length; m++) {
+                if (m) {
+                    msg += ',';
+                }
+                msg += members[m] + ': ';
+                msg += tomsg(arg[members[m]])
+            }
+            msg += '}';
+        } else {
+            msg += arg;
+        }
+        return msg;
+    }
+
     var msg = '';
     for (var i = 0; i < args.length; i++) {
         if (i) {
             msg += ' ';
         }
-        if (args[i] instanceof Object && !args[i].__class) {
-            msg += JSON.stringify(args[i]);
-        } else {
-            msg += args[i];
-        }
+        msg += tomsg(args[i]);
     }
     d.messages.push(msg);
+
     if (!d.silenced) {
         var err = new Error('Stack trace');
         var stack = err.stack.split("\n");
