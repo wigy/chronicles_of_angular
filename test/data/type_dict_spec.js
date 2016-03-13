@@ -57,7 +57,7 @@ describe('module coa.data, TypeDict class', function() {
         expect(dict.isInvalid({'a': null})).toEqual(false);
 
         var dict2 = new TypeDict({default: {}, type: new TypeStr({required: true})});
-        expect(dict2.isInvalid({'a': null})).toEqual(['Incorrect value in this collection.']);
+        expect(dict2.isInvalid({'a': null})).toEqual(['Incorrect value in the collection.']);
     });
 
     it('can add dicts inside dicts', function() {

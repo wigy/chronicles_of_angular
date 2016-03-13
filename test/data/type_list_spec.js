@@ -69,7 +69,7 @@ describe('module coa.data, TypeList class', function() {
         expect(type.isInvalid(null)).toEqual(false);
         expect(type.isInvalid([])).toEqual(false);
         expect(type.isInvalid(['Hi'])).toEqual(false);
-        expect(type.isInvalid([null])).toEqual(['Incorrect value in this collection.']);
+        expect(type.isInvalid([null])).toEqual(['Incorrect value in the list.']);
         expect(type.isInvalid({})).toEqual(['Value has not correct type.']);
         expect(type.isInvalid(new User())).toEqual(['Value has not correct type.']);
 
