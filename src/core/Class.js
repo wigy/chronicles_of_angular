@@ -37,6 +37,7 @@
          * are skipped.
          */
         Class.prototype.toString = function() {
+
             var args = '';
             var members = Object.getOwnPropertyNames(this).sort();
             var added = false;
@@ -50,6 +51,19 @@
                     str += member.toString();
                 } else if (typeof(member) === 'function') {
                     continue;
+                } else if (member instanceof Array) {
+                    str += '[';
+                    for (var j=0; j < member.length; j++) {
+                        if (j) {
+                            str += ', ';
+                        }
+                        if (member[j] instanceof Class) {
+                            str += member[j].toString();
+                        } else {
+                            str += JSON.stringify(member[j]);
+                        }
+                    }
+                    str += ']';
                 } else {
                     str += JSON.stringify(member);
                 }

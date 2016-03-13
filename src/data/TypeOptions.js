@@ -14,6 +14,8 @@
          * @ngdoc function
          * @name coa.data.class:TypeOptions
          * @requires coa.data.class:Type
+         * @requires coa.data.class:TypeDict
+         * @requires coa.core.class:Options
          * @param {Object} options Options for this type.
          * @description
          * A key-value dictionary with validation. This is similar to {@link coa.data.class:TypeDict TypeDict}

@@ -14,6 +14,8 @@
          * @ngdoc function
          * @name coa.data.class:TypeObj
          * @requires coa.data.class:Type
+         * @requires coa.data.class:Data
+         * @requires coa.data.service:factory
          * @param {Object} options Options for this type.
          * @description
          * An instance of another class. Required option is <code>class</code>, which is fully
