@@ -33,38 +33,25 @@ describe('module coa.data, TypeTuple class', function() {
         expect(d.errors()).toEqual(['Invalid value undefined for member of type TypeTuple({default: ["A", "B"], label: "Pair", required: false, types: [TypeStr({required: false}), TypeStr({required: false})]}) for object Data({pair: ["A", "B"]})']);
     });
 
-    xit('has string presentation', function() {
-        var type = new TypeStr();
-        expect(type.toString()).toBe('TypeStr({required: false})');
+    it('has string presentation', function() {
+        var type = new TypeTuple({default: [1, 'A'], types: [new TypeInt(), new TypeStr()]});
+        expect(type.toString()).toBe('TypeTuple({default: [1, "A"], required: false, types: [TypeInt({required: false}), TypeStr({required: false})]})');
     });
 
-    xit('validates options correctly', function() {
+    it('validates options correctly', function() {
 
-        var type = new TypeStr();
+        var type = new TypeTuple({default: [1, 'A'], types: [new TypeInt({required: true}), new TypeStr()]});
 
-        var options =  {};
-        expect(type.optionDefinitions.validate(options)).toEqual({ required: false, default: null, label: null, pattern: null });
-        options = {pattern: 12};
-        expect(type.optionDefinitions.validate(options)).toEqual(null);
-        options = {pattern: /xxx/};
-        expect(type.optionDefinitions.validate(options)).toEqual({ pattern: /xxx/, required: false, default: null, label: null });
-
-        options = {};
-        type.init(options);
         expect(type.isInvalid(null)).toEqual(false);
         expect(type.isInvalid({})).toEqual(['Value has not correct type.']);
         expect(type.isInvalid(true)).toEqual(['Value has not correct type.']);
         expect(type.isInvalid(1)).toEqual(['Value has not correct type.']);
-
-        options = {pattern: /xxx/};
-        type.init(options);
-        expect(type.isInvalid(null)).toEqual(false);
-        expect(type.isInvalid('x')).toEqual(['Value does not have correct format.']);
-        expect(type.isInvalid('axxxb')).toEqual(false);
-
-        options = {pattern: /^xxx/};
-        type.init(options);
-        expect(type.isInvalid(null)).toEqual(false);
-        expect(type.isInvalid('axxxb')).toEqual(['Value does not have correct format.']);
+        expect(type.isInvalid([])).toEqual(['Invalid tuple members.']);
+        expect(type.isInvalid([1, 2])).toEqual(['Invalid tuple members.']);
+        expect(type.isInvalid([1, "2"])).toEqual(false);
+        expect(type.isInvalid([1, "2", "3"])).toEqual(['Invalid tuple members.']);
+        expect(type.isInvalid([1])).toEqual(['Invalid tuple members.']);
+        expect(type.isInvalid(["1", 2])).toEqual(['Invalid tuple members.']);
+        expect(type.isInvalid([null, null])).toEqual(['Invalid tuple members.']);
     });
 });

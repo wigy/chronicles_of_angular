@@ -51,7 +51,17 @@
                     if (value === null) {
                         return true;
                     }
-                    d("TODO: Tuple validator.")
+                    if (value instanceof Array) {
+                        if (option.length != value.length) {
+                            return false;
+                        }
+                        for (var i=0; i < option.length; i++) {
+                            if (!option[i].isValid(value[i])) {
+                                return false;
+                            }
+                        }
+                        return true;
+                    }
                     return false;
                 }
             }
