@@ -24,12 +24,11 @@
      * @name play
      * @methodOf coa.audio.service:player
      * @param {String} name The name of the sound to play.
-     * @param {String} timestamp If DEBUG is set, then names are printed on console with optional timestamp string.
      * @description
      *
-     * Play the sound.
+     * Play the sound. If name is 'list', then the list of sound names is returned instead.
      */
-    function play(name, timestamp) {
+    function play(name) {
         if (name === 'list') {
             return Object.keys(audio);
         }
@@ -38,11 +37,7 @@
             return;
         }
 
-        if (timestamp) {
-            d((timestamp ? timestamp : '') + "   >>> " + name + " <<<");
-        } else {
-            audio[name].play();
-        }
+        audio[name].play();
     }
 
     /**
