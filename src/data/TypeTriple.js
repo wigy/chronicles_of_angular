@@ -24,7 +24,7 @@
          *   <dt>default</dt><dd>Default value for the member of this type.</dd>
          *   <dt>label</dt><dd>UI printable description for the member of this type.</dd>
          *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
-         *   <dt>types</dt><dd>Two <i>Type</i> instances defining the members of pair in order.</dd>
+         *   <dt>types</dt><dd>Three <i>Type</i> instances defining the members of pair in order (required).</dd>
          * </dl>
          */
         TypeTriple = function(options) {

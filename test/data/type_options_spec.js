@@ -63,4 +63,18 @@ describe('module coa.data, TypeOptions class', function() {
         expect(opts.isInvalid({one: false, two: '1'})).toEqual(false);
         expect(opts.isInvalid({two: '1'})).toEqual(['Value has not correct type.']);
     });
+
+    it('does not share default value', function() {
+
+        function Container(data) {
+            this.init(data);
+        }
+        Container.prototype = new Data([
+            {opts: new TypeOptions({options: new Options()})}
+        ]);
+
+        var c1 = new Container();
+        var c2 = new Container();
+        expect(c1.opts === c2.opts).toBe(false);
+    });
 });

@@ -119,7 +119,7 @@
          * @return {any} Default value for this type.
          */
         Type.prototype.getDefault = function() {
-            return this.options.default;
+            return angular.copy(this.options.default);
         };
 
         /**

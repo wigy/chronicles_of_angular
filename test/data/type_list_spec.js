@@ -84,4 +84,18 @@ describe('module coa.data, TypeList class', function() {
         expect(type.isInvalid([null])).toEqual(false);
         expect(type.isInvalid([null, 'Hi', null])).toEqual(false);
     });
+
+    it('does not share default value', function() {
+
+        function Container(data) {
+            this.init(data);
+        }
+        Container.prototype = new Data([
+            {strings: new TypeList({type: new TypeStr()})}
+        ]);
+
+        var c1 = new Container();
+        var c2 = new Container();
+        expect(c1.strings === c2.strings).toBe(false);
+    });
 });

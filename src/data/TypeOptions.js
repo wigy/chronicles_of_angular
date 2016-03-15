@@ -22,9 +22,9 @@
          * except that validation is done via {@link coa.core.class:Options Options}.
          * <h1>Options:</h1>
          * <dl>
-         *   <dt>default</dt><dd>Default value for the member of this type.</dd>
+         *   <dt>default</dt><dd>Default value for the member of this type (defaults to empty object {}).</dd>
          *   <dt>label</dt><dd>UI printable description for the member of this type.</dd>
-         *   <dt>options</dt><dd>An {@link coa.core.class:Options Options} instance defining allowed values.</dd>
+         *   <dt>options</dt><dd>An {@link coa.core.class:Options Options} instance defining allowed values (required).</dd>
          * </dl>
          */
         TypeOptions = function (options) {

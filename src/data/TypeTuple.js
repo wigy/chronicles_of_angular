@@ -23,7 +23,7 @@
          *   <dt>default</dt><dd>Default value for the member of this type.</dd>
          *   <dt>label</dt><dd>UI printable description for the member of this type.</dd>
          *   <dt>required</dt><dd>If set to true, value cannot be null.</dd>
-         *   <dt>types</dt><dd>One or more <i>Type</i> instances defining the members of tuple in order.</dd>
+         *   <dt>types</dt><dd>One or more <i>Type</i> instances defining the members of tuple in order (required).</dd>
          * </dl>
          */
         TypeTuple = function(options) {

@@ -22,7 +22,7 @@
          *   <dt>default</dt><dd>Default value for the member of this type (defaults to empty []).</dd>
          *   <dt>label</dt><dd>UI printable description for the member of this type.</dd>
          *   <dt>required</dt><dd>If set to true, there must be at least one item in the array.</dd>
-         *   <dt>type</dt><dd>A <i>Type</i> instance defining allowed elements.</dd>
+         *   <dt>type</dt><dd>A <i>Type</i> instance defining allowed elements (required).</dd>
          * </dl>
          */
         TypeList = function (options) {
