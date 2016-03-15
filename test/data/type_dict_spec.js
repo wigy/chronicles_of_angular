@@ -12,7 +12,7 @@ describe('module coa.data, TypeDict class', function() {
             TypeDict = _TypeDict_;
         });
 
-        dict = new TypeDict({default: {}, type: new TypeStr()});
+        dict = new TypeDict({type: new TypeStr()});
 
         Dict = function(data) {
             this.init(data);
@@ -56,7 +56,7 @@ describe('module coa.data, TypeDict class', function() {
         expect(dict.isInvalid({'a': 12})).toEqual(['Value has not correct type.']);
         expect(dict.isInvalid({'a': null})).toEqual(false);
 
-        var dict2 = new TypeDict({default: {}, type: new TypeStr({required: true})});
+        var dict2 = new TypeDict({type: new TypeStr({required: true})});
         expect(dict2.isInvalid({'a': null})).toEqual(['Incorrect value in the collection.']);
     });
 
@@ -65,7 +65,7 @@ describe('module coa.data, TypeDict class', function() {
             this.init(data);
         }
         DoubleDict.prototype = new Data([
-            {deep: new TypeDict({default: {}, type: new TypeDict({default: {}, type: new TypeStr()})})},
+            {deep: new TypeDict({type: new TypeDict({type: new TypeStr()})})},
         ]);
 
         var obj = new DoubleDict({deep: {foo: {bar: "Baz"}}});

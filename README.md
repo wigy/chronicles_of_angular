@@ -39,13 +39,13 @@ Licensed under the GPL-2.0 license.
 
 * *TypeTuple* providing options `types` defining list of element types.
 * Sub-classes *TypePair* and *TypeTriple* of *TypeTuple*.
+* Override better defaults `{}` and `[]` for *TypeDict* and *TypeList*.
 
 ### Not Yet Done
 
-* Override better defaults `{}` and `[]` for *TypeDict* and *TypeList*.
 
 ## Future Ideas
 
-* Data persistence interface `coe.store`.
+* Data persistence interface `coa.store`.
 * Data handling system to generate pre-loaded file to contain all data (use CoG build).
 * Write short introduction about "define once, use everywhere".

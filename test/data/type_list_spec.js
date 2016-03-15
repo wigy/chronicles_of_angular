@@ -37,10 +37,13 @@ describe('module coa.data, TypeList class', function() {
         expect(container.userlist[0] instanceof User).toBe(true);
         expect(container.userlist[1].name).toBe("testinguser");
         expect(container.userlist[2]).toBe(null);
+
+        var empty = new Container();
+        expect(empty.userlist).toEqual([]);
     });
 
     it('has string presentation', function() {
-        var type = new TypeList({default: [], type: new TypeStr({required: true})});
+        var type = new TypeList({type: new TypeStr({required: true})});
         expect(type.toString()).toBe('TypeList({default: [], type: TypeStr({required: true})})');
     });
 
