@@ -36,7 +36,7 @@ function d(arg1, arg2, argN) {
                 if (m) {
                     msg += ', ';
                 }
-                msg += tomsg(arg[m])
+                msg += tomsg(arg[m]);
             }
             msg += ']';
         } else if (arg instanceof Object && !arg.__class) {
@@ -47,7 +47,7 @@ function d(arg1, arg2, argN) {
                     msg += ',';
                 }
                 msg += members[m] + ': ';
-                msg += tomsg(arg[members[m]])
+                msg += tomsg(arg[members[m]]);
             }
             msg += '}';
         } else {

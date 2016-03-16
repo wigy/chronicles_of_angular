@@ -38,7 +38,7 @@
         var oldValidator = TypeTriple.prototype.optionDefinitions.types.type;
         TypeTriple.prototype.optionDefinitions.types.type = function(options) {
             return oldValidator(options) && options.length === 3;
-        }
+        };
 
         return TypeTriple;
     }]);

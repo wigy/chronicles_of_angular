@@ -38,7 +38,7 @@
         var oldValidator = TypePair.prototype.optionDefinitions.types.type;
         TypePair.prototype.optionDefinitions.types.type = function(options) {
             return oldValidator(options) && options.length === 2;
-        }
+        };
 
         return TypePair;
     }]);

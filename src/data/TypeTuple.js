@@ -52,7 +52,7 @@
                         return true;
                     }
                     if (value instanceof Array) {
-                        if (option.length != value.length) {
+                        if (option.length !== value.length) {
                             return false;
                         }
                         for (var i=0; i < option.length; i++) {
