@@ -43,6 +43,8 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* `TypeAny` to allow any non-undefined value.
+
 ## Future Ideas
 
 * Data persistence interface `coa.store` with in-memory, mongodb and rest-api implementations.

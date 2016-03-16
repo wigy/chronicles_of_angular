@@ -28,6 +28,7 @@
  *
  * Standard member types are:
  * <dl>
+ *   <dt>any</dt><dd>{@link coa.data.class:TypeAny TypeAny}</dd>
  *   <dt>boolean</dt><dd>{@link coa.data.class:TypeBool TypeBool}</dd>
  *   <dt>dict</dt><dd>{@link coa.data.class:TypeDict TypeDict}</dd>
  *   <dt>integer</dt><dd>{@link coa.data.class:TypeInt TypeInt}</dd>

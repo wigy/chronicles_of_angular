@@ -1,7 +1,7 @@
 {
   "name": "chronicles_of_angular",
   "description": "Wigy's collection of useful utilities for AngularJS.",
-  "version": "0.5.2",
+  "version": "0.5.3-beta",
   "homepage": "https://github.com/wigy/chronicles_of_angular",
   "author": {
     "name": "Tommi Ronkainen",
