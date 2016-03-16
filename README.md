@@ -9,6 +9,10 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v0.5.2
+    - *TypeTuple* providing options `types` defining list of element types.
+    - Sub-classes *TypePair* and *TypeTriple* of *TypeTuple*.
+    - Override better defaults `{}` and `[]` for *TypeDict* and *TypeList*.
 * v0.5.1
     - Fix prototype of TypeOptions.
 * v0.5.0
@@ -37,12 +41,7 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* *TypeTuple* providing options `types` defining list of element types.
-* Sub-classes *TypePair* and *TypeTriple* of *TypeTuple*.
-* Override better defaults `{}` and `[]` for *TypeDict* and *TypeList*.
-
 ### Not Yet Done
-
 
 ## Future Ideas
 
