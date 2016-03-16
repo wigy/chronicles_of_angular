@@ -30,6 +30,8 @@
          * @return {String} A string presentation of this object.
          * @description
          *
+         * Every class should be able to provide readable string presentation of its state.
+         *
          * This is default implementation for stringifying function for all classes.
          * It assumes that prototype sets correct <tt>__class</tt> member to have
          * fully qualified class name. The return value has format <i>ClassName({member: val, member2: val2})</i>,

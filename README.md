@@ -45,6 +45,10 @@ Licensed under the GPL-2.0 license.
 
 ## Future Ideas
 
-* Data persistence interface `coa.store`.
-* Data handling system to generate pre-loaded file to contain all data (use CoG build).
-* Write short introduction about "define once, use everywhere".
+* Data persistence interface `coa.store` with in-memory, mongodb and rest-api implementations.
+* Builder task for collecting data from JSON-files and setting up in-memory storage for single-file application (use CoG build).
+* Rendering for every class with member `html(context)`, where *context* is RenderingContext instance
+  (to be defined).
+* Page structure descriped by page.json files in the configured project directory tree.
+* Builder task for pages in single file application (use CoG build).
+* Application configuration mechanism to provide different settings for production and developement.
