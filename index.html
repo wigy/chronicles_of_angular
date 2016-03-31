@@ -58,7 +58,10 @@
           };
       });
 
-      function dbconf() {
+      /**
+       * Possible interface for setting up database.
+       */
+      function DBConfig() {
           this.dbs = null;
           this.set = function(name, url) {
               this.dbs = this.dbs || {};
@@ -67,12 +70,11 @@
           }
           this.set('default', 'mem://default')
       }
-      angular.module('coa.data').value('dbconfig', new dbconf());
+      angular.module('coa.data').value('dbconfig', new DBConfig());
 
       TestApp.run(['dbconfig', function(dbconfig) {
           dbconfig.set('server', 'mongodb://localhost:8000');
-          console.log(dbconfig);
-          // TODO: d(dbconfig) is infinite loop.
+          d(dbconfig);
       }]);
 
       TestApp.controller('TestAppController', ['$scope', 'player',
