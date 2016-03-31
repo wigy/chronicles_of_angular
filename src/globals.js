@@ -6,6 +6,8 @@
  * All functions and constants defined in this module are available in every module without dependency injection.
  */
 
+// TODO: This could be generic module in chronicles_of_grunt or even own project.
+
 /**
  * @ngdoc function
  * @name globals.function:d
@@ -22,9 +24,28 @@
  */
 function d(arg1, arg2, argN) {
 
+    // Take the args.
     var args = Array.prototype.slice.call(arguments);
     if (args.length === 0) {
         return;
+    }
+
+    // Get an idea about environment.
+    var hasNode = true;
+    try {
+        module.id;
+    } catch(e)  {
+        hasNode = false;
+    }
+    var useColor = !hasNode;
+
+    // Helper to show message.
+    function show(msg) {
+        if (useColor) {
+            console.log('%c' + msg, 'color: red; display: none');
+        } else {
+            console.log(msg);
+        }
     }
 
     // Scan the stack and print calling spot. Then display arguments.
@@ -35,14 +56,14 @@ function d(arg1, arg2, argN) {
         if (d.stack) {
             console.log.apply(console, args);
             for (var j = 0; j < stack.length; j++) {
-                console.log('%c' + stack[j], 'color: red; display: none');
+                show(stack[j]);
             }
         } else {
             var line = /\((.*)\)/.exec(stack[0]);
             if (line) {
-                console.log('%c' + line[1], 'color: red');
+                show(line[1]);
             } else {
-                console.log('%c' + stack[0], 'color: red');
+                show(stack[0]);
             }
             console.log.apply(console, args);
         }
@@ -120,3 +141,8 @@ d.errors = function() {
     d.silenced = false;
     return ret;
 };
+
+try {
+    module.exports = d;
+} catch(e) {
+}
