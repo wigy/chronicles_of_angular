@@ -6,6 +6,8 @@
  * All functions and constants defined in this module are available in every module without dependency injection.
  */
 
+// TODO: This could be generic module in chronicles_of_grunt or even own project.
+
 /**
  * @ngdoc function
  * @name globals.function:d
@@ -22,9 +24,38 @@
  */
 function d(arg1, arg2, argN) {
 
+    // Take the args.
     var args = Array.prototype.slice.call(arguments);
     if (args.length === 0) {
         return;
+    }
+
+    // Get an idea about environment.
+    var hasNode = true;
+    try {
+        module.id;
+    } catch(e)  {
+        hasNode = false;
+    }
+    var useColor = !hasNode;
+    var hasBrowser = !hasNode;
+
+    // Helper to do the logging.
+    function consoleLog(args) {
+        if (hasBrowser) {
+            console.log.apply(console, args);
+        } else {
+            console.log(tomsg.apply(this, args))
+        }
+    }
+
+    // Helper to show message.
+    function show(msg) {
+        if (useColor) {
+            console.log('%c' + msg, 'color: red; display: none');
+        } else {
+            console.log(msg);
+        }
     }
 
     // Scan the stack and print calling spot. Then display arguments.
@@ -33,18 +64,23 @@ function d(arg1, arg2, argN) {
         var stack = err.stack.split("\n");
         stack.splice(0,2);
         if (d.stack) {
-            console.log.apply(console, args);
+            consoleLog(args);
             for (var j = 0; j < stack.length; j++) {
-                console.log('%c' + stack[j], 'color: red; display: none');
+                show(stack[j]);
             }
         } else {
             var line = /\((.*)\)/.exec(stack[0]);
             if (line) {
-                console.log('%c' + line[1], 'color: red');
+                show(line[1]);
             } else {
-                console.log('%c' + stack[0], 'color: red');
+                line = /^\s+at\s+(.*)/.exec(stack[0]);
+                if (line) {
+                    show(line[1]);
+                } else {
+                    show(stack[0]);
+                }
             }
-            console.log.apply(console, args);
+            consoleLog(args);
         }
     }
 
@@ -120,3 +156,18 @@ d.errors = function() {
     d.silenced = false;
     return ret;
 };
+
+/**
+ * TODO: Docs.
+ */
+d.throw = function(args) {
+    var args = Array.prototype.slice.call(arguments);
+    d.apply(null, args);
+    // TODO: Implement stringifying of arguments.
+    throw "COA ERROR";
+}
+
+try {
+    module.exports = d;
+} catch(e) {
+}
