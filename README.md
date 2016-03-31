@@ -9,6 +9,8 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v0.5.3
+    - `TypeAny` to allow any non-undefined value.
 * v0.5.2
     - *TypeTuple* providing options `types` defining list of element types.
     - Sub-classes *TypePair* and *TypeTriple* of *TypeTuple*.
@@ -42,8 +44,6 @@ Licensed under the GPL-2.0 license.
 ### Done
 
 ### Not Yet Done
-
-* `TypeAny` to allow any non-undefined value.
 
 ## Future Ideas
 
