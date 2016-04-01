@@ -27,6 +27,28 @@ function d(arg1, arg2, argN) {
         return;
     }
 
+    // Scan the stack and print calling spot. Then display arguments.
+    if (!d.silenced) {
+        var err = new Error('Stack trace');
+        var stack = err.stack.split("\n");
+        stack.splice(0,2);
+        if (d.stack) {
+            console.log.apply(console, args);
+            for (var j = 0; j < stack.length; j++) {
+                console.log('%c' + stack[j], 'color: red; display: none');
+            }
+        } else {
+            var line = /\((.*)\)/.exec(stack[0]);
+            if (line) {
+                console.log('%c' + line[1], 'color: red');
+            } else {
+                console.log('%c' + stack[0], 'color: red');
+            }
+            console.log.apply(console, args);
+        }
+    }
+
+    // Convert to string and record the message.
     function tomsg(arg) {
         var m;
         var msg = '';
@@ -39,10 +61,15 @@ function d(arg1, arg2, argN) {
                 msg += tomsg(arg[m]);
             }
             msg += ']';
+        } else if (arg instanceof Function) {
+            msg = '';
         } else if (arg instanceof Object && !arg.__class) {
             msg += '{';
             var members = Object.getOwnPropertyNames(arg).sort();
             for (m = 0; m < members.length; m++) {
+                if (arg[members[m]] instanceof Function) {
+                    continue;
+                }
                 if (m) {
                     msg += ',';
                 }
@@ -65,25 +92,6 @@ function d(arg1, arg2, argN) {
     }
     d.messages.push(msg);
 
-    if (!d.silenced) {
-        var err = new Error('Stack trace');
-        var stack = err.stack.split("\n");
-        stack.splice(0,2);
-        if (d.stack) {
-            console.log.apply(console, args);
-            for (var j = 0; j < stack.length; j++) {
-                console.log('%c' + stack[j], 'color: red; display: none');
-            }
-        } else {
-            var line = /\((.*)\)/.exec(stack[0]);
-            if (line) {
-                console.log('%c' + line[1], 'color: red');
-            } else {
-                console.log('%c' + stack[0], 'color: red');
-            }
-            console.log.apply(console, args);
-        }
-    }
     return args[args.length - 1];
 }
 
