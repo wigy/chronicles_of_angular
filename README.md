@@ -47,6 +47,8 @@ Licensed under the GPL-2.0 license.
 
 ### Not Yet Done
 
+* Use new neat-dump instead of own implementation of d().
+
 ## Future Ideas
 
 * Data persistence interface `coa.store` with in-memory, mongodb and rest-api implementations.
