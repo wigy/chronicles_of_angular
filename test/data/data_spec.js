@@ -16,16 +16,17 @@ describe('module coa.data, Data class', function() {
     });
 
     it('refuses to define same member twice', function() {
-        d.quiet();
-        function Testing(data) {
-            this.init(data);
-        }
-        Testing.prototype = new Data([
-            {name: new TypeStr()},
-            {name: new TypeStr()},
-        ]);
-        var testing = new Testing();
-        expect(d.errors()).toEqual(['Trying to define member name as TypeStr({label: "Name", required: false}) but it has been already defined as TypeStr({label: "Name", required: false}) in Data()']);
+
+        d.expect(function() {
+            function Testing(data) {
+                this.init(data);
+            }
+            Testing.prototype = new Data([
+                {name: new TypeStr()},
+                {name: new TypeStr()},
+            ]);
+            var testing = new Testing();
+        }).toBe('Trying to define member name as TypeStr({label: "Name", required: false}) but it has been already defined as TypeStr({label: "Name", required: false}) in Data()');
     });
 
     it('can validate all members', function() {

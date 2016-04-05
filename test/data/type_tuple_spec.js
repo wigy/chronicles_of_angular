@@ -28,9 +28,9 @@ describe('module coa.data, TypeTuple class', function() {
     });
 
     it('refuses to initialize undefined values', function() {
-        d.quiet();
-        var team = new Tuples({pair: undefined});
-        expect(d.errors()).toEqual(['Invalid value undefined for member of type TypeTuple({default: ["A", "B"], label: "Pair", required: false, types: [TypeStr({required: false}), TypeStr({required: false})]}) for object Data({pair: ["A", "B"]})']);
+        d.expect(function(){
+            var team = new Tuples({pair: undefined});
+        }).toBe('Invalid value undefined for member of type TypeTuple({default: ["A", "B"], label: "Pair", required: false, types: [TypeStr({required: false}), TypeStr({required: false})]}) for object Data({pair: ["A", "B"]})');
     });
 
     it('has string presentation', function() {

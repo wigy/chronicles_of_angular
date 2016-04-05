@@ -14,11 +14,11 @@ describe('module coa.data, TypeObj class', function() {
     });
 
     it('requires class option', function() {
-        d.quiet();
-        new Data([
-            {invalid: new TypeObj({})},
-        ]);
-        expect(d.errors()).toEqual(['Invalid options {} for type TypeObj({})']);
+        d.expect(function(){
+            new Data([
+                {invalid: new TypeObj({})},
+            ]);
+        }).toBe('Invalid options {} for type TypeObj({})');
     });
 
     it('initializes object members with default values', function() {

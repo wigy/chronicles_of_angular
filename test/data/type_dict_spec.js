@@ -23,11 +23,11 @@ describe('module coa.data, TypeDict class', function() {
     });
 
     it('requires type option', function() {
-        d.quiet();
-        new Data([
-            {invalid: new TypeDict({})},
-        ]);
-        expect(d.errors()).toEqual(['Invalid options {} for type TypeDict({})']);
+        d.expect(function(){
+            new Data([
+                {invalid: new TypeDict({})},
+            ]);
+        }).toBe('Invalid options {} for type TypeDict({})');
     });
 
     it('initializes object members with default values', function() {

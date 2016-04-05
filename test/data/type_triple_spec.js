@@ -19,9 +19,9 @@ describe('module coa.data, TypeTriple class', function() {
     });
 
     it('refuses invalid number of types', function() {
-        d.quiet();
-        var type = new TypeTriple({types: [new TypeInt(), new TypeStr()]});
-        expect(d.errors()).toEqual(['Invalid options {types: [TypeInt({required: false}), TypeStr({required: false})]} for type TypeTriple({})']);
+        d.expect(function(){
+            var type = new TypeTriple({types: [new TypeInt(), new TypeStr()]});
+        }).toBe('Invalid options {types: [TypeInt({required: false}), TypeStr({required: false})]} for type TypeTriple({})');
     });
 
     it('does not mess up prototype of TypeTuple', function() {

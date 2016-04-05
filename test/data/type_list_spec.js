@@ -15,11 +15,11 @@ describe('module coa.data, TypeList class', function() {
     });
 
     it('requires type option', function() {
-        d.quiet();
-        new Data([
-            {invalid: new TypeList({})},
-        ]);
-        expect(d.errors()).toEqual(['Invalid options {} for type TypeList({})']);
+        d.expect(function(){
+            new Data([
+                {invalid: new TypeList({})},
+            ]);
+        }).toBe('Invalid options {} for type TypeList({})');
     });
 
     it('initializes object members with default values', function() {
