@@ -2,6 +2,7 @@
  * @ngdoc overview
  * @name coa.data
  * @requires coa.core
+ * @requires coa.store
  * @description
  *
  * Classes needed for storing and presenting data and its meta information.
@@ -40,4 +41,4 @@
  *   <dt>tuple</dt><dd>{@link coa.data.class:TypeTuple TypeTuple}</dd>
  * </dl>
  */
-angular.module('coa.data', ['coa.core']);
+angular.module('coa.data', ['coa.core', 'coa.store']);
