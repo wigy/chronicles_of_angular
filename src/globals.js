@@ -6,7 +6,7 @@
  * All functions and constants defined in this module are available in every module without dependency injection.
  */
 
-// TODO: This could be generic module in chronicles_of_grunt or even own project.
+// TODO: Remove this and use neat-dump.
 
 /**
  * @ngdoc function

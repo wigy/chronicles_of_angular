@@ -43,8 +43,6 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* Fix infinite loop in `d()` with objects having function members.
-
 ### Not Yet Done
 
 * Use new neat-dump instead of own implementation of d().
