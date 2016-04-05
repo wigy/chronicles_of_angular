@@ -74,7 +74,7 @@
                         });
                     }
                     else {
-                        d("Cannot find key-press handler", $attrs.coaKeyHandler);
+                        d.error("Cannot find key-press handler", $attrs.coaKeyHandler);
                     }
                 });
             }
