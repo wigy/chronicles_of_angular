@@ -53,7 +53,7 @@
             // TODO: Verify that it is Data
             // TODO: Module debug here
             engine.insert(q, obj.__class, obj.toJSON(), opts);
-
+            // TODO: Chain promises to insert ID into object
             return q.promise;
         }
 
@@ -70,6 +70,8 @@
             // TODO: Check for correct cls
             // TODO: Convert from JSON. What if partial data?
             engine.find(q, cls.prototype.__class, filter, opts);
+
+            // TODO: Need to chain promises here to convert JSON to objects
             return q.promise;
         }
 

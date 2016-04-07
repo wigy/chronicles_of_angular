@@ -5,7 +5,6 @@ describe('module coa.store, db service', function() {
     function Project(data) {
         this.init(data);
     }
-    Project.prototype.__class = 'unit-testing.Project';
 
     beforeEach(function() {
         module('coa.data');
@@ -20,6 +19,7 @@ describe('module coa.store, db service', function() {
                 name: new TypeStr(),
                 description: new TypeStr(),
             }]);
+            Project.prototype.__class = 'unit-testing.Project';
         });
     });
 
@@ -31,8 +31,11 @@ describe('module coa.store, db service', function() {
         db.find(Project).then(function(data) {
             d(data);
             expect(true).toBe(true);
+        }).finally(function() {
             done();
         });
         db.flush();
     });
+
+    // TODO: Saving objects over previous copies.
 });
