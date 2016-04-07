@@ -24,12 +24,14 @@ describe('module coa.store, db service', function() {
     });
 
     it('can insert objects into memory', function(done) {
-        // Note that memory DB is guaranteed to act immediately.
         db.using('mem a');
-        db.insert(new Project({name: "Project 1", description: "This is one."}));
-        db.insert(new Project({name: "Project 2", description: "This is two."}));
+        var p1 = new Project({name: "Project 1", description: "This is one."});
+        var p2 = new Project({name: "Project 2", description: "This is two."});
+        // Note that memory DB is guaranteed to act immediately, so no need to chain promises.
+        db.insert(p1);
+        db.insert(p2);
         db.find(Project).then(function(data) {
-            d(data);
+            d("Find:", data);
             expect(true).toBe(true);
         }).finally(function() {
             done();

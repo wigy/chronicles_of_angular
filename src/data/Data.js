@@ -131,6 +131,7 @@
          * Reset all member values to defaults.
          */
         Data.prototype.reset = function() {
+            this._id = null;
             for (var k = 0; k < this._members.length; k++ ) {
                 this[this._members[k]] = this._types[this._members[k]].copy(this._types[this._members[k]].getDefault());
             }
@@ -153,6 +154,7 @@
             for (var k = 0; k < this._members.length; k++ ) {
                 this[this._members[k]] = this._types[this._members[k]].copy(target[this._members[k]]);
             }
+            this._id = target._id;
         };
 
         /**
