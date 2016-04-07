@@ -14,12 +14,7 @@
   "bugs": {
     "url": "https://github.com/wigy/chronicles_of_angular/issues"
   },
-  "licenses": [
-    {
-      "type": "GPL-2.0",
-      "url": "https://github.com/wigy/chronicles_of_angular/blob/master/LICENSE"
-    }
-  ],
+  "license": "GPL-2.0",
   "engines": {
     "node": ">= 5.0.0"
   },
@@ -38,6 +33,6 @@
     "angularcontext": "0.0.18",
     "express": "^4.13.4"
     "chronicles_of_grunt": "^1.11.6",
-    "neat-dump": "^1.0.1"
+    "neat-dump": "^1.0.2"
   }
 }
