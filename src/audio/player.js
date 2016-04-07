@@ -33,7 +33,7 @@
             return Object.keys(audio);
         }
         if (!(name in audio)) {
-            d("Invalid audio name:", name);
+            d.error("Invalid audio name:", name);
             return;
         }
 

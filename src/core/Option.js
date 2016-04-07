@@ -81,7 +81,7 @@
          */
         Option.prototype.operate = function(option, args) {
             if (option === undefined) {
-                d("Undefined value given for Option.operate() option", this);
+                d.error("Undefined value given for Option.operate() option", this);
                 return undefined;
             }
             args = Array.prototype.slice.call(arguments);

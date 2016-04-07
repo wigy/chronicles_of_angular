@@ -27,11 +27,11 @@ describe('module coa.data, TypeOptions class', function() {
     });
 
     it('requires options option', function() {
-        d.quiet();
-        new Data([
-            {invalid: new TypeOptions({})},
-        ]);
-        expect(d.errors()).toEqual(['Invalid options {} for type TypeOptions({})']);
+        d.expect(function(){
+            new Data([
+                {invalid: new TypeOptions({})},
+            ]);
+        }).toBe('Invalid options {} for type TypeOptions({})');
     });
 
     it('initializes object members with default values', function() {

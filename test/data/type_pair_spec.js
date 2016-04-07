@@ -19,9 +19,9 @@ describe('module coa.data, TypePair class', function() {
     });
 
     it('refuses invalid number of types', function() {
-        d.quiet();
-        var type = new TypePair({types: [new TypeInt(), new TypeStr(), new TypeStr()]});
-        expect(d.errors()).toEqual(['Invalid options {types: [TypeInt({required: false}), TypeStr({required: false}), TypeStr({required: false})]} for type TypePair({})']);
+        d.expect(function(){
+            var type = new TypePair({types: [new TypeInt(), new TypeStr(), new TypeStr()]});
+        }).toBe('Invalid options {types: [TypeInt({required: false}), TypeStr({required: false}), TypeStr({required: false})]} for type TypePair({})');
     });
 
     it('does not mess up prototype of TypeTuple', function() {

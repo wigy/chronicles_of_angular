@@ -45,11 +45,11 @@
             try {
                 injector = angular.injector(['ng', mod]);
             } catch(e) {
-                d("There is no such module than", mod);
+                d.error("There is no such module than", mod);
                 return null;
             }
             if (!injector.has(cls)) {
-                d("There is no such class than", cls, "defined in the module", mod);
+                d.error("There is no such class than", cls, "defined in the module", mod);
                 return null;
             }
             if (!constructors[mod]) {

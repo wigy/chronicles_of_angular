@@ -85,13 +85,13 @@
 
             var validatedOptions = this.optionDefinitions.validate(options || {});
             if (!validatedOptions) {
-                d("Invalid options", options, "for type", this);
+                d.error("Invalid options", options, "for type", this);
                 return;
             }
             this.options = validatedOptions;
             var def = this.convert(this.options.default);
             if (def === undefined) {
-                d("Invalid default value", this.options.default, "for", this);
+                d.error("Invalid default value", this.options.default, "for", this);
                 def = null;
             }
             this.options.default = def;
@@ -201,7 +201,7 @@
         Type.prototype.set = function(target, key, value) {
             var set = this.convert(value);
             if (set === undefined) {
-                d("Invalid value", value, "for member of type", this, "for object", target);
+                d.error("Invalid value", value, "for member of type", this, "for object", target);
                 set = this.getDefault();
             }
             target[key] = set;

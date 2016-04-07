@@ -52,7 +52,7 @@
 
             if (!this._options) {
                 this.optionDefinitions.validate({});
-                d("Invalid options", options, "for Data", this, "(using defaults instead).");
+                d.error("Invalid options", options, "for Data", this, "(using defaults instead).");
             }
             this._createMembers(definitions);
         };
@@ -82,7 +82,7 @@
          */
         Data.prototype._createMembers = function(definitions) {
             if (!(definitions instanceof Array)) {
-                d("Invalid arguments", definitions, "for Data");
+                d.error("Invalid arguments", definitions, "for Data");
                 return;
             }
             for (var i = 0; i < definitions.length; i++) {
@@ -101,12 +101,12 @@
         Data.prototype._addMember = function(name, definition) {
 
             if (typeof(name) !== "string") {
-                d("Invalid name for a data member", name, "with definition", definition);
+                d.error("Invalid name for a data member", name, "with definition", definition);
                 return;
             }
 
             if (!(definition instanceof Type)) {
-                d("Invalid type", definition, "given for", this);
+                d.error("Invalid type", definition, "given for", this);
                 return;
             }
 
@@ -115,7 +115,7 @@
             }
 
             if (this._types[name]) {
-                d("Trying to define member", name, "as", definition, "but it has been already defined as", this._types[name], "in", this);
+                d.error("Trying to define member", name, "as", definition, "but it has been already defined as", this._types[name], "in", this);
                 return;
             }
 
@@ -146,7 +146,7 @@
          */
         Data.prototype.copy = function(target) {
             if (target.__class !== this.__class) {
-                d("Mismatching classes when trying to copy", target, "into", this);
+                d.error("Mismatching classes when trying to copy", target, "into", this);
                 this.reset();
                 return;
             }
@@ -180,7 +180,7 @@
 
             if (data instanceof Data) {
                 if (data.__class !== this.__class) {
-                    d("Cannot initialize '" + this.__class + "' object", this, " from '" + data.__class + "' object", data);
+                    d.error("Cannot initialize '" + this.__class + "' object", this, " from '" + data.__class + "' object", data);
                     return;
                 }
                 // Create clean copy of data.
@@ -197,7 +197,7 @@
                     if (type) {
                         type.set(this, k, data[k]);
                     } else {
-                        d("Invalid member name '" + k + "' in initial data", data, "for", this);
+                        d.error("Invalid member name '" + k + "' in initial data", data, "for", this);
                     }
                 }
                 return;
@@ -206,14 +206,14 @@
             if (this._options.primary_field) {
                 type = this._types[this._options.primary_field];
                 if (!type) {
-                    d("Invalid primary field '" + this._options.primary_field + "' defined for", this);
+                    d.error("Invalid primary field '" + this._options.primary_field + "' defined for", this);
                     return;
                 }
                 type.set(this, this._options.primary_field, data);
                 return;
             }
 
-            d("Invalid initial values", data, "for", this);
+            d.error("Invalid initial values", data, "for", this);
         };
 
         /**

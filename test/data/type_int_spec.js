@@ -24,12 +24,13 @@ describe('module coa.data, TypeInt class', function() {
     });
 
     it('refuses invalid initial values', function() {
-        d.quiet();
-        new Numbering({first: 3.5});
-        expect(d.errors()).toEqual(['Invalid value 3.5 for member of type TypeInt({default: -1, label: "First", required: false}) for object Data({first: -1})']);
-        d.quiet();
-        new Numbering({first: '1'});
-        expect(d.errors()).toEqual(['Invalid value 1 for member of type TypeInt({default: -1, label: "First", required: false}) for object Data({first: -1})']);
+        d.expect(function(){
+            new Numbering({first: 3.5});
+        }).toBe('Invalid value 3.5 for member of type TypeInt({default: -1, label: "First", required: false}) for object Data({first: -1})');
+
+        d.expect(function(){
+            new Numbering({first: '1'});
+        }).toBe('Invalid value 1 for member of type TypeInt({default: -1, label: "First", required: false}) for object Data({first: -1})');
     });
 
     it('handles zero as default', function() {
