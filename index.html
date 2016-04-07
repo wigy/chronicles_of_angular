@@ -64,20 +64,6 @@
           };
       });
 
-      /**
-       * Possible interface for setting up database.
-       */
-      function DBConfig() {
-          this.dbs = null;
-          this.set = function(name, url) {
-              this.dbs = this.dbs || {};
-              this.dbs[name] = this.dbs[name] || {};
-              this.dbs[name].url = url;
-          }
-          this.set('default', 'mem://default')
-      }
-      angular.module('coa.data').value('dbconfig', new DBConfig());
-
       TestApp.run(['dbconfig', function(dbconfig) {
           dbconfig.set('server', 'mongodb://localhost:8000');
           d(dbconfig);

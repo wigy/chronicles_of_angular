@@ -17,14 +17,14 @@
         EngineMemory.prototype = new Engine();
         EngineMemory.prototype.__class = 'coa.store.EngineMemory';
 
-        EngineMemory.prototype.insert = function(deferred, obj, opts) {
-            d("Insert", obj);
+        Engine.prototype.insert = function(deferred, name, json, opts) {
+            d("Insert", name, json);
             // TODO: Implement
             deferred.resolve();
         };
 
-        EngineMemory.prototype.find = function(deferred, cls, filter, opts) {
-            d("Find", cls);
+        EngineMemory.prototype.find = function(deferred, name, filter, opts) {
+            d("Find", name);
             // TODO: Implement
             deferred.resolve([]);
         };
