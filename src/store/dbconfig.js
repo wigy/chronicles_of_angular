@@ -20,11 +20,15 @@
         this.dbs[name].engine = null;
     };
 
+    DBConfig.prototype.has = function(name) {
+        return name in this.dbs;
+    };
+
     DBConfig.prototype.get = function(name) {
         if (this.dbs[name]) {
             return this.dbs[name];
         }
-        // TODO: raise error
+        d.fatal("No such database defined as", name);
     };
 
     module.value('dbconfig', new DBConfig());

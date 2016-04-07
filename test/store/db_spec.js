@@ -11,13 +11,14 @@ describe('module coa.store, db service', function() {
         module('coa.data');
         module('coa.store');
         inject(function(dbconfig, _db_, _Data_, _TypeStr_) {
-            dbconfig.set('a', 'memory://a')
-            dbconfig.set('b', 'memory://b')
+            dbconfig.set('a', 'memory://a');
+            dbconfig.set('b', 'memory://b');
             db = _db_;
             Data = _Data_;
             TypeStr = _TypeStr_;
             Project.prototype = new Data([{
-                name: new TypeStr()
+                name: new TypeStr(),
+                description: new TypeStr(),
             }]);
         });
     });

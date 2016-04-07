@@ -38,6 +38,7 @@
             }
             var engine = getEngine(db);
             var q = $q.defer();
+            // TODO: Verify that it is Data
             // TODO: Convert to JSON
             // TODO: Module debug here
             engine.insert(q, obj, opts);
@@ -65,7 +66,9 @@
         }
 
         function using(name) {
-            // TODO: Validate
+            if (!dbconfig.has(name)) {
+                d.warning("Switching to database that does not exist:", name);
+            }
             defaultDb = name;
         }
 
