@@ -36,6 +36,6 @@
     "angular": "^1.4.8",
     "angular-mocks": "^1.4.8",
     "chronicles_of_grunt": "^1.11.6",
-    "neat-dump": "^1.0.0"
+    "neat-dump": "^1.0.1"
   }
 }
