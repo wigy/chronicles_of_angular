@@ -3,7 +3,10 @@
     // TODO: Docs
     var module = angular.module('coa.store');
 
-    module.service('db', ['$q', 'dbconfig', 'EngineMem', function($q, dbconfig, EngineMem) {
+    module.service('db', ['$q', '$rootScope', 'dbconfig', 'EngineMem', function($q, $rootScope, dbconfig, EngineMem) {
+
+        // Name of the default DB to use.
+        var defaultDb = 'default';
 
         function engine(url) {
             // TODO: Parse url
@@ -31,7 +34,7 @@
             if (typeof(db) !== 'string') {
                 opts = obj;
                 obj = db;
-                db = 'default';
+                db = defaultDb;
             }
             var engine = getEngine(db);
             var q = $q.defer();
@@ -48,7 +51,7 @@
                 opts = filter;
                 filter = cls;
                 cls = db;
-                db = 'default';
+                db = defaultDb;
             }
             var engine = getEngine(db);
             var q = $q.defer();
@@ -57,9 +60,20 @@
             return q.promise;
         }
 
+        function flush() {
+            $rootScope.$apply();
+        }
+
+        function using(name) {
+            // TODO: Validate
+            defaultDb = name;
+        }
+
         return {
             find: find,
             insert: insert,
+            flush: flush,
+            using: using,
         };
     }]);
 

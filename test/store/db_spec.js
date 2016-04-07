@@ -1,6 +1,6 @@
 describe('module coa.store, db service', function() {
 
-    var db, Data, TypeStr, $rootScope;
+    var db, Data, TypeStr;
 
     function Project(data) {
         this.init(data);
@@ -10,25 +10,28 @@ describe('module coa.store, db service', function() {
     beforeEach(function() {
         module('coa.data');
         module('coa.store');
-        inject(function(_db_, _Data_, _TypeStr_, _$rootScope_) {
+        inject(function(dbconfig, _db_, _Data_, _TypeStr_) {
+            dbconfig.set('a', 'mem://a')
+            dbconfig.set('b', 'mem://b')
             db = _db_;
             Data = _Data_;
             TypeStr = _TypeStr_;
-            $rootScope = _$rootScope_;
             Project.prototype = new Data([{
                 name: new TypeStr()
             }]);
         });
     });
 
-    it('can insert objects into memory', function() {
-        // TODO: Implement with promises
+    it('can insert objects into memory', function(done) {
+        // Note that memory DB is guaranteed to act immediately.
+        db.using('a');
         db.insert(new Project({name: "Project 1"}));
         db.insert(new Project({name: "Project 2"}));
         db.find(Project).then(function(data) {
             d(data);
+            expect(true).toBe(true);
+            done();
         });
-        $rootScope.$apply();
-        expect(true).toBe(true);
+        db.flush();
     });
 });
