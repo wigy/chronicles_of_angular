@@ -11,8 +11,8 @@ describe('module coa.store, db service', function() {
         module('coa.data');
         module('coa.store');
         inject(function(dbconfig, _db_, _Data_, _TypeStr_) {
-            dbconfig.set('a', 'mem://a')
-            dbconfig.set('b', 'mem://b')
+            dbconfig.set('a', 'memory://a')
+            dbconfig.set('b', 'memory://b')
             db = _db_;
             Data = _Data_;
             TypeStr = _TypeStr_;

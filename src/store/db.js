@@ -3,7 +3,7 @@
     // TODO: Docs
     var module = angular.module('coa.store');
 
-    module.service('db', ['$q', '$rootScope', 'dbconfig', 'EngineMem', function($q, $rootScope, dbconfig, EngineMem) {
+    module.service('db', ['$q', '$rootScope', 'dbconfig', 'EngineMemory', function($q, $rootScope, dbconfig, EngineMemory) {
 
         // Name of the default DB to use.
         var defaultDb = 'default';
@@ -11,7 +11,7 @@
         function engine(url) {
             // TODO: Parse url
             // TODO: Module debug here
-            return new EngineMem(url);
+            return new EngineMemory(url);
         }
 
         /**
