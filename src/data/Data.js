@@ -198,6 +198,8 @@
                     type = this._types[k];
                     if (type) {
                         type.set(this, k, data[k]);
+                    } else if (k === '_id') {
+                        this._id = data._id;
                     } else {
                         d.error("Invalid member name '" + k + "' in initial data", data, "for", this);
                     }
