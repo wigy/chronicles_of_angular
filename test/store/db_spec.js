@@ -37,7 +37,7 @@ describe('module coa.store, db service', function() {
         db.insert(p1);
         db.insert(p2);
         db.find(Project).then(function(data) {
-            d("Find:", data);
+            // TODO: Expect
             expect(true).toBe(true);
         }).finally(function() {
             done();

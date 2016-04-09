@@ -41,46 +41,105 @@
             return conf.engine;
         }
 
-        // TODO: Implement.
+        /**
+        * @ngdoc method
+        * @name insert
+        * @methodOf coa.store.service:db
+        * @param {Data} obj An object instance to store.
+        * @param {Object} opts Options for the operation (currently none).
+        * @return {Promise} An Angular promise object resolved once stored.
+        * @description
+        * This creates new instance to the collection. The name of the collection will
+        * be the name of the class of the object to store. If successful, the ID of the
+        * newly created object is set into the target object. It is also parameter for
+        * the success-function of the promise, when resolved.
+        */
         function insert(db, obj, opts) {
+
+            // Figure out arguments.
             if (typeof(db) !== 'string') {
                 opts = obj;
                 obj = db;
                 db = defaultDb;
             }
+
+            // Validate data.
+            if (!('toJSON' in obj)) {
+                d.error("Cannot store objects that does not have toJSON():", obj);
+                return;
+            }
+            if (!obj.__class) {
+                d.error("Cannot store objects that does not define __class:", obj);
+                return;
+            }
+
+            // Get engine and store it.
             var engine = getEngine(db);
             var q = $q.defer();
-            // TODO: Verify that it is Data
             var json = obj.toJSON();
             var name = obj.__class;
-            d('STORE', 'Insert', json, 'to collection', name, 'in', defaultDb);
+
+            d('STORE', 'Insert', json, 'to collection', name, 'in', db);
             engine.insert(q, name, json, opts);
-            // TODO: Chain promises to insert ID into object
-            return q.promise;
+
+            // Mark ID to the object.
+            return q.promise.then(function(id){
+                obj._id = id;
+                return id;
+            });
         }
 
-        // TODO: Implement.
-        function find(db, cls, filter, opts) {
+        /**
+        * @ngdoc method
+        * @name find
+        * @methodOf coa.store.service:db
+        * @param {Function} Cls A constructor of some {@link coa.data.class:Data Data} class.
+        * @param {Object} opts Options for the operation (currently none).
+        * @return {Promise} An Angular promise object resolved once data retrieved.
+        * @description
+        * A lookup is done to the storage and promise is resolved with an array of results all
+        * instantiated as a members of the target class.
+        */
+        function find(db, Cls, filter, opts) {
+
+            // TODO: Support single fetch when ID given as a string.
+            // Figure out arguments.
             if (typeof(db) !== 'string') {
                 opts = filter;
-                filter = cls;
-                cls = db;
+                filter = Cls;
+                Cls = db;
                 db = defaultDb;
             }
+
+            // Validate arguments.
+            // TODO: Check for correct cls
+            var name = Cls.prototype.__class;
+            filter = filter || {};
+
+            // Fetch data.
             var engine = getEngine(db);
             var q = $q.defer();
-            // TODO: Check for correct cls
-            // TODO: Convert from JSON. What if partial data?
-            engine.find(q, cls.prototype.__class, filter, opts);
-            // TODO: Module debug
-            // TODO: Need to chain promises here to convert JSON to objects
-            return q.promise;
+            engine.find(q, name, filter, opts);
+
+            // TODO: Option to keep data raw.
+
+            // Convert to targets.
+            return q.promise.then(function(data){
+                var ret = [];
+                for (var i = 0; i < data.length; i++) {
+                    ret.push(new Cls(data[i]));
+                }
+                d('STORE', 'Find', filter, 'from collection', name, 'in', db, ':', ret);
+                return ret;
+            });
         }
 
+        // TODO: Docs
         function flush() {
             $rootScope.$apply();
         }
 
+        // TODO: Docs
         function using(name) {
             if (!dbconfig.has(name)) {
                 d.warning("Switching to database that does not exist:", name);
