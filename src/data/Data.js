@@ -10,6 +10,8 @@
             return Data;
         }
 
+// TODO: Document special member _id.
+
         /**
         * @ngdoc function
         * @name coa.data.class:Data
