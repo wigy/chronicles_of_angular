@@ -22,7 +22,7 @@
 
         function engine(url) {
             // TODO: Parse url
-            // TODO: Module debug here
+            d('STORE', 'Creating an engine for', url);
             return new EngineMemory(url);
         }
 
@@ -51,8 +51,10 @@
             var engine = getEngine(db);
             var q = $q.defer();
             // TODO: Verify that it is Data
-            // TODO: Module debug here
-            engine.insert(q, obj.__class, obj.toJSON(), opts);
+            var json = obj.toJSON();
+            var name = obj.__class;
+            d('STORE', 'Insert', json, 'to collection', name, 'in', defaultDb);
+            engine.insert(q, name, json, opts);
             // TODO: Chain promises to insert ID into object
             return q.promise;
         }
@@ -70,7 +72,7 @@
             // TODO: Check for correct cls
             // TODO: Convert from JSON. What if partial data?
             engine.find(q, cls.prototype.__class, filter, opts);
-
+            // TODO: Module debug
             // TODO: Need to chain promises here to convert JSON to objects
             return q.promise;
         }

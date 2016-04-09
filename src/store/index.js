@@ -15,3 +15,9 @@
  * </pre>
  */
 angular.module('coa.store', ['coa.core']);
+
+angular.module('coa.store').run(function(){
+    d.channels({
+        STORE: null
+    });
+})

@@ -21,6 +21,12 @@ describe('module coa.store, db service', function() {
             }]);
             Project.prototype.__class = 'unit-testing.Project';
         });
+
+        // TODO: Drop debug.
+        d.channels({
+            STORE: true
+        });
+
     });
 
     it('can insert objects into memory', function(done) {
