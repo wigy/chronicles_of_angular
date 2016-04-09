@@ -37,8 +37,13 @@ describe('module coa.store, db service', function() {
         db.insert(p1);
         db.insert(p2);
         db.find(Project).then(function(data) {
-            // TODO: Expect
-            expect(true).toBe(true);
+            expect(data.length).toBe(2);
+            expect(data[0] instanceof Project).toBe(true);
+            expect(data[1] instanceof Project).toBe(true);
+            expect(data[0].name).toBe("Project 1");
+            expect(data[0].description).toBe("This is one.");
+            expect(data[1].name).toBe("Project 2");
+            expect(data[1].description).toBe("This is two.");
         }).finally(function() {
             done();
         });
