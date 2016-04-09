@@ -163,16 +163,31 @@
             });
         }
 
-        // TODO: Docs
+        /**
+        * @ngdoc method
+        * @name flush
+        * @methodOf coa.store.service:db
+        * @description
+        * Since Angular promises does not trigger necessarily immediately, this function can be called
+        * in order to force handling of the pending promises that has been already resolved.
+        */
         function flush() {
             $rootScope.$apply();
         }
 
-        // TODO: Docs
+        /**
+        * @ngdoc method
+        * @name using
+        * @param {String} name Name of the storage.
+        * @methodOf coa.store.service:db
+        * @description
+        * Change the default storage to the named one.
+        */
         function using(name) {
             if (!dbconfig.has(name)) {
                 d.warning("Switching to database that does not exist:", name);
             }
+            d('STORE', 'Switching to storage', name);
             defaultDb = name;
         }
 
