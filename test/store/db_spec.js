@@ -10,8 +10,8 @@ describe('module coa.store, db service', function() {
         module('coa.data');
         module('coa.store');
         inject(function(dbconfig, _db_, _Data_, _TypeStr_) {
-            dbconfig.set('mem a', 'memory://mem_a');
-            dbconfig.set('mem b', 'memory://mem_b');
+            dbconfig.set('MemA', 'memory://mem_a');
+            dbconfig.set('MemB', 'memory://mem_b');
             db = _db_;
             Data = _Data_;
             TypeStr = _TypeStr_;
@@ -30,7 +30,7 @@ describe('module coa.store, db service', function() {
     });
 
     it('can insert objects into memory', function(done) {
-        db.using('mem a');
+        db.using('MemA');
         var p1 = new Project({name: "Project 1", description: "This is one."});
         var p2 = new Project({name: "Project 2", description: "This is two."});
         // Note that memory DB is guaranteed to act immediately, so no need to chain promises.

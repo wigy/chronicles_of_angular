@@ -15,15 +15,31 @@
      * if not yet used before. Then the conversion between {@link coa.data.class:Data Data} instance
      * and JSON is performed when the object is either stored or retrieced from the engine.
      */
-    module.service('db', ['$q', '$rootScope', 'dbconfig', 'EngineMemory', function($q, $rootScope, dbconfig, EngineMemory) {
+    module.service('db', ['$q', '$rootScope', 'dbconfig', function($q, $rootScope, dbconfig) {
 
         // Name of the default DB to use.
         var defaultDb = 'default';
 
+        /**
+         * Parse URI and instantiate appropriate storage engine.
+         */
         function engine(url) {
-            // TODO: Parse url
-            d('STORE', 'Creating an engine for', url);
-            return new EngineMemory(url);
+            var ret;
+
+            var parts = /^(\w+):/.exec(url);
+            if (!parts) {
+                d.fatal("Invalid engine URI", url);
+            }
+            try {
+                var Engine = angular.injector(['ng', 'coa.store']).get('Engine' + parts[1].ucfirst());
+                ret = new Engine(url);
+            } catch(e) {
+                d.fatal("Unable to instantiate engine for URI", url, e);
+            }
+
+            d('STORE', 'Creating an engine for URI', url, ':', ret);
+
+            return ret;
         }
 
         /**
@@ -79,7 +95,7 @@
             var json = obj.toJSON();
             var name = obj.__class;
 
-            d('STORE', 'Insert', json, 'to collection', name, 'in', db);
+            d('STORE', 'Insert', json, 'to collection', name, 'in store', db);
             engine.insert(q, name, json, opts);
 
             // Mark ID to the object.
@@ -129,7 +145,7 @@
                 for (var i = 0; i < data.length; i++) {
                     ret.push(new Cls(data[i]));
                 }
-                d('STORE', 'Find', filter, 'from collection', name, 'in', db, ':', ret);
+                d('STORE', 'Find', filter, 'from collection', name, 'in store', db, ':', ret);
                 return ret;
             });
         }
