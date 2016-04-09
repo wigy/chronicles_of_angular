@@ -72,6 +72,8 @@
         */
         function insert(db, obj, opts) {
 
+            var q = $q.defer();
+
             // Figure out arguments.
             if (typeof(db) !== 'string') {
                 opts = obj;
@@ -82,16 +84,17 @@
             // Validate data.
             if (!('toJSON' in obj)) {
                 d.error("Cannot store objects that does not have toJSON():", obj);
-                return;
+                q.reject("Cannot store objects that does not have toJSON().");
+                return q.promise;
             }
             if (!obj.__class) {
                 d.error("Cannot store objects that does not define __class:", obj);
-                return;
+                q.reject("Cannot store objects that does not define __class.");
+                return q.promise;
             }
 
             // Get engine and store it.
             var engine = getEngine(db);
-            var q = $q.defer();
             var json = obj.toJSON();
             var name = obj.__class;
 
@@ -118,6 +121,8 @@
         */
         function find(db, Cls, filter, opts) {
 
+            var q = $q.defer();
+
             // TODO: Support single fetch when ID given as a string.
             // Figure out arguments.
             if (typeof(db) !== 'string') {
@@ -128,16 +133,24 @@
             }
 
             // Validate arguments.
-            // TODO: Check for correct cls
+            if (typeof(Cls) !== "function") {
+                d.error("Invalid class for finding objects", Cls);
+                q.reject("Invalid class for finding objects.");
+                return q.promise;
+            }
             var name = Cls.prototype.__class;
+            if (!name) {
+                d.error("Target object constructor for storing does not define class:", Cls);
+                q.reject("Target object constructor for storing does not define class.");
+                return q.promise;
+            }
             filter = filter || {};
 
             // Fetch data.
             var engine = getEngine(db);
-            var q = $q.defer();
             engine.find(q, name, filter, opts);
 
-            // TODO: Option to keep data raw.
+            // TODO: Option to keep data raw. Validate using Options.
 
             // Convert to targets.
             return q.promise.then(function(data){
