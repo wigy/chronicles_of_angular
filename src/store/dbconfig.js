@@ -26,7 +26,7 @@
 
         this.dbs = {
             default: {
-                url: 'mem://default',
+                url: 'memory://default',
                 engine: null
             }
         };

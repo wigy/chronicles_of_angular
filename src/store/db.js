@@ -1,6 +1,5 @@
 (function() {
 
-    // TODO: Docs
     var module = angular.module('coa.store');
 
     /**
@@ -15,7 +14,7 @@
      * if not yet used before. Then the conversion between {@link coa.data.class:Data Data} instance
      * and JSON is performed when the object is either stored or retrieced from the engine.
      */
-    module.service('db', ['$q', '$rootScope', 'dbconfig', function($q, $rootScope, dbconfig) {
+    module.service('db', ['$q', '$rootScope', 'dbconfig', 'Options', function($q, $rootScope, dbconfig, Options) {
 
         // Name of the default DB to use.
         var defaultDb = 'default';
@@ -108,6 +107,14 @@
             });
         }
 
+        // Valid options for find().
+        var findOptions = new Options({
+            raw: {
+                type: "boolean",
+                default: false
+            }
+        });
+
         /**
         * @ngdoc method
         * @name find
@@ -132,6 +139,13 @@
                 db = defaultDb;
             }
 
+            // Validate options.
+            var options = findOptions.validate(opts);
+            if (!options) {
+                d.warning("Invalid options", opts, "for storage find().");
+                options = findOptions.validate({});
+            }
+
             // Validate arguments.
             if (typeof(Cls) !== "function") {
                 d.error("Invalid class for finding objects", Cls);
@@ -154,10 +168,17 @@
 
             // Convert to targets.
             return q.promise.then(function(data){
+
                 var ret = [];
-                for (var i = 0; i < data.length; i++) {
-                    ret.push(new Cls(data[i]));
+
+                if (options.raw) {
+                    ret = data;
+                } else {
+                    for (var i = 0; i < data.length; i++) {
+                        ret.push(new Cls(data[i]));
+                    }
                 }
+
                 d('STORE', 'Find', filter, 'from collection', name, 'in store', db, ':', ret);
                 return ret;
             });

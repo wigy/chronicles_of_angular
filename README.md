@@ -43,13 +43,15 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
+* Use new neat-dump instead of own implementation of d().
+
 ### Not Yet Done
 
-* Use new neat-dump instead of own implementation of d().
+* Data persistence interface `coa.store` with in-memory implementation.
 
 ## Future Ideas
 
-* Data persistence interface `coa.store` with in-memory, mongodb and rest-api implementations.
+* Data persistence engines for mongodb and rest-api.
 * Builder task for collecting data from JSON-files and setting up in-memory storage for single-file application (use CoG build).
 * Rendering for every class with member `html(context)`, where *context* is RenderingContext instance
   (to be defined).
