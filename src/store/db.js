@@ -69,16 +69,9 @@
         * newly created object is set into the target object. It is also parameter for
         * the success-function of the promise, when resolved.
         */
-        function insert(db, obj, opts) {
+        function insert(obj, opts) {
 
             var q = $q.defer();
-
-            // Figure out arguments.
-            if (typeof(db) !== 'string') {
-                opts = obj;
-                obj = db;
-                db = defaultDb;
-            }
 
             // Validate data.
             if (!('toJSON' in obj)) {
@@ -93,11 +86,11 @@
             }
 
             // Get engine and store it.
-            var engine = getEngine(db);
+            var engine = getEngine(defaultDb);
             var json = obj.toJSON();
             var name = obj.__class;
 
-            d('STORE', 'Insert', json, 'to collection', name, 'in store', db);
+            d('STORE', 'Insert', json, 'to collection', name, 'in store', defaultDb);
             engine.insert(q, name, json, opts);
 
             // Mark ID to the object.
@@ -127,18 +120,9 @@
         * A lookup is done to the storage and promise is resolved with an array of results all
         * instantiated as a members of the target class.
         */
-        function find(db, Cls, filter, opts) {
+        function find(Cls, filter, opts) {
 
             var q = $q.defer();
-
-            // TODO: Support single fetch when ID given as a string. (Maybe resolved in Filter class.)
-            // Figure out arguments.
-            if (typeof(db) !== 'string') {
-                opts = filter;
-                filter = Cls;
-                Cls = db;
-                db = defaultDb;
-            }
 
             // Validate options.
             var options = findOptions.validate(opts);
@@ -162,7 +146,7 @@
             filter = filter || {};
 
             // Fetch data.
-            var engine = getEngine(db);
+            var engine = getEngine(defaultDb);
             engine.find(q, name, filter, opts);
 
             // TODO: Option to keep data raw. Validate using Options.
@@ -180,9 +164,28 @@
                     }
                 }
 
-                d('STORE', 'Find', filter, 'from collection', name, 'in store', db, ':', ret);
+                d('STORE', 'Find', filter, 'from collection', name, 'in store', defaultDb, ':', ret);
                 return ret;
             });
+        }
+
+        /**
+        * @ngdoc method
+        * @name update
+        * @methodOf coa.store.service:db
+        * @param {Function} Cls A constructor of some {@link coa.data.class:Data Data} class.
+        * @param {Object} filter Filtering conditions for objects to update. TODO: Add link to filter class.
+        * @param {Object} changes An object containing new values to set.
+        * @param {Object} opts Options for the operation (currently none).
+        * @return {Promise} An Angular promise object resolved once update operation is complete.
+        * @description
+        * An update is executed to the objects matching the filter. The values defined is written into objects
+        * matching the filter.
+        */
+        function update(Cls, filter, changes, opts) {
+
+            var q = $q.defer();
+            // TODO: Implement.
         }
 
         /**
@@ -216,6 +219,7 @@
         return {
             find: find,
             insert: insert,
+            update: update,
             flush: flush,
             using: using,
         };
