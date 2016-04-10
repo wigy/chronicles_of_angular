@@ -53,6 +53,7 @@ Licensed under the GPL-2.0 license.
 
 * Data persistence engines for mongodb and rest-api.
 * Builder task for collecting data from JSON-files and setting up in-memory storage for single-file application (use CoG build).
+* Use https://github.com/kofrasa/mingo/ if installed, when parsing search filters.
 * Rendering for every class with member `html(context)`, where *context* is RenderingContext instance
   (to be defined).
 * Page structure descriped by page.json files in the configured project directory tree.

@@ -63,7 +63,7 @@
         */
         Engine.prototype.insert = function(deferred, name, json, opts) {
             d.warning("No implementation for insert() in", this.__class);
-            deferred.reject();
+            deferred.reject("No implementation for insert().");
         };
 
         /**
@@ -81,7 +81,7 @@
         */
         Engine.prototype.find = function(deferred, name, filter, opts) {
             d.warning("No implementation for find() in", this.__class);
-            deferred.reject();
+            deferred.reject("No implementation for find().");
         };
 
         return Engine;

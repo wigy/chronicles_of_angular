@@ -120,6 +120,7 @@
         * @name find
         * @methodOf coa.store.service:db
         * @param {Function} Cls A constructor of some {@link coa.data.class:Data Data} class.
+        * @param {Object} filter Filtering conditions as an object. TODO: Add link to filter class.
         * @param {Object} opts Options for the operation (currently none).
         * @return {Promise} An Angular promise object resolved once data retrieved.
         * @description
@@ -130,7 +131,7 @@
 
             var q = $q.defer();
 
-            // TODO: Support single fetch when ID given as a string.
+            // TODO: Support single fetch when ID given as a string. (Maybe resolved in Filter class.)
             // Figure out arguments.
             if (typeof(db) !== 'string') {
                 opts = filter;

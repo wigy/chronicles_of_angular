@@ -1,6 +1,5 @@
 (function() {
 
-    // TODO: Docs
     var module = angular.module('coa.store');
 
     var EngineMemory;
@@ -21,7 +20,7 @@
         * @param {String} url Resource URI defined in the configuration for this engine.
         * @description
         *
-        * A database storage engine storing data into memory. Storing happens immediately
+        * A database storage {@link coa.store.class:Engine engine} storing data into memory. Storing happens immediately
         * on call, but all data vanishes for example on browser refresh.
         */
         EngineMemory = function(url) {

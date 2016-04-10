@@ -11,6 +11,8 @@
         }
 
 // TODO: Document special member _id.
+// TODO: Interface to store save and fetch.
+// TODO: Example about using storage.
 
         /**
         * @ngdoc function
@@ -69,7 +71,12 @@
         });
 
         /**
-         * Concstruct an object of memebers.
+         * @ngdoc method
+         * @name toJSON
+         * @methodOf coa.data.class:Data
+         * @return {Object} JSON presentation of the object data.
+         * @description
+         * Construct JSON object to present object data.
          */
         Data.prototype.toJSON = function() {
             var ret = {};
