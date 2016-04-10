@@ -2,7 +2,7 @@
 
 var express = require('express');
 var angularcontext = require('angularcontext');
-var d = require('./src/globals.js');
+var d = require('neat-dump');
 
 /**
  * Set up Angular.
