@@ -113,7 +113,8 @@
         * @name find
         * @methodOf coa.store.service:db
         * @param {Function} Cls A constructor of some {@link coa.data.class:Data Data} class.
-        * @param {Object} filter Filtering conditions as an object. TODO: Add link to filter class.
+        * @param {Object|String|Lookup} filter Filtering conditions. See {@link coa.store.class:Lookup Lookup}.
+        *   If this argument is not <i>Lookup</i> object, it is instantiated using the argument as constructor parameter.
         * @param {Object} opts Options for the operation (currently none).
         * @return {Promise} An Angular promise object resolved once data retrieved.
         * @description
@@ -121,6 +122,7 @@
         * instantiated as a members of the target class.
         */
         function find(Cls, filter, opts) {
+            // TODO: What about Mongo-style find parameters to select fields?
 
             var q = $q.defer();
 
@@ -172,7 +174,8 @@
         * @name update
         * @methodOf coa.store.service:db
         * @param {Function} Cls A constructor of some {@link coa.data.class:Data Data} class.
-        * @param {Object} filter Filtering conditions for objects to update. TODO: Add link to filter class.
+        * @param {Object|String|Lookup} filter Filtering conditions for objects to update. See {@link coa.store.class:Lookup Lookup}.
+        *    If this argument is not <i>Lookup</i> object, it is instantiated using the argument as constructor parameter.
         * @param {Object} changes An object containing new values to set.
         * @param {Object} opts Options for the operation (currently none).
         * @return {Promise} An Angular promise object resolved once update operation is complete.
@@ -191,7 +194,7 @@
         * @name flush
         * @methodOf coa.store.service:db
         * @description
-        * Since Angular promises does not trigger necessarily immediately, this function can be called
+        * Since Angular promises do not trigger necessarily immediately, this function can be called
         * in order to force handling of the pending promises that has been already resolved.
         */
         function flush() {
