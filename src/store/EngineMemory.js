@@ -47,12 +47,12 @@
 
         EngineMemory.prototype.find = function(deferred, name, filter, opts) {
             var ret = [];
-            // TODO: Filtering basics: all, by field and by id
             if (name in storage[this.server]) {
                 var keys = Object.keys(storage[this.server][name]);
                 for (var id in storage[this.server][name]) {
                     ret.push(angular.copy(storage[this.server][name][id]));
                 }
+                ret = filter.search(ret);
             }
             deferred.resolve(ret);
         };

@@ -71,7 +71,7 @@
         * @name find
         * @methodOf coa.store.class:Engine
         * @param {Deferred} deferred Angular deferred instance to be signaled after data retrieved.
-        * @param {Object} filter JSON formatted search criteria. TODO: Link to filter specification.
+        * @param {Lookup} filter An Lookup instance. See {@link coa.store.class:Lookup Lookup}.
         * @param {Object} options Options for the operation.
         * @description
         * Fetch data from the given storage matching the filter.

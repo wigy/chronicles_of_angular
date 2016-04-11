@@ -14,7 +14,7 @@
      * if not yet used before. Then the conversion between {@link coa.data.class:Data Data} instance
      * and JSON is performed when the object is either stored or retrieced from the engine.
      */
-    module.service('db', ['$q', '$rootScope', 'dbconfig', 'Options', function($q, $rootScope, dbconfig, Options) {
+    module.service('db', ['$q', '$rootScope', 'dbconfig', 'Options', 'Lookup', function($q, $rootScope, dbconfig, Options, Lookup) {
 
         // Name of the DB to use.
         var defaultDb = 'default';
@@ -56,6 +56,10 @@
             return conf.engine;
         }
 
+        // Valid options for insert().
+        var insertOptions = new Options({
+        });
+
         /**
         * @ngdoc method
         * @name insert
@@ -83,6 +87,13 @@
                 d.error("Cannot store objects that does not define __class:", obj);
                 q.reject("Cannot store objects that does not define __class.");
                 return q.promise;
+            }
+
+            // Validate options.
+            var options = insertOptions.validate(opts);
+            if (!options) {
+                d.warning("Invalid options", opts, "for storage insert(). Using defaults.");
+                options = insertOptions.validate({});
             }
 
             // Get engine and store it.
@@ -115,7 +126,10 @@
         * @param {Function} Cls A constructor of some {@link coa.data.class:Data Data} class.
         * @param {Object|String|Lookup} filter Filtering conditions. See {@link coa.store.class:Lookup Lookup}.
         *   If this argument is not <i>Lookup</i> object, it is instantiated using the argument as constructor parameter.
-        * @param {Object} opts Options for the operation (currently none).
+        * @param {Object} opts Options for the operation.
+        * <dl>
+        *   <dt>raw</dt><dd>If set, return raw data instead of object instances.</dd>
+        * </dl>
         * @return {Promise} An Angular promise object resolved once data retrieved.
         * @description
         * A lookup is done to the storage and promise is resolved with an array of results all
@@ -129,7 +143,7 @@
             // Validate options.
             var options = findOptions.validate(opts);
             if (!options) {
-                d.warning("Invalid options", opts, "for storage find().");
+                d.warning("Invalid options", opts, "for storage find(). Using defaults.");
                 options = findOptions.validate({});
             }
 
@@ -145,7 +159,7 @@
                 q.reject("Target object constructor for storing does not define class.");
                 return q.promise;
             }
-            filter = filter || {};
+            filter = new Lookup(filter || {});
 
             // Fetch data.
             var engine = getEngine(defaultDb);
@@ -204,17 +218,20 @@
         /**
         * @ngdoc method
         * @name using
-        * @param {String} name Name of the storage.
         * @methodOf coa.store.service:db
+        * @param {String} name Name of the storage.
+        * @return {String} Name of the previous storage.
         * @description
         * Change the default storage to the named one.
         */
         function using(name) {
+            var old = defaultDb;
             if (!dbconfig.has(name)) {
                 d.warning("Switching to database that does not exist:", name);
             }
             d('STORE', 'Switching to storage', name);
             defaultDb = name;
+            return old;
         }
 
         return {
