@@ -16,7 +16,7 @@
      */
     module.service('db', ['$q', '$rootScope', 'dbconfig', 'Options', function($q, $rootScope, dbconfig, Options) {
 
-        // Name of the default DB to use.
+        // Name of the DB to use.
         var defaultDb = 'default';
 
         /**
@@ -148,8 +148,6 @@
             // Fetch data.
             var engine = getEngine(defaultDb);
             engine.find(q, name, filter, opts);
-
-            // TODO: Option to keep data raw. Validate using Options.
 
             // Convert to targets.
             return q.promise.then(function(data){
