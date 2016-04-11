@@ -48,7 +48,7 @@
         * @param {Array|Object} collection A collection of objects to search from.
         * @return {Array} An array containing references to matching objects.
         */
-        Lookup.prototype.find = function(collection) {
+        Lookup.prototype.search = function(collection) {
             var ret = [];
 
             for (var k in collection) {
