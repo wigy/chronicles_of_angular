@@ -48,13 +48,22 @@
         EngineMemory.prototype.find = function(deferred, name, filter, opts) {
             var ret = [];
             if (name in storage[this.server]) {
-                var keys = Object.keys(storage[this.server][name]);
                 for (var id in storage[this.server][name]) {
                     ret.push(angular.copy(storage[this.server][name][id]));
                 }
                 ret = filter.search(ret);
             }
             deferred.resolve(ret);
+        };
+
+        Engine.prototype.update = function(deferred, name, filter, changes, opts) {
+            if (name in storage[this.server]) {
+                var updates = filter.search(storage[this.server][name]);
+                for (var i in updates) {
+                    angular.extend(updates[i], angular.copy(changes));
+                }
+            }
+            deferred.resolve({});
         };
 
         EngineMemory.prototype.destroy = function(deferred) {

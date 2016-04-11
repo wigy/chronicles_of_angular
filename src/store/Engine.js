@@ -71,6 +71,7 @@
         * @name find
         * @methodOf coa.store.class:Engine
         * @param {Deferred} deferred Angular deferred instance to be signaled after data retrieved.
+        * @param {String} name Name of the collection.
         * @param {Lookup} filter An Lookup instance. See {@link coa.store.class:Lookup Lookup}.
         * @param {Object} options Options for the operation.
         * @description
@@ -82,6 +83,24 @@
         Engine.prototype.find = function(deferred, name, filter, opts) {
             d.warning("No implementation for find() in", this.__class);
             deferred.reject("No implementation for find().");
+        };
+
+        /**
+        * @ngdoc method
+        * @name update
+        * @methodOf coa.store.class:Engine
+        * @param {Deferred} deferred Angular deferred instance to be signaled after data retrieved.
+        * @param {String} name Name of the collection.
+        * @param {Lookup} filter An Lookup instance. See {@link coa.store.class:Lookup Lookup}.
+        * @param {Object} changes A mapping from member names to new values.
+        * @param {Object} options Options for the operation.
+        * @description
+        * Each instance in the collection, that matches the filter, will be changed as specified in
+        * the <i>changes</i> object. Values from the object will be copied over existing values.
+        */
+        Engine.prototype.update = function(deferred, name, filter, changes, opts) {
+            d.warning("No implementation for update() in", this.__class);
+            deferred.reject("No implementation for update().");
         };
 
         /**

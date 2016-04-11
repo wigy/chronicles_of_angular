@@ -136,8 +136,6 @@
         * instantiated as a members of the target class.
         */
         function find(Cls, filter, opts) {
-            // TODO: What about Mongo-style find parameters to select fields?
-
             var q = $q.defer();
 
             // Validate options.
@@ -183,6 +181,10 @@
             });
         }
 
+        // Valid options for update().
+        var updateOptions = new Options({
+        });
+
         /**
         * @ngdoc method
         * @name update
@@ -200,7 +202,38 @@
         function update(Cls, filter, changes, opts) {
 
             var q = $q.defer();
-            // TODO: Implement.
+
+            // Validate options.
+            var options = updateOptions.validate(opts);
+            if (!options) {
+                d.warning("Invalid options", opts, "for storage update(). Using defaults.");
+                options = updateOptions.validate({});
+            }
+
+            // Validate arguments.
+            if (typeof(Cls) !== "function") {
+                d.error("Invalid class for updating objects", Cls);
+                q.reject("Invalid class for updating objects.");
+                return q.promise;
+            }
+            var name = Cls.prototype.__class;
+            if (!name) {
+                d.error("Target object constructor for storing does not define class:", Cls);
+                q.reject("Target object constructor for storing does not define class.");
+                return q.promise;
+            }
+            if ('_id' in changes) {
+                d.error("Cannot change _id of", name, "with update", changes);
+                q.reject("Cannot change _id with update().");
+                return q.promise;
+            }
+            filter = new Lookup(filter || {});
+
+            // Update data.
+            var engine = getEngine(defaultDb);
+            engine.update(q, name, filter, changes, opts);
+
+            return q.promise;
         }
 
         /**
@@ -223,9 +256,7 @@
         * Destroy everything in the store. This may not be implemented for all engines.
         */
         function destroy() {
-            var q = $q.defer();
-
-            getEngine(defaultDb).destroy(q);
+            return getEngine(defaultDb).destroy($q.defer());
         }
 
         /**

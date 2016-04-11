@@ -53,7 +53,9 @@ Licensed under the GPL-2.0 license.
 
 * Data persistence engine for mongodb.
 * Data persistence engine for rest-api.
-* Deletion from storage.
+* Deletion instances from storage.
+* Another storage API call calc() simimilar to find() which allows selecting fields in MongoDB-style.
+* Return value for update() similar to MongoDB.
 * Builder task for collecting data from JSON-files and setting up in-memory storage for single-file application (use CoG build).
 * Use https://github.com/kofrasa/mingo/ if installed, when parsing search filters.
 * Rendering for every class with member `html(context)`, where *context* is RenderingContext instance
