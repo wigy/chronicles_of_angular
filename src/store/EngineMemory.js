@@ -57,6 +57,11 @@
             deferred.resolve(ret);
         };
 
+        EngineMemory.prototype.destroy = function(deferred) {
+            storage[this.server] = {};
+            deferred.resolve();
+        };
+
         return EngineMemory;
     }]);
 

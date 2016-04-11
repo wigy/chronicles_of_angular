@@ -84,6 +84,19 @@
             deferred.reject("No implementation for find().");
         };
 
+        /**
+        * @ngdoc method
+        * @name destroy
+        * @methodOf coa.store.class:Engine
+        * @param {Deferred} deferred Angular deferred instance to be signaled after all data deleted.
+        * @description
+        * Remove everything from the storage.
+        */
+        Engine.prototype.destroy = function(deferred) {
+            d.warning("No implementation for destroy() in", this.__class);
+            deferred.reject("No implementation for destroy().");
+        };
+
         return Engine;
     }]);
 

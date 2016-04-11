@@ -217,6 +217,19 @@
 
         /**
         * @ngdoc method
+        * @name destroy
+        * @methodOf coa.store.service:db
+        * @description
+        * Destroy everything in the store. This may not be implemented for all engines.
+        */
+        function destroy() {
+            var q = $q.defer();
+
+            getEngine(defaultDb).destroy(q);
+        }
+
+        /**
+        * @ngdoc method
         * @name using
         * @methodOf coa.store.service:db
         * @param {String} name Name of the storage.
@@ -240,6 +253,7 @@
             update: update,
             flush: flush,
             using: using,
+            destroy: destroy,
         };
     }]);
 

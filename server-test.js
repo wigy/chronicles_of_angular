@@ -16,7 +16,7 @@ context.runFiles(
     ],
     function (result, error) {
         if (error) {
-            d.throw("Failed to load Angular context:", error);
+            d.fatal("Failed to load Angular context:", error);
             return;
         } else {
 
