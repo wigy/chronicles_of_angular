@@ -46,4 +46,4 @@ angular.module('coa.store').run(function(){
     d.channels({
         STORE: null
     });
-})
+});

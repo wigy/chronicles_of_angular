@@ -45,7 +45,7 @@
             if (parts[2]) {
                 this.server = parts[2];
             }
-        }
+        };
 
         /**
         * @ngdoc method
