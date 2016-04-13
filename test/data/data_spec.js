@@ -1,17 +1,21 @@
 describe('module coa.data, Data class', function() {
 
-    var Data, TimeStr, TypeStr, TypeBool, TypeInt, TypeObj;
+    var Data, TimeStr, TypeStr, TypeBool, TypeInt, TypeObj, db;
 
     beforeEach(function() {
         module('coa.data');
         module('coa.datetime');
-        inject(function(_Data_, _TimeStr_, _TypeStr_, _TypeInt_, _TypeBool_, _TypeObj_){
+        module('coa.store');
+        inject(function(_Data_, _TimeStr_, _TypeStr_, _TypeInt_, _TypeBool_, _TypeObj_, _db_){
             Data = _Data_;
             TimeStr = _TimeStr_;
             TypeStr = _TypeStr_;
             TypeInt = _TypeInt_;
             TypeBool = _TypeBool_;
             TypeObj = _TypeObj_;
+            db = _db_;
+
+            db.destroy();
         });
     });
 
@@ -137,5 +141,41 @@ describe('module coa.data, Data class', function() {
         expect(obj.name).toBe('Hello!');
         obj = new Testing();
         expect(obj.name).toBe(null);
+    });
+
+    it('can save and fetch values from the storage', function(done) {
+
+        function Testing(data) {
+            this.init(data);
+        }
+
+        Testing.prototype = new Data([
+            {name: new TypeStr({required: true})},
+            {number: new TypeInt()},
+            {active: new TypeBool()},
+        ]);
+        Testing.prototype.__class = 'unit-testing.Testing';
+
+        var t1 = new Testing({name: "I am", number: 212, active: true});
+
+        /*
+        // TODO: This does not work yet.
+        t1.save().then(function(id){
+            d(t1._id);
+        }).finally(function(){
+            done();
+        });
+*/
+        db.insert(t1).then(function(id){
+            d(t1._id);
+        }).finally(function(){
+            done();
+        });
+
+        var t2 = new Testing();
+        t2.load(t1._id);
+        // TODO: Test saving invalid object
+
+        db.flush();
     });
 });

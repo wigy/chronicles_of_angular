@@ -4,7 +4,7 @@
 
     var Data;
 
-    module.factory('Data', ['Class', 'Options', 'Type', function(Class, Options, Type) {
+    module.factory('Data', ['$q', 'db', 'Class', 'Options', 'Type', function($q, db, Class, Options, Type) {
 
         if (Data) {
             return Data;
@@ -18,6 +18,7 @@
         * @ngdoc function
         * @name coa.data.class:Data
         * @requires coa.core.class:Class
+        * @requires coa.store.service:db
         * @param {Array} definitions A list of <i>member definitions</i>.
         * An array can contain one ore more objects with definitions. Each member definition has
         * the following format:
@@ -299,6 +300,39 @@
          */
         Data.prototype.isValid = function() {
             return !this.isInvalid();
+        };
+
+        /**
+         * @ngdoc method
+         * @name save
+         * @methodOf coa.data.class:Data
+         * @return {Promise} Angular promise which is resolved with the ID of the saved object.
+         */
+        Data.prototype.save = function() {
+
+            if (this.isInvalid()) {
+                var q = $q.defer();
+                d.error("Cannot save", this, "since it has errors:", this.isInvalid());
+                q.reject("Cannot save invalid object.");
+                return q.promise;
+            }
+
+            // Create new item.
+            if (this._id === null) {
+                return db.insert(this);
+            }
+            // TODO: Need to tune db.update() interface to support directly class name.
+        };
+
+        /**
+         * @ngdoc method
+         * @name load
+         * @methodOf coa.data.class:Data
+         * @param {String} id Id of the object to load.
+         * @return {Promise} Angular promise which is resolved when data is loaded.
+         */
+        Data.prototype.load = function(id) {
+            // TODO: Implement load().
         };
 
         return Data;
