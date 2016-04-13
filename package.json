@@ -32,7 +32,7 @@
     "angular-mocks": "^1.4.8",
     "angularcontext": "0.0.18",
     "express": "^4.13.4",
-    "chronicles_of_grunt": "^1.11.6",
+    "chronicles_of_grunt": "^1.11.7",
     "neat-dump": "^1.0.5"
   }
 }
