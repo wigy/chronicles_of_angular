@@ -6,7 +6,13 @@
  *
  * The store module provides implementations for storing objects either temporarily
  * or permanently. Different storage engines can be configured and accessed by their
- * names.
+ * names. Essintially any object can stored that fullfills the following conditions:
+ *
+ * <ol>
+ *   <li>It has {@link coa.core.class:Class Class} as its prototype.
+ *   <li>It implements `toJSON()` to extract data for storing.
+ *   <li>It can be reconstructed with `new`-operator by using the JSON-data given out by `toJSON`.
+ * </ol>
  *
  * Available storage engines are:
  * <dl>

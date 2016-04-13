@@ -10,18 +10,14 @@
             return Data;
         }
 
-// TODO: Document special member _id.
-// TODO: Interface to store save and fetch.
-// TODO: Example about using storage.
+// TODO: Implement find
+// TODO: Implement save (remember validation)
+// TODO: Implement load
 
         /**
         * @ngdoc function
         * @name coa.data.class:Data
         * @requires coa.core.class:Class
-        * @description
-        *
-        * Data description to be used as a prototype for any data container class.
-        *
         * @param {Array} definitions A list of <i>member definitions</i>.
         * An array can contain one ore more objects with definitions. Each member definition has
         * the following format:
@@ -45,6 +41,10 @@
         *  <dt>primary_field</dt><dd>If defined, the class can be instantiated with the single atom
         *                            parameter, which is inserted into the named field.</dd>
         * </dl>
+        *
+        * @description
+        *
+        * Data description to be used as a prototype for any data container class.
         */
         Data = function(definitions, options) {
             // This is list of member names in order.
