@@ -68,7 +68,7 @@
 
         EngineMemory.prototype.destroy = function(deferred) {
             storage[this.server] = {};
-            deferred.resolve();
+            deferred.resolve(true);
         };
 
         return EngineMemory;

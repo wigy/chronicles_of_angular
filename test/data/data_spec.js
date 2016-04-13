@@ -158,20 +158,21 @@ describe('module coa.data, Data class', function() {
 
         var t1 = new Testing({name: "I am", number: 212, active: true});
 
-        /*
+
         // TODO: This does not work yet.
         t1.save().then(function(id){
             d(t1._id);
         }).finally(function(){
             done();
         });
-*/
+
+/*
         db.insert(t1).then(function(id){
             d(t1._id);
         }).finally(function(){
             done();
         });
-
+*/
         var t2 = new Testing();
         t2.load(t1._id);
         // TODO: Test saving invalid object

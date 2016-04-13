@@ -56,10 +56,6 @@
             return conf.engine;
         }
 
-        // Valid options for insert().
-        var insertOptions = new Options({
-        });
-
         /**
         * @ngdoc method
         * @name insert
@@ -76,6 +72,10 @@
         function insert(obj, opts) {
 
             var q = $q.defer();
+
+            // Valid options for insert().
+            var insertOptions = new Options({
+            });
 
             // Validate data.
             if (!('toJSON' in obj)) {
@@ -111,14 +111,6 @@
             });
         }
 
-        // Valid options for find().
-        var findOptions = new Options({
-            raw: {
-                type: "boolean",
-                default: false
-            }
-        });
-
         /**
         * @ngdoc method
         * @name find
@@ -136,7 +128,16 @@
         * instantiated as a members of the target class.
         */
         function find(Cls, filter, opts) {
+
             var q = $q.defer();
+
+            // Valid options for find().
+            var findOptions = new Options({
+                raw: {
+                    type: "boolean",
+                    default: false
+                }
+            });
 
             // Validate options.
             var options = findOptions.validate(opts);
@@ -181,10 +182,6 @@
             });
         }
 
-        // Valid options for update().
-        var updateOptions = new Options({
-        });
-
         /**
         * @ngdoc method
         * @name update
@@ -202,6 +199,10 @@
         function update(Cls, filter, changes, opts) {
 
             var q = $q.defer();
+
+            // Valid options for update().
+            var updateOptions = new Options({
+            });
 
             // Validate options.
             var options = updateOptions.validate(opts);
