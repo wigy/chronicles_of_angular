@@ -33,6 +33,6 @@
     "angularcontext": "0.0.18",
     "express": "^4.13.4",
     "chronicles_of_grunt": "^1.11.6",
-    "neat-dump": "^1.0.4"
+    "neat-dump": "^1.0.5"
   }
 }
