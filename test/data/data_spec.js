@@ -165,10 +165,10 @@ describe('module coa.data, Data class', function() {
     });
 
     xit('can save and fetch values from the storage', function(done) {
-
         // Somewhere there is a problem with forcing promises to be resolved.
         // If this test is run with other tests, the promise will not resolve ever.
         // This test works as expected, when running it alone.
+
         function Testing(data) {
             this.init(data);
         }
@@ -192,6 +192,39 @@ describe('module coa.data, Data class', function() {
                 done();
             });
         });
+        db.flush();
+    });
+
+    xit('can update values in the storage', function(done) {
+        // Same problem as above.
+
+        function Testing(data) {
+            this.init(data);
+        }
+
+        Testing.prototype = new Data([
+            {name: new TypeStr({required: true})},
+            {number: new TypeInt()},
+        ]);
+        Testing.prototype.__class = 'unit-testing.Testing';
+
+        var t1 = new Testing({name: "I am", number: 212});
+
+        t1.save().then(function(id) {
+            var oldId = t1._id;
+            t1.name = "I was";
+            t1.save().then(function() {
+                expect(t1._id).toBe(oldId);
+                var t2 = new Testing();
+                t2.load(t1._id).then(function() {
+                    expect(t2.name).toBe("I was");
+                    expect(t2.number).toBe(212);
+                }).finally(function() {
+                    done();
+                });
+            });
+        });
+
         db.flush();
     });
 });

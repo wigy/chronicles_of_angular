@@ -11,7 +11,8 @@
         }
 
 // TODO: Implement find
-// TODO: How to solve switching storages? Option?
+// TODO: Implement update
+// TODO: How to solve switching storages? Option? What about handling _id when saving to new storage?
 
         /**
         * @ngdoc function
@@ -319,8 +320,10 @@
             // Create new item.
             if (this._id === null) {
                 return db.insert(this);
+            } else {
+                return db.update(this.__class, {_id: this._id}, this.toJSON());
             }
-            // TODO: Need to tune db.update() interface to support directly class name.
+
         };
 
         /**
