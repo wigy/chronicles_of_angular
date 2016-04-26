@@ -161,22 +161,24 @@ describe('module coa.data, Data class', function() {
 
         // TODO: This does not work yet.
         t1.save().then(function(id){
+            d('save then')
             d(t1._id);
         }).finally(function(){
-            done();
+            d('save finally')
+            expect(true).toBe(true);
+            var t2 = new Testing();
+            t2.load(t1._id).then(function() {
+                d(t1._id, t2)
+                d('load then')
+            }).finally(function() {
+                d('load finally')
+                done();
+            });
+            d('db flush 2')
+            db.flush();
         });
-
-/*
-        db.insert(t1).then(function(id){
-            d(t1._id);
-        }).finally(function(){
-            done();
-        });
-*/
-        var t2 = new Testing();
-        t2.load(t1._id);
         // TODO: Test saving invalid object
-
+        d('db flush 1')
         db.flush();
     });
 });

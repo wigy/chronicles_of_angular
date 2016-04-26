@@ -332,6 +332,8 @@
          * @return {Promise} Angular promise which is resolved when data is loaded.
          */
         Data.prototype.load = function(id) {
+
+            this.reset();
             // TODO: Implement load().
         };
 

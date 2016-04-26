@@ -36,8 +36,6 @@ describe('module coa.store, db service', function() {
     it('can insert objects into memory', function(done) {
         db.find(Project).then(function(data) {
             expect(data.length).toBe(2);
-            expect(data[0] instanceof Project).toBe(true);
-            expect(data[1] instanceof Project).toBe(true);
             expect(data[0].name).toBe("Project 1");
             expect(data[0].description).toBe("This is one.");
             expect(data[0].number).toBe(10001);
@@ -56,19 +54,8 @@ describe('module coa.store, db service', function() {
         }).toBe("Invalid options {invalid: 111} for storage find(). Using defaults.");
     });
 
-    it('supports raw data', function(done) {
-        db.find(Project, {}, {raw: true}).then(function(data){
-            expect(data.length).toBe(2);
-            expect(data[0] instanceof Project).toBe(false);
-            expect(data[1] instanceof Project).toBe(false);
-        }).finally(function() {
-            done();
-        });
-        db.flush();
-    });
-
     it('performs simple lookup', function(done) {
-        db.find(Project, {name: "Project 2"}, {raw: true}).then(function(data){
+        db.find(Project, {name: "Project 2"}).then(function(data){
             expect(data.length).toBe(1);
             expect(data[0].name).toBe("Project 2");
         }).finally(function() {
@@ -92,7 +79,6 @@ describe('module coa.store, db service', function() {
         db.using('MemA');
         db.find(Project).then(function(data) {
             expect(data.length).toBe(1);
-            expect(data[0] instanceof Project).toBe(true);
             expect(data[0].name).toBe("Project 1");
             expect(data[0].description).toBe("This is one.");
 
@@ -109,7 +95,7 @@ describe('module coa.store, db service', function() {
     });
 
     it('performs simple lookup', function(done) {
-        db.find(Project, {name: "Project 2"}, {raw: true}).then(function(data){
+        db.find(Project, {name: "Project 2"}).then(function(data){
             expect(data.length).toBe(1);
             expect(data[0].name).toBe("Project 2");
         }).finally(function() {
@@ -122,8 +108,6 @@ describe('module coa.store, db service', function() {
         db.update(Project, {name: "Project 2"}, {name: 'Second Project', description: null});
         db.find(Project).then(function(data){
             expect(data.length).toBe(2);
-            expect(data[0] instanceof Project).toBe(true);
-            expect(data[1] instanceof Project).toBe(true);
             expect(data[0].name).toBe("Project 1");
             expect(data[0].description).toBe("This is one.");
             expect(data[0].number).toBe(10001);
@@ -139,7 +123,7 @@ describe('module coa.store, db service', function() {
     it('refuses changing _id with update()', function() {
         d.expect(function() {
             db.update(Project, {}, {_id: '1'});
-        }).toBe("Cannot change _id of unit-testing.Project with update {_id: \"1\"}");
+        }).toBe('Cannot change _id of unit-testing.Project with update {_id: "1"}');
 
         db.find(Project).then(function(data){
             expect(data.length).toBe(2);

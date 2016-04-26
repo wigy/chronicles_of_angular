@@ -115,17 +115,13 @@
         * @ngdoc method
         * @name find
         * @methodOf coa.store.service:db
-        * @param {Function} Cls A constructor of some {@link coa.data.class:Data Data} class.
+        * @param {Function|string} Cls A constructor or name of some {@link coa.data.class:Data Data} class.
         * @param {Object|String|Lookup} filter Filtering conditions. See {@link coa.store.class:Lookup Lookup}.
         *   If this argument is not <i>Lookup</i> object, it is instantiated using the argument as constructor parameter.
-        * @param {Object} opts Options for the operation.
-        * <dl>
-        *   <dt>raw</dt><dd>If set, return raw data instead of object instances.</dd>
-        * </dl>
+        * @param {Object} opts Options for the operation (none so far).
         * @return {Promise} An Angular promise object resolved once data retrieved.
         * @description
-        * A lookup is done to the storage and promise is resolved with an array of results all
-        * instantiated as a members of the target class.
+        * A lookup is done to the storage and promise is resolved with an array of resulting JSON data.
         */
         function find(Cls, filter, opts) {
 
@@ -133,10 +129,6 @@
 
             // Valid options for find().
             var findOptions = new Options({
-                raw: {
-                    type: "boolean",
-                    default: false
-                }
             });
 
             // Validate options.
@@ -147,12 +139,17 @@
             }
 
             // Validate arguments.
-            if (typeof(Cls) !== "function") {
+            var name;
+            if (typeof(Cls) === "function") {
+                name = Cls.prototype.__class;
+            } else if(typeof(Cls) === "string") {
+                name = Cls;
+            } else {
                 d.error("Invalid class for finding objects", Cls);
                 q.reject("Invalid class for finding objects.");
                 return q.promise;
             }
-            var name = Cls.prototype.__class;
+
             if (!name) {
                 d.error("Target object constructor for storing does not define class:", Cls);
                 q.reject("Target object constructor for storing does not define class.");
@@ -173,7 +170,7 @@
                     ret = data;
                 } else {
                     for (var i = 0; i < data.length; i++) {
-                        ret.push(new Cls(data[i]));
+                        ret.push(data[i]);
                     }
                 }
 
@@ -186,7 +183,7 @@
         * @ngdoc method
         * @name update
         * @methodOf coa.store.service:db
-        * @param {Function} Cls A constructor of some {@link coa.data.class:Data Data} class.
+        * @param {Function|string} Cls A constructor or name of some {@link coa.data.class:Data Data} class.
         * @param {Object|String|Lookup} filter Filtering conditions for objects to update. See {@link coa.store.class:Lookup Lookup}.
         *    If this argument is not <i>Lookup</i> object, it is instantiated using the argument as constructor parameter.
         * @param {Object} changes An object containing new values to set.
@@ -212,12 +209,17 @@
             }
 
             // Validate arguments.
-            if (typeof(Cls) !== "function") {
-                d.error("Invalid class for updating objects", Cls);
-                q.reject("Invalid class for updating objects.");
+            var name;
+            if (typeof(Cls) === "function") {
+                name = Cls.prototype.__class;
+            } else if(typeof(Cls) === "string") {
+                name = Cls;
+            } else {
+                d.error("Invalid class for finding objects", Cls);
+                q.reject("Invalid class for finding objects.");
                 return q.promise;
             }
-            var name = Cls.prototype.__class;
+
             if (!name) {
                 d.error("Target object constructor for storing does not define class:", Cls);
                 q.reject("Target object constructor for storing does not define class.");
