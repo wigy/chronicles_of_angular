@@ -10,8 +10,6 @@
             return Data;
         }
 
-// TODO: Implement find
-// TODO: Implement update
 // TODO: How to solve switching storages? Option? What about handling _id when saving to new storage?
 
         /**
@@ -350,6 +348,35 @@
                 }
                 return self;
             });
+        };
+
+        /**
+         * @ngdoc method
+         * @name find
+         * @methodOf coa.data.class:Data
+         * @param {Object|String|Lookup} filter Filtering conditions. See {@link coa.store.service:db#methods_find db.find()}.
+         * @param {Object} opts Options for the operation. See {@link coa.store.service:db#methods_find db.find()}.
+         * @return {Promise} Angular promise which is resolved with the resulting data.
+         *
+         * This is a shortcut calling {@link coa.store.service:db#methods_find db.find()} for this class.
+         */
+        Data.prototype.find = function(filter, opts) {
+            return db.find(this.__class, filter, opts);
+        };
+
+        /**
+         * @ngdoc method
+         * @name update
+         * @methodOf coa.data.class:Data
+         * @param {Object|String|Lookup} filter Matching conditions. See {@link coa.store.service:db#methods_update db.update()}.
+         * @param {Object} changes An object containing new values to set.
+         * @param {Object} opts Options for the operation. See {@link coa.store.service:db#methods_update db.update()}.
+         * @return {Promise} Angular promise which is resolved with the resulting status.
+         *
+         * This is a shortcut calling {@link coa.store.service:db#methods_update db.update()} for this class.
+         */
+        Data.prototype.update = function(filter, changes, opts) {
+            return db.update(this.__class, filter, changes, opts);
         };
 
         return Data;
