@@ -27,20 +27,23 @@
  * }]);
  * </pre>
  *
- * In addition to defined members, there is an implicit member `_id`, which is set by
- * the storage, if an object is stored there. You can read more about storages {@link coa.store here}.
- * Also {@link coa.data.class:Data Data class} itself has simple interface for fetching ans storing
+ * In addition to defined members, there is an implicit member `_id`, which is set when an object
+ * has been saved to the storage. It consists of the name of the storage and the unique ID given
+ * by the storage engine. These parts are concatenated together by colon.
+ * You can read more about storages {@link coa.store here}.
+ * Also {@link coa.data.class:Data Data class} itself has simple interface for fetching and storing
  * object instances. For example, to create new enrty:
  * <pre>
  *   var my = new MyClass({name: 'Zork'});
  *   my.save().then(function(id) {
- *       d("Saved with ID", id);
+ *       d("Saved with ID", id); // For example: "Saved with ID default:1"
  *   });
  * </pre>
  *
  * In order to lookup for specific field matches, we can use
  * <pre>
- *   MyClass.find({name: 'Zork'}).then(function(list){
+ *   var my = new MyClass():
+ *   my.find({name: 'Zork'}).then(function(list){
  *       d("Found", list");
  *   });
  * </pre>

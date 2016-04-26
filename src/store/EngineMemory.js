@@ -38,7 +38,7 @@
                 storage[this.server][name] = {};
             }
 
-            var id = 'mem' + (Object.keys(storage[this.server][name]).length + 1).toString();
+            var id = (Object.keys(storage[this.server][name]).length + 1).toString();
             storage[this.server][name][id] = angular.copy(json);
             storage[this.server][name][id]._id = id;
 

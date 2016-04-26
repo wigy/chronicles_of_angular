@@ -122,13 +122,13 @@ describe('module coa.store, db service', function() {
 
     it('refuses changing _id with update()', function() {
         d.expect(function() {
-            db.update(Project, {}, {_id: '1'});
-        }).toBe('Cannot change _id of unit-testing.Project with update {_id: "1"}');
+            db.update(Project, {}, {_id: '1234'});
+        }).toBe('Cannot change _id of unit-testing.Project with update {_id: "1234"}');
 
         db.find(Project).then(function(data){
             expect(data.length).toBe(2);
-            expect(data[0]._id).not.toBe('1');
-            expect(data[1]._id).not.toBe('1');
+            expect(data[0]._id).not.toBe('1234');
+            expect(data[1]._id).not.toBe('1234');
         }).finally(function() {
             done();
         });

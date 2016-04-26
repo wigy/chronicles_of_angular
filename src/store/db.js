@@ -274,7 +274,7 @@
         function using(name) {
             var old = defaultDb;
             if (!dbconfig.has(name)) {
-                d.warning("Switching to database that does not exist:", name);
+                d.fatal("Switching to database that does not exist:", name);
             }
             d('STORE', 'Switching to storage', name);
             defaultDb = name;

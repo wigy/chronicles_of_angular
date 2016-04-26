@@ -10,8 +10,6 @@
             return Data;
         }
 
-// TODO: How to solve switching storages? Option? What about handling _id when saving to new storage?
-
         /**
         * @ngdoc function
         * @name coa.data.class:Data
@@ -298,6 +296,27 @@
          */
         Data.prototype.isValid = function() {
             return !this.isInvalid();
+        };
+
+
+        /**
+         * @ngdoc method
+         * @name getId
+         * @methodOf coa.data.class:Data
+         * @return {String|null} Get the storage dependent unique ID part of the ID.
+         */
+        Data.prototype.getId = function() {
+            return this._id === null ? null : this._id.split(':')[1];
+        };
+
+        /**
+         * @ngdoc method
+         * @name getStorage
+         * @methodOf coa.data.class:Data
+         * @return {String|null} Get the name of the storage, where this object has been stored.
+         */
+        Data.prototype.getStorage = function() {
+            return this._id === null ? null : this._id.split(':')[0];
         };
 
         /**
