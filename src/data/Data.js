@@ -306,6 +306,7 @@
          * @return {String|null} Get the storage dependent unique ID part of the ID.
          */
         Data.prototype.getId = function() {
+            d(this)
             return this._id === null ? null : this._id.split(':')[1];
         };
 
@@ -322,10 +323,11 @@
         /**
          * @ngdoc method
          * @name save
+         * @param {String} dbName Name of the configured storage (defaults to <b>default</b>).
          * @methodOf coa.data.class:Data
          * @return {Promise} Angular promise which is resolved with the ID of the saved object.
          */
-        Data.prototype.save = function() {
+        Data.prototype.save = function(dbName) {
 
             if (this.isInvalid()) {
                 var q = $q.defer();
@@ -334,30 +336,38 @@
                 return q.promise;
             }
 
+            dbName = dbName || 'default';
+
             // Create new item.
             if (this._id === null) {
-                return db.insert(this);
+                var self = this;
+                return db.insert(dbName, this).then(function(id) {
+                    self._id = dbName + ':' + id;
+                    return self._id;
+                });
             } else {
-                return db.update(this.__class, {_id: this._id}, this.toJSON());
+                return db.update(this.getStorage(), this.__class, {_id: this.getId()}, this.toJSON());
             }
-
         };
 
         /**
          * @ngdoc method
          * @name load
          * @methodOf coa.data.class:Data
-         * @param {String} id Id of the object to load.
+         * @param {String} id Id of the object to load including storage name.
          * @return {Promise} Angular promise which is resolved when data is loaded.
          */
         Data.prototype.load = function(id) {
 
-            var q = db.find(this.__class, {_id: id});
+            var parts = id.split(':');
+            var dbName = parts[0], dbId = parts[1];
             var self = this;
+            var q = db.find(dbName, this.__class, {_id: dbId});
 
             return q.then(function(data) {
                 if (data.length) {
                     self.init(data[0]);
+                    self._id = id;
                 } else {
                     self.reset();
                     d.error("Cannot load", self.__class, "with id", id);
@@ -378,9 +388,10 @@
          * @return {Promise} Angular promise which is resolved with the resulting data.
          *
          * This is a shortcut calling {@link coa.store.service:db#methods_find db.find()} for this class.
+         * Default storage is always used.
          */
         Data.prototype.find = function(filter, opts) {
-            return db.find(this.__class, filter, opts);
+            return db.find('default', this.__class, filter, opts);
         };
 
         /**
@@ -393,9 +404,10 @@
          * @return {Promise} Angular promise which is resolved with the resulting status.
          *
          * This is a shortcut calling {@link coa.store.service:db#methods_update db.update()} for this class.
+         * Default storage is always used.
          */
         Data.prototype.update = function(filter, changes, opts) {
-            return db.update(this.__class, filter, changes, opts);
+            return db.update('default', this.__class, filter, changes, opts);
         };
 
         return Data;

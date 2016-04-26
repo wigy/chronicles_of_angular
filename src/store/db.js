@@ -16,9 +16,6 @@
      */
     module.service('db', ['$q', '$rootScope', 'dbconfig', 'Options', 'Lookup', function($q, $rootScope, dbconfig, Options, Lookup) {
 
-        // Name of the DB to use.
-        var defaultDb = 'default';
-
         /**
          * Parse URI and instantiate appropriate storage engine.
          */
@@ -49,6 +46,9 @@
          * on the first use.
          */
         function getEngine(name) {
+            if (!dbconfig.has(name)) {
+                d.fatal("Trying to access data storage that is not configured:", name);
+            }
             var conf = dbconfig.get(name);
             if (!conf.engine) {
                 conf.engine = engine(conf.url);
@@ -60,16 +60,17 @@
         * @ngdoc method
         * @name insert
         * @methodOf coa.store.service:db
+        * @param {String} dbName Name of the configured storage.
         * @param {Data} obj An object instance to store.
         * @param {Object} opts Options for the operation (currently none).
         * @return {Promise} An Angular promise object resolved once stored.
         * @description
         * This creates new instance to the collection. The name of the collection will
         * be the name of the class of the object to store. If successful, the ID of the
-        * newly created object is set into the target object. It is also parameter for
+        * newly created object is given as a parameter for
         * the success-function of the promise, when resolved.
         */
-        function insert(obj, opts) {
+        function insert(dbName, obj, opts) {
 
             var q = $q.defer();
 
@@ -97,24 +98,21 @@
             }
 
             // Get engine and store it.
-            var engine = getEngine(defaultDb);
+            var engine = getEngine(dbName);
             var json = obj.toJSON();
             var name = obj.__class;
 
-            d('STORE', 'Insert', json, 'to collection', name, 'in store', defaultDb);
+            d('STORE', 'Insert', json, 'to collection', name, 'in store', dbName);
             engine.insert(q, name, json, opts);
 
-            // Mark ID to the object.
-            return q.promise.then(function(id){
-                obj._id = id;
-                return id;
-            });
+            return q.promise;
         }
 
         /**
         * @ngdoc method
         * @name find
         * @methodOf coa.store.service:db
+        * @param {String} dbName Name of the configured storage.
         * @param {Function|string} Cls A constructor or name of some {@link coa.data.class:Data Data} class.
         * @param {Object|String|Lookup} filter Filtering conditions. See {@link coa.store.class:Lookup Lookup}.
         *   If this argument is not <i>Lookup</i> object, it is instantiated using the argument as constructor parameter.
@@ -123,7 +121,7 @@
         * @description
         * A lookup is done to the storage and promise is resolved with an array of resulting JSON data.
         */
-        function find(Cls, filter, opts) {
+        function find(dbName, Cls, filter, opts) {
 
             var q = $q.defer();
 
@@ -158,7 +156,7 @@
             filter = new Lookup(filter || {});
 
             // Fetch data.
-            var engine = getEngine(defaultDb);
+            var engine = getEngine(dbName);
             engine.find(q, name, filter, opts);
 
             // Convert to targets.
@@ -174,7 +172,7 @@
                     }
                 }
 
-                d('STORE', 'Find', filter, 'from collection', name, 'in store', defaultDb, ':', ret);
+                d('STORE', 'Find', filter, 'from collection', name, 'in store', dbName, ':', ret);
                 return ret;
             });
         }
@@ -183,6 +181,7 @@
         * @ngdoc method
         * @name update
         * @methodOf coa.store.service:db
+        * @param {String} dbName Name of the configured storage.
         * @param {Function|string} Cls A constructor or name of some {@link coa.data.class:Data Data} class.
         * @param {Object|String|Lookup} filter Filtering conditions for objects to update. See {@link coa.store.class:Lookup Lookup}.
         *    If this argument is not <i>Lookup</i> object, it is instantiated using the argument as constructor parameter.
@@ -193,7 +192,7 @@
         * An update is executed to the objects matching the filter. The values defined is written into objects
         * matching the filter.
         */
-        function update(Cls, filter, changes, opts) {
+        function update(dbName, Cls, filter, changes, opts) {
 
             var q = $q.defer();
 
@@ -233,7 +232,7 @@
             filter = new Lookup(filter || {});
 
             // Update data.
-            var engine = getEngine(defaultDb);
+            var engine = getEngine(dbName);
             engine.update(q, name, filter, changes, opts);
 
             return q.promise;
@@ -255,30 +254,12 @@
         * @ngdoc method
         * @name destroy
         * @methodOf coa.store.service:db
+        * @param {String} dbName Name of the configured storage.
         * @description
         * Destroy everything in the store. This may not be implemented for all engines.
         */
-        function destroy() {
-            return getEngine(defaultDb).destroy($q.defer());
-        }
-
-        /**
-        * @ngdoc method
-        * @name using
-        * @methodOf coa.store.service:db
-        * @param {String} name Name of the storage.
-        * @return {String} Name of the previous storage.
-        * @description
-        * Change the default storage to the named one.
-        */
-        function using(name) {
-            var old = defaultDb;
-            if (!dbconfig.has(name)) {
-                d.fatal("Switching to database that does not exist:", name);
-            }
-            d('STORE', 'Switching to storage', name);
-            defaultDb = name;
-            return old;
+        function destroy(dbName) {
+            return getEngine(dbName).destroy($q.defer());
         }
 
         return {
@@ -286,7 +267,6 @@
             insert: insert,
             update: update,
             flush: flush,
-            using: using,
             destroy: destroy,
         };
     }]);

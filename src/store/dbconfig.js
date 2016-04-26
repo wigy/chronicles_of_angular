@@ -37,6 +37,9 @@
      * Set the URI for database. Engine link will be reseted.
      */
     DBConfig.prototype.set = function(name, url) {
+        if (!name.match(/^[_a-zA-Z0-9]+$/)) {
+            d.fatal("Trying to configure invalid storage name", name, "Must use only characters and numbers.");
+        }
         this.dbs[name] = {};
         this.dbs[name].url = url;
         this.dbs[name].engine = null;

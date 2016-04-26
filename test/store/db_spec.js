@@ -23,18 +23,18 @@ describe('module coa.store, db service', function() {
             Project.prototype.__class = 'unit-testing.Project';
 
             // Clear all data.
-            db.destroy();
+            db.destroy('default');
             // Insert samples.
             var p1 = new Project({name: "Project 1", description: "This is one.", number: 10001});
             var p2 = new Project({name: "Project 2", description: "This is two.", number: 10002});
             // Note that memory DB is guaranteed to act immediately, so no need to chain promises.
-            db.insert(p1);
-            db.insert(p2);
+            db.insert('default', p1);
+            db.insert('default', p2);
         });
     });
 
     it('can insert objects into memory', function(done) {
-        db.find(Project).then(function(data) {
+        db.find('default', Project).then(function(data) {
             expect(data.length).toBe(2);
             expect(data[0].name).toBe("Project 1");
             expect(data[0].description).toBe("This is one.");
@@ -50,12 +50,12 @@ describe('module coa.store, db service', function() {
 
     it('refuses invalid options in find()', function() {
         d.expect(function() {
-            db.find(Project, {}, {invalid: 111});
+            db.find('default', Project, {}, {invalid: 111});
         }).toBe("Invalid options {invalid: 111} for storage find(). Using defaults.");
     });
 
     it('performs simple lookup', function(done) {
-        db.find(Project, {name: "Project 2"}).then(function(data){
+        db.find('default', Project, {name: "Project 2"}).then(function(data){
             expect(data.length).toBe(1);
             expect(data[0].name).toBe("Project 2");
         }).finally(function() {
@@ -71,19 +71,15 @@ describe('module coa.store, db service', function() {
 
         var p1 = new Project({name: "Project 1", description: "This is one."});
         var p2 = new Project({name: "Project 2", description: "This is two."});
-        db.using('MemA');
-        db.insert(p1);
-        db.using('MemB');
-        db.insert(p2);
+        db.insert('MemA', p1);
+        db.insert('MemB', p2);
 
-        db.using('MemA');
-        db.find(Project).then(function(data) {
+        db.find('MemA', Project).then(function(data) {
             expect(data.length).toBe(1);
             expect(data[0].name).toBe("Project 1");
             expect(data[0].description).toBe("This is one.");
 
-            db.using('MemB');
-            db.find(Project).then(function(data) {
+            db.find('MemB', Project).then(function(data) {
                 expect(data.length).toBe(1);
                 expect(data[0].name).toBe("Project 2");
                 expect(data[0].description).toBe("This is two.");
@@ -95,7 +91,7 @@ describe('module coa.store, db service', function() {
     });
 
     it('performs simple lookup', function(done) {
-        db.find(Project, {name: "Project 2"}).then(function(data){
+        db.find('default', Project, {name: "Project 2"}).then(function(data){
             expect(data.length).toBe(1);
             expect(data[0].name).toBe("Project 2");
         }).finally(function() {
@@ -105,8 +101,8 @@ describe('module coa.store, db service', function() {
     });
 
     it('can update existing objects', function(done) {
-        db.update(Project, {name: "Project 2"}, {name: 'Second Project', description: null});
-        db.find(Project).then(function(data){
+        db.update('default', Project, {name: "Project 2"}, {name: 'Second Project', description: null});
+        db.find('default', Project).then(function(data){
             expect(data.length).toBe(2);
             expect(data[0].name).toBe("Project 1");
             expect(data[0].description).toBe("This is one.");
@@ -122,10 +118,10 @@ describe('module coa.store, db service', function() {
 
     it('refuses changing _id with update()', function() {
         d.expect(function() {
-            db.update(Project, {}, {_id: '1234'});
+            db.update('default', Project, {}, {_id: '1234'});
         }).toBe('Cannot change _id of unit-testing.Project with update {_id: "1234"}');
 
-        db.find(Project).then(function(data){
+        db.find('default', Project).then(function(data){
             expect(data.length).toBe(2);
             expect(data[0]._id).not.toBe('1234');
             expect(data[1]._id).not.toBe('1234');

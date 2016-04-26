@@ -15,7 +15,7 @@ describe('module coa.data, Data class', function() {
             TypeObj = _TypeObj_;
             db = _db_;
 
-            db.destroy();
+            db.destroy('default');
         });
     });
 

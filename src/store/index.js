@@ -25,8 +25,8 @@
  * <pre>
  *     var p1 = new Project({name: "Project 1", description: "This is one."});
  *     var p2 = new Project({name: "Project 2", description: "This is two."});
- *     db.insert(p1).then(function(id1){
- *         db.insert(p2).then(function(id2) {
+ *     db.insert('default', p1).then(function(id1){
+ *         db.insert('default', p2).then(function(id2) {
  *             d("Created new Projects with IDs", id1, "and", id2);
  *         });
  *     });
@@ -35,10 +35,12 @@
  * Note that inserting is asynchronous. Similarly fetching data is asynchronous. To find all instances in the store
  * you can use {@link coa.store.service:db#methods_find find()}
  * <pre>
- *     db.find(Project).then(function(data) {
+ *     db.find('default', Project).then(function(data) {
  *          d("We have now projects", data);
  *     });
  * </pre>
+ * All these functions take name of the configured storage as the first argument. The storage named <b>default</b> is
+ * always available and is in-memory storage, if not configured otherwise.
  */
 angular.module('coa.store', ['coa.core']);
 
