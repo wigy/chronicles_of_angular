@@ -11,8 +11,7 @@
         }
 
 // TODO: Implement find
-// TODO: Implement save (remember validation)
-// TODO: Implement load
+// TODO: How to solve switching storages? Option?
 
         /**
         * @ngdoc function
@@ -333,8 +332,21 @@
          */
         Data.prototype.load = function(id) {
 
-            this.reset();
-            // TODO: Implement load().
+            var q = db.find(this.__class, {_id: id});
+            var self = this;
+
+            return q.then(function(data) {
+                if (data.length) {
+                    self.init(data[0]);
+                } else {
+                    self.reset();
+                    d.error("Cannot load", self.__class, "with id", id);
+                    var q = $q.defer();
+                    q.reject("Cannot load " + self.__class + " with id " + id);
+                    return q.promise;
+                }
+                return self;
+            });
         };
 
         return Data;
