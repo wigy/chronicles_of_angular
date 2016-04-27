@@ -306,7 +306,6 @@
          * @return {String|null} Get the storage dependent unique ID part of the ID.
          */
         Data.prototype.getId = function() {
-            d(this)
             return this._id === null ? null : this._id.split(':')[1];
         };
 

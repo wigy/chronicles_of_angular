@@ -9,6 +9,10 @@ Licensed under the GPL-2.0 license.
 
 ## Release History
 
+* v0.6.0
+    - Data persistence interface `coa.store` with in-memory implementation.
+* v0.5.4
+    - Use new neat-dump instead of own implementation of d().
 * v0.5.3
     - `TypeAny` to allow any non-undefined value.
 * v0.5.2
@@ -43,11 +47,7 @@ Licensed under the GPL-2.0 license.
 
 ### Done
 
-* Use new neat-dump instead of own implementation of d().
-
 ### Not Yet Done
-
-* Data persistence interface `coa.store` with in-memory implementation.
 
 ## Future Ideas
 
