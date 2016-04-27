@@ -10,7 +10,7 @@ var d = require('neat-dump');
 var context = angularcontext.Context();
 context.runFiles(
     [
-        // TODO: Auto-generate server index. Need separate production server and development server using minified dist files.
+        // TODO: Auto-generate server index. Need separate production server (all minified dist) and development server (minified libs with normal source).
         'dist/lib/neat-dump.min.js',
         'dist/lib/angular.min.js',
         'dist/coa.min.js'
