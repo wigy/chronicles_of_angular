@@ -11,6 +11,7 @@ var context = angularcontext.Context();
 context.runFiles(
     [
         // TODO: Auto-generate server index. Need separate production server and development server using minified dist files.
+        'dist/lib/neat-dump.min.js',
         'dist/lib/angular.min.js',
         'dist/coa.min.js'
     ],

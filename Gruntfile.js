@@ -14,7 +14,8 @@ module.exports = function(grunt) {
                     models: [],
                     data: [],
                     libs: ['src/**/index.js', 'src/**/*.js'],
-                    templates: 'sample/template.html'
+                    templates: 'sample/template.html',
+                    otherjs: 'server-test.js'
                 },
                 media: {
                     sounds: 'sounds/*.mp3',
