@@ -1,7 +1,7 @@
 {
   "name": "chronicles_of_angular",
   "description": "Wigy's collection of useful utilities for AngularJS.",
-  "version": "0.5.4",
+  "version": "0.5.4-beta",
   "homepage": "https://github.com/wigy/chronicles_of_angular",
   "author": {
     "name": "Tommi Ronkainen",
@@ -30,7 +30,9 @@
   "dependencies": {
     "angular": "^1.4.8",
     "angular-mocks": "^1.4.8",
-    "chronicles_of_grunt": "^1.11.6",
-    "neat-dump": "^1.0.2"
+    "angularcontext": "0.0.18",
+    "express": "^4.13.4",
+    "chronicles_of_grunt": "^1.11.7",
+    "neat-dump": "^1.0.5"
   }
 }

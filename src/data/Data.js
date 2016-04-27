@@ -4,7 +4,7 @@
 
     var Data;
 
-    module.factory('Data', ['Class', 'Options', 'Type', function(Class, Options, Type) {
+    module.factory('Data', ['$q', 'db', 'Class', 'Options', 'Type', function($q, db, Class, Options, Type) {
 
         if (Data) {
             return Data;
@@ -14,10 +14,7 @@
         * @ngdoc function
         * @name coa.data.class:Data
         * @requires coa.core.class:Class
-        * @description
-        *
-        * Data description to be used as a prototype for any data container class.
-        *
+        * @requires coa.store.service:db
         * @param {Array} definitions A list of <i>member definitions</i>.
         * An array can contain one ore more objects with definitions. Each member definition has
         * the following format:
@@ -41,6 +38,10 @@
         *  <dt>primary_field</dt><dd>If defined, the class can be instantiated with the single atom
         *                            parameter, which is inserted into the named field.</dd>
         * </dl>
+        *
+        * @description
+        *
+        * Data description to be used as a prototype for any data container class.
         */
         Data = function(definitions, options) {
             // This is list of member names in order.
@@ -67,7 +68,12 @@
         });
 
         /**
-         * Concstruct an object of memebers.
+         * @ngdoc method
+         * @name toJSON
+         * @methodOf coa.data.class:Data
+         * @return {Object} JSON presentation of the object data.
+         * @description
+         * Construct JSON object to present object data.
          */
         Data.prototype.toJSON = function() {
             var ret = {};
@@ -131,6 +137,7 @@
          * Reset all member values to defaults.
          */
         Data.prototype.reset = function() {
+            this._id = null;
             for (var k = 0; k < this._members.length; k++ ) {
                 this[this._members[k]] = this._types[this._members[k]].copy(this._types[this._members[k]].getDefault());
             }
@@ -153,6 +160,7 @@
             for (var k = 0; k < this._members.length; k++ ) {
                 this[this._members[k]] = this._types[this._members[k]].copy(target[this._members[k]]);
             }
+            this._id = target._id;
         };
 
         /**
@@ -196,6 +204,8 @@
                     type = this._types[k];
                     if (type) {
                         type.set(this, k, data[k]);
+                    } else if (k === '_id') {
+                        this._id = data._id;
                     } else {
                         d.error("Invalid member name '" + k + "' in initial data", data, "for", this);
                     }
@@ -286,6 +296,118 @@
          */
         Data.prototype.isValid = function() {
             return !this.isInvalid();
+        };
+
+
+        /**
+         * @ngdoc method
+         * @name getId
+         * @methodOf coa.data.class:Data
+         * @return {String|null} Get the storage dependent unique ID part of the ID.
+         */
+        Data.prototype.getId = function() {
+            d(this)
+            return this._id === null ? null : this._id.split(':')[1];
+        };
+
+        /**
+         * @ngdoc method
+         * @name getStorage
+         * @methodOf coa.data.class:Data
+         * @return {String|null} Get the name of the storage, where this object has been stored.
+         */
+        Data.prototype.getStorage = function() {
+            return this._id === null ? null : this._id.split(':')[0];
+        };
+
+        /**
+         * @ngdoc method
+         * @name save
+         * @param {String} dbName Name of the configured storage (defaults to <b>default</b>).
+         * @methodOf coa.data.class:Data
+         * @return {Promise} Angular promise which is resolved with the ID of the saved object.
+         */
+        Data.prototype.save = function(dbName) {
+
+            if (this.isInvalid()) {
+                var q = $q.defer();
+                d.error("Cannot save", this, "since it has errors:", this.isInvalid());
+                q.reject("Cannot save invalid object.");
+                return q.promise;
+            }
+
+            dbName = dbName || 'default';
+
+            // Create new item.
+            if (this._id === null) {
+                var self = this;
+                return db.insert(dbName, this).then(function(id) {
+                    self._id = dbName + ':' + id;
+                    return self._id;
+                });
+            } else {
+                return db.update(this.getStorage(), this.__class, {_id: this.getId()}, this.toJSON());
+            }
+        };
+
+        /**
+         * @ngdoc method
+         * @name load
+         * @methodOf coa.data.class:Data
+         * @param {String} id Id of the object to load including storage name.
+         * @return {Promise} Angular promise which is resolved when data is loaded.
+         */
+        Data.prototype.load = function(id) {
+
+            var parts = id.split(':');
+            var dbName = parts[0], dbId = parts[1];
+            var self = this;
+            var q = db.find(dbName, this.__class, {_id: dbId});
+
+            return q.then(function(data) {
+                if (data.length) {
+                    self.init(data[0]);
+                    self._id = id;
+                } else {
+                    self.reset();
+                    d.error("Cannot load", self.__class, "with id", id);
+                    var q = $q.defer();
+                    q.reject("Cannot load " + self.__class + " with id " + id);
+                    return q.promise;
+                }
+                return self;
+            });
+        };
+
+        /**
+         * @ngdoc method
+         * @name find
+         * @methodOf coa.data.class:Data
+         * @param {Object|String|Lookup} filter Filtering conditions. See {@link coa.store.service:db#methods_find db.find()}.
+         * @param {Object} opts Options for the operation. See {@link coa.store.service:db#methods_find db.find()}.
+         * @return {Promise} Angular promise which is resolved with the resulting data.
+         *
+         * This is a shortcut calling {@link coa.store.service:db#methods_find db.find()} for this class.
+         * Default storage is always used.
+         */
+        Data.prototype.find = function(filter, opts) {
+            return db.find('default', this.__class, filter, opts);
+        };
+
+        /**
+         * @ngdoc method
+         * @name update
+         * @methodOf coa.data.class:Data
+         * @param {Object|String|Lookup} filter Matching conditions. See {@link coa.store.service:db#methods_update db.update()}.
+         * @param {Object} changes An object containing new values to set.
+         * @param {Object} opts Options for the operation. See {@link coa.store.service:db#methods_update db.update()}.
+         * @return {Promise} Angular promise which is resolved with the resulting status.
+         *
+         * This is a shortcut calling {@link coa.store.service:db#methods_update db.update()} for this class.
+         * Default storage is always used.
+         */
+        Data.prototype.update = function(filter, changes, opts) {
+            return db.update('default', this.__class, filter, changes, opts);
         };
 
         return Data;

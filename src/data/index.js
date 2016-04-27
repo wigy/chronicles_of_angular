@@ -2,6 +2,7 @@
  * @ngdoc overview
  * @name coa.data
  * @requires coa.core
+ * @requires coa.store
  * @description
  *
  * Classes needed for storing and presenting data and its meta information.
@@ -26,18 +27,48 @@
  * }]);
  * </pre>
  *
+ * In addition to defined members, there is an implicit member `_id`, which is set when an object
+ * has been saved to the storage. It consists of the name of the storage and the unique ID given
+ * by the storage engine. These parts are concatenated together by colon.
+ * You can read more about storages {@link coa.store here}.
+ * Also {@link coa.data.class:Data Data class} itself has simple interface for fetching and storing
+ * object instances. For example, to create new enrty:
+ * <pre>
+ *   var my = new MyClass({name: 'Zork'});
+ *   my.save().then(function(id) {
+ *       d("Saved with ID", id); // For example: "Saved with ID default:1"
+ *   });
+ * </pre>
+ *
+ * In order to lookup for specific field matches, we can use
+ * <pre>
+ *   var my = new MyClass():
+ *   my.find({name: 'Zork'}).then(function(list){
+ *       d("Found", list");
+ *   });
+ * </pre>
+ *
+ * or to load an object with the specific ID
+ * <pre>
+ *   var my = new MyClass();
+ *   my.load(id).then(function(){
+ *      d("Now we have loaded", my);
+ *   });
+ * </pre>
+ *
  * Standard member types are:
  * <dl>
- *   <dt>any</dt><dd>{@link coa.data.class:TypeAny TypeAny}</dd>
- *   <dt>boolean</dt><dd>{@link coa.data.class:TypeBool TypeBool}</dd>
- *   <dt>dict</dt><dd>{@link coa.data.class:TypeDict TypeDict}</dd>
- *   <dt>integer</dt><dd>{@link coa.data.class:TypeInt TypeInt}</dd>
- *   <dt>list</dt><dd>{@link coa.data.class:TypeList TypeList}</dd>
- *   <dt>object</dt><dd>{@link coa.data.class:TypeObj TypeObj}</dd>
- *   <dt>options</dt><dd>{@link coa.data.class:TypeOptions TypeOptions}</dd>
- *   <dt>pair</dt><dd>{@link coa.data.class:TypePair TypePair}</dd>
- *   <dt>string</dt><dd>{@link coa.data.class:TypeStr TypeStr}</dd>
- *   <dt>tuple</dt><dd>{@link coa.data.class:TypeTuple TypeTuple}</dd>
+ *   <dt>{@link coa.data.class:TypeAny TypeAny}</dt><dd>can contain any value</dd>
+ *   <dt>{@link coa.data.class:TypeBool TypeBool}</dt><dd>boolean value</dd>
+ *   <dt>{@link coa.data.class:TypeDict TypeDict}</dt><dd>an object</dd>
+ *   <dt>{@link coa.data.class:TypeInt TypeInt}</dt><dd>integer number</dd>
+ *   <dt>{@link coa.data.class:TypeList TypeList}</dt><dd>an array of objects with specified type</dd>
+ *   <dt>{@link coa.data.class:TypeObj TypeObj}</dt><dd>any other Data object</dd>
+ *   <dt>{@link coa.data.class:TypeOptions TypeOptions}</dt><dd>an object containing value for Options</dd>
+ *   <dt>{@link coa.data.class:TypePair TypePair}</dt><dd>two values with specified types</dd>
+ *   <dt>{@link coa.data.class:TypeStr TypeStr}</dt><dd>a string</dd>
+ *   <dt>{@link coa.data.class:TypeTriple TypeTriple}</dt><dd>three values with specified types</dd>
+ *   <dt>{@link coa.data.class:TypeTuple TypeTuple}</dt><dd>any number of values with specified types</dd>
  * </dl>
  */
-angular.module('coa.data', ['coa.core']);
+angular.module('coa.data', ['coa.core', 'coa.store']);
