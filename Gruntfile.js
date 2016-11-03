@@ -6,7 +6,7 @@ module.exports = function(grunt) {
                 name: "coa",
                 title: "Chronicles of Angular",
                 external: ['angular', 'neat-dump'],
-                paths: {
+                options: {
                     template: 'sample/templates.js'
                 },
                 src: {
